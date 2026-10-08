@@ -119,7 +119,8 @@ Pausen, überlappen nicht und erhalten kurze Blenden gegen Klicks. Lautstärken
 sind vorsichtig angeglichen, Crits etwas kräftiger. Tonhöhe und Tempo bleiben
 unverändert. WAV-Clips liegen unter `spoken/clips/`, WoW-Dateien unter `Sounds/`.
 
-`previews/index.html` verlinkt die Browser-Hörproben. `previews/spoken/index.html`
+Die [Browser-Hörproben](https://gabbajoe.github.io/GabbaSounds/) sind direkt online
+abspielbar. Für die Offline-Nutzung verlinkt `previews/index.html` dieselben Player. `previews/spoken/index.html`
 enthält alle 219 Sprachclips; `previews/melee/` die Nahkampf-Pakete und
 `previews/magic/` die synthetischen Sounds. Die kleinen HTML-Seiten sind im Repo
 enthalten und laden OGGs aus `Sounds/`, ohne Internet oder Webserver. Lade dafür

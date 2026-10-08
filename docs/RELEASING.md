@@ -99,6 +99,23 @@ Replace `1.0.1` with the actual next version. Published tags should remain fixed
 
 ## Public checkout versus local recording workspace
 
+### Listening site
+
+The browser players are published at https://gabbajoe.github.io/GabbaSounds/.
+The separate `Listening previews` workflow builds and checks all relative HTML
+and audio links, then deploys through GitHub Pages after relevant changes reach
+`main`. It can also be started manually on `main`. Pages must use the GitHub
+Actions publishing source in the repository settings.
+
+`python3 tools/build_preview_site.py --output-dir dist/site` creates the site in
+a destination that does not yet exist. Only the eight current player pages,
+the landing page, logo, `.nojekyll` and 345 manifest-listed OGGs are included.
+Private recordings and archived players are excluded. This workflow neither
+creates an addon release nor uploads to CurseForge. The release ZIP continues
+to use its independent runtime allowlist.
+
+### Local sources
+
 The public repository contains the finished OGGs, manifests, addon source, tools, documentation and anonymized combat-event fixtures. Browser previews under `previews/` are also checked in, with relative links to the shipped OGGs. `python3 tools/build_previews.py` rebuilds them without source recordings. Source WAVs and generated editable cuts stay in the original recording workspace. `.gitignore` preserves these local files without uploading them.
 
 On a fresh public checkout, run:
