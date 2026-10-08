@@ -4,6 +4,11 @@
 
 # Generated listening pages, comparisons and reference downloads.
 *.html
+!/previews/index.html
+!/previews/spoken/index.html
+!/previews/melee/*.html
+!/previews/magic/index.html
+/previews/magic/Hoerprobe.ogg
 /Hoerprobe.ogg
 /Sounds/spoken_*.ogg
 /references/
@@ -11,6 +16,7 @@
 /analysis/*
 !/analysis/frostbolt_original_sounds.json
 !/analysis/hunter_original_sounds.json
+!/analysis/melee_original_sounds.json
 !/analysis/mage_spells.json
 
 # Build outputs and developer caches.

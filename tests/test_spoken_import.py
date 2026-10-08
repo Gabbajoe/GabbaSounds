@@ -103,13 +103,13 @@ class CategorizedRecordings(unittest.TestCase):
         import json
         manifest = json.loads((ROOT / 'spoken/manifest.json').read_text())
         self.assertEqual(manifest['version'], 2)
-        self.assertEqual(len(manifest['sources']), 43)
-        self.assertEqual(len(manifest['sounds']), 179)
+        self.assertEqual(len(manifest['sources']), 51)
+        self.assertEqual(len(manifest['sounds']), 219)
         for source in manifest['sources']:
             clips = [item for item in manifest['sounds'] if item['source'] == source['file']]
             self.assertEqual(len(clips), source['clips'])
             self.assertTrue(all(a['source_end'] <= b['source_start'] for a,b in zip(clips, clips[1:])))
-        for weapon, normal, crit in [('wand',16,3),('bow',7,4),('gun',7,4),('frostbolt',7,7)]:
+        for weapon, normal, crit in [('wand',16,3),('bow',7,4),('gun',7,4),('frostbolt',7,7),('blade',6,4),('blunt',6,4),('dagger',6,4),('fist',6,4)]:
             bank = manifest['banks'][weapon]
             self.assertEqual(len(bank['hit']), normal)
             self.assertEqual(len(bank['crit']), crit)
@@ -176,6 +176,41 @@ class CategorizedRecordings(unittest.TestCase):
             self.assertEqual(imported['frostbolt'][kind], banks['frostbolt'][kind])
         self.assertTrue(all('cast' not in imported[weapon] for weapon in ('wand', 'bow', 'gun')))
         self.assertTrue(all(imported[weapon]['cast'] == [] for weapon in ('fireball', 'iceblock', 'blizzard')))
+
+
+class PreviewFiles(unittest.TestCase):
+    def test_all_checked_in_previews_link_existing_audio_without_embedding_duplicates(self):
+        from html.parser import HTMLParser
+        class AudioPaths(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.paths = []
+            def handle_starttag(self, tag, attrs):
+                if tag == 'audio': self.paths.append(dict(attrs)['src'])
+        for name, count in [('spoken/index.html', 219), ('melee/index.html', 56),
+                            ('magic/index.html', 126), *[(f'melee/{key}.html',26) for key in ('blade','blunt','dagger','fist')]]:
+            page = ROOT / 'previews' / name
+            parser = AudioPaths()
+            parser.feed(page.read_text())
+            self.assertEqual(len(parser.paths), count)
+            for audio in parser.paths:
+                self.assertNotIn('data:', audio)
+                self.assertTrue((page.parent / audio).is_file(), audio)
+
+
+class MeleeCuts(unittest.TestCase):
+    def test_reviewed_cuts_are_hash_guarded_and_preserve_short_blade_sound(self):
+        import hashlib, json
+        from import_spoken_library import reviewed_ranges
+        cuts = json.loads((ROOT / 'spoken/melee/cuts.json').read_text())
+        self.assertEqual(len(cuts), 8)
+        for name, record in cuts.items():
+            ranges = record['ranges_seconds']
+            self.assertEqual(len(ranges), 6 if name.endswith('/hit.wav') else 4)
+            self.assertTrue(all(a[1] <= b[0] for a, b in zip(ranges, ranges[1:])))
+            with self.assertRaisesRegex(ValueError, 'Recording changed'):
+                reviewed_ranges(name, 'changed', np.zeros((441000, 2)), 0.2)
+        self.assertEqual(cuts['spoken/melee/blade/hit.wav']['ranges_seconds'][2], [3.28, 4.0])
 
 
 if __name__ == '__main__':

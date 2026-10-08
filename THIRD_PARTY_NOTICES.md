@@ -29,3 +29,11 @@ Rank reference: https://github.com/wowsims/classic/tree/master/sim/mage
 Additional rank references: https://classicdb.ch/?spell=10230,
 https://classicdb.ch/?spell=10161, https://classicdb.ch/?spell=28609,
 https://classicdb.ch/?spell=10187.
+
+The 301 native melee FileDataIDs were selected from sword, axe, mace, dagger,
+unarmed, swing, miss, parry and shield-impact paths in the installed Leatrix
+Sounds Classic Era 1.15.157 effects catalog. Only identifiers are included; no
+Leatrix code, full catalog or Blizzard audio is redistributed. Source paths and
+the catalog checksum are recorded in `analysis/melee_original_sounds.json`.
+The SWING event layout was checked against Blizzard's Classic Era combat-log UI:
+https://github.com/Gethe/wow-ui-source/blob/classic_era/Interface/AddOns/Blizzard_CombatLog/Classic/Blizzard_CombatLog.lua

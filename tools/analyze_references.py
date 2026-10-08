@@ -100,8 +100,10 @@ def main():
 <p>Sound Spark nennt WoW ausdrücklich als Inspiration und setzt auf Luftgeräusche, Dopplerbewegung und organische Texturen. David Dumais beschreibt die Schichtung von gleitenden Tönen, Whooshes und Impulsen sowie Variationen innerhalb derselben Klangfamilie.</p>
 <script>const players=[...document.querySelectorAll('audio')];players.forEach(p=>{if(p.dataset.original==='true')p.volume=.4;p.addEventListener('play',()=>players.forEach(o=>{if(o!==p)o.pause()}))});</script></html>
 '''
-    (ROOT / 'Referenzvergleich.html').write_text(page, encoding='utf-8')
-    print('Created reference_analysis.json, three spectrograms, and Referenzvergleich.html.')
+    preview_dir = ROOT / 'previews' / 'reference'
+    preview_dir.mkdir(parents=True, exist_ok=True)
+    (preview_dir / 'index.html').write_text(page, encoding='utf-8')
+    print('Created reference_analysis.json, three spectrograms, and previews/reference/index.html.')
 
 
 if __name__ == '__main__':

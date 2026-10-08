@@ -1,0 +1,28 @@
+-- Anonymized Classic Era SWING events from 2026-10-06; advanced text extras removed.
+-- Text logging omits offhand; Lua offhand handling is checked separately.
+return {
+    { miss = "MISS", source = "Player-Melee-1", expected = "miss" },
+    { crit = false, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-2", expected = "hit" },
+    { crit = false, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-2", expected = "hit" },
+    { crit = false, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-2", expected = "hit" },
+    { miss = "PARRY", source = "Player-Melee-2", expected = "miss" },
+    { miss = "DODGE", source = "Player-Melee-2", expected = "miss" },
+    { crit = true, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-2", expected = "crit" },
+    { miss = "PARRY", source = "Player-Melee-2", expected = "miss" },
+    { miss = "MISS", source = "Player-Melee-3", expected = "miss" },
+    { miss = "MISS", source = "Player-Melee-3", expected = "miss" },
+    { crit = true, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-3", expected = "crit" },
+    { crit = true, glancing = false, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-3", expected = "crit" },
+    { crit = false, glancing = false, resisted = 0, blocked = 16, absorbed = 0, source = "Player-Melee-3", expected = "graze" },
+    { miss = "PARRY", source = "Player-Melee-3", expected = "miss" },
+    { crit = false, glancing = true, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-4", expected = "graze" },
+    { crit = false, glancing = true, resisted = 0, blocked = 0, absorbed = 0, source = "Player-Melee-4", expected = "graze" },
+    { miss = "DODGE", source = "Player-Melee-5", expected = "miss" },
+    { miss = "DODGE", source = "Player-Melee-5", expected = "miss" },
+    { miss = "ABSORB", source = "Player-Melee-5", expected = "absorb" },
+    { miss = "ABSORB", source = "Player-Melee-5", expected = "absorb" },
+    { miss = "ABSORB", source = "Player-Melee-6", expected = "absorb" },
+    { miss = "IMMUNE", source = "Player-Melee-5", expected = "miss" },
+    { miss = "IMMUNE", source = "Player-Melee-6", expected = "miss" },
+    { miss = "IMMUNE", source = "Player-Melee-5", expected = "miss" },
+}

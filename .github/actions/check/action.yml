@@ -37,7 +37,10 @@ runs:
         GABBA_RUNTIME_ONLY: '1'
         LUA: lua5.1
         LUAC: luac5.1
-      run: bash tests/run_tests.sh
+      run: |
+        python tools/build_previews.py
+        git diff --exit-code -- previews
+        bash tests/run_tests.sh
     - name: Validate shipped audio
       shell: bash
       run: python tools/validate_sounds.py --pack all --runtime-only

@@ -10,6 +10,8 @@ LUAC="${LUAC:-luac}"
 "$LUAC" -p SoundData.lua
 "$LUAC" -p CustomSoundData.lua
 "$LUAC" -p Schools.lua
+"$LUAC" -p Melee.lua
+"$LUAC" -p MeleeSoundIDs.lua
 "$LUAC" -p Weapons.lua
 "$LUAC" -p Minimap.lua
 "$LUA" tests/test_addon.lua

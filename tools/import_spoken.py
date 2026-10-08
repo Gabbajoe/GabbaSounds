@@ -154,7 +154,9 @@ players.forEach(p => p.addEventListener('play', () => players.forEach(other => {
 document.querySelector('#stop').onclick = () => players.forEach(p => { p.pause(); p.currentTime = 0; });
 document.querySelector('#random').onclick = () => { let choices = players.filter(p => !previous || p.dataset.group !== previous.dataset.group); if(!choices.length) choices = players.filter(p => p !== previous); if(!choices.length) choices = players; const selected = choices[Math.floor(Math.random() * choices.length)]; previous = selected; selected.currentTime = 0; selected.play().catch(() => {}); };
 </script></html>'''
-    (ROOT / 'spoken' / 'Anhoeren.html').write_text(page)
+    preview_dir = ROOT / 'previews' / 'legacy'
+    preview_dir.mkdir(parents=True, exist_ok=True)
+    (preview_dir / 'index.html').write_text(page)
     assert hashlib.sha256(source.read_bytes()).hexdigest() == source_hash, 'Source WAV changed!'
     print(f'Split {source.name} ({len(samples) / RATE:.2f}s) into {len(items)} sounds; source SHA256 unchanged.')
     for item in items:

@@ -1,0 +1,1514 @@
+{
+  "source": "Installed Leatrix Sounds Classic Era 1.15.157",
+  "source_url": "https://www.curseforge.com/wow/addons/leatrix-sounds",
+  "source_data_file": "Leatrix_Sounds_Effects.lua",
+  "source_data_sha256": "249eaf1d2dcbfef0b974749c8821576332d9cb063f5e8ba0b22914f3bf12a7fb",
+  "combat_log_reference": "https://github.com/Gethe/wow-ui-source/blob/classic_era/Interface/AddOns/Blizzard_CombatLog/Classic/Blizzard_CombatLog.lua",
+  "sounds": [
+    {
+      "file_data_id": 567629,
+      "path": "sound/item/weapons/axe1h/m1haxehitchain1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567633,
+      "path": "sound/item/weapons/axe1h/m1haxehitchain1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567636,
+      "path": "sound/item/weapons/axe1h/m1haxehitchain1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567625,
+      "path": "sound/item/weapons/axe1h/m1haxehitchaincrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567621,
+      "path": "sound/item/weapons/axe1h/m1haxehitflesh1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567620,
+      "path": "sound/item/weapons/axe1h/m1haxehitflesh1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567632,
+      "path": "sound/item/weapons/axe1h/m1haxehitflesh1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567619,
+      "path": "sound/item/weapons/axe1h/m1haxehitfleshcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567643,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalshield1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567641,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalshield1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567623,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalshield1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567642,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalshieldcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567634,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalweapon1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567637,
+      "path": "sound/item/weapons/axe1h/m1haxehitmetalweaponcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567626,
+      "path": "sound/item/weapons/axe1h/m1haxehitplate1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567635,
+      "path": "sound/item/weapons/axe1h/m1haxehitplate1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567624,
+      "path": "sound/item/weapons/axe1h/m1haxehitplate1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567628,
+      "path": "sound/item/weapons/axe1h/m1haxehitplatecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567631,
+      "path": "sound/item/weapons/axe1h/m1haxehitstone1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567618,
+      "path": "sound/item/weapons/axe1h/m1haxehitstone1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567622,
+      "path": "sound/item/weapons/axe1h/m1haxehitstone1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567640,
+      "path": "sound/item/weapons/axe1h/m1haxehitstone1crit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567639,
+      "path": "sound/item/weapons/axe1h/m1haxehitwood1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567638,
+      "path": "sound/item/weapons/axe1h/m1haxehitwood1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567627,
+      "path": "sound/item/weapons/axe1h/m1haxehitwood1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567630,
+      "path": "sound/item/weapons/axe1h/m1haxehitwood1crita.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567665,
+      "path": "sound/item/weapons/axe2h/m2haxehitchain1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567652,
+      "path": "sound/item/weapons/axe2h/m2haxehitchain1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567659,
+      "path": "sound/item/weapons/axe2h/m2haxehitchain1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567663,
+      "path": "sound/item/weapons/axe2h/m2haxehitchaincrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567661,
+      "path": "sound/item/weapons/axe2h/m2haxehitflesh1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567651,
+      "path": "sound/item/weapons/axe2h/m2haxehitflesh1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567645,
+      "path": "sound/item/weapons/axe2h/m2haxehitflesh1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567668,
+      "path": "sound/item/weapons/axe2h/m2haxehitfleshcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567667,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalshield1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567655,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalshield1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567656,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalshield1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567648,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalshieldcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567669,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalweapon1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567653,
+      "path": "sound/item/weapons/axe2h/m2haxehitmetalweaponcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567649,
+      "path": "sound/item/weapons/axe2h/m2haxehitplate1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567664,
+      "path": "sound/item/weapons/axe2h/m2haxehitplate1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567644,
+      "path": "sound/item/weapons/axe2h/m2haxehitplate1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567647,
+      "path": "sound/item/weapons/axe2h/m2haxehitplatecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567660,
+      "path": "sound/item/weapons/axe2h/m2haxehitstone1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567666,
+      "path": "sound/item/weapons/axe2h/m2haxehitstone1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567654,
+      "path": "sound/item/weapons/axe2h/m2haxehitstone1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567658,
+      "path": "sound/item/weapons/axe2h/m2haxehitstone1crita.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567646,
+      "path": "sound/item/weapons/axe2h/m2haxehitwood1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567657,
+      "path": "sound/item/weapons/axe2h/m2haxehitwood1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567650,
+      "path": "sound/item/weapons/axe2h/m2haxehitwood1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567662,
+      "path": "sound/item/weapons/axe2h/m2haxehitwood1crita.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567705,
+      "path": "sound/item/weapons/dagger/1hdaggerhitchaina.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567691,
+      "path": "sound/item/weapons/dagger/1hdaggerhitchainb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567688,
+      "path": "sound/item/weapons/dagger/1hdaggerhitchainc.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567706,
+      "path": "sound/item/weapons/dagger/1hdaggerhitchaincriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567711,
+      "path": "sound/item/weapons/dagger/1hdaggerhitflesha.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567710,
+      "path": "sound/item/weapons/dagger/1hdaggerhitfleshb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567704,
+      "path": "sound/item/weapons/dagger/1hdaggerhitfleshc.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567702,
+      "path": "sound/item/weapons/dagger/1hdaggerhitfleshcriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567690,
+      "path": "sound/item/weapons/dagger/1hdaggerhitmetalshielda.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567707,
+      "path": "sound/item/weapons/dagger/1hdaggerhitmetalshieldb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567692,
+      "path": "sound/item/weapons/dagger/1hdaggerhitmetalshieldc.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567696,
+      "path": "sound/item/weapons/dagger/1hdaggerhitmetalshieldcriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567687,
+      "path": "sound/item/weapons/dagger/1hdaggerhitplatea.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567698,
+      "path": "sound/item/weapons/dagger/1hdaggerhitplateb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567699,
+      "path": "sound/item/weapons/dagger/1hdaggerhitplatec.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567694,
+      "path": "sound/item/weapons/dagger/1hdaggerhitplatecriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567685,
+      "path": "sound/item/weapons/dagger/1hdaggerhitstonea.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567701,
+      "path": "sound/item/weapons/dagger/1hdaggerhitstoneb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567684,
+      "path": "sound/item/weapons/dagger/1hdaggerhitstonec.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567693,
+      "path": "sound/item/weapons/dagger/1hdaggerhitstonecriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567708,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwooda.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567686,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567700,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodc.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567689,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodcriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567695,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodshielda.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567709,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodshieldb.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567703,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodshieldc.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567697,
+      "path": "sound/item/weapons/dagger/1hdaggerhitwoodshieldcriticala.ogg",
+      "weapon": "dagger"
+    },
+    {
+      "file_data_id": 567748,
+      "path": "sound/item/weapons/mace1h/1hmacehitchain1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567729,
+      "path": "sound/item/weapons/mace1h/1hmacehitchain1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567743,
+      "path": "sound/item/weapons/mace1h/1hmacehitchain1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567739,
+      "path": "sound/item/weapons/mace1h/1hmacehitchaincrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567750,
+      "path": "sound/item/weapons/mace1h/1hmacehitflesh1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567741,
+      "path": "sound/item/weapons/mace1h/1hmacehitflesh1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567738,
+      "path": "sound/item/weapons/mace1h/1hmacehitflesh1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567724,
+      "path": "sound/item/weapons/mace1h/1hmacehitfleshcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567737,
+      "path": "sound/item/weapons/mace1h/1hmacehitmetalshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567727,
+      "path": "sound/item/weapons/mace1h/1hmacehitmetalshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567744,
+      "path": "sound/item/weapons/mace1h/1hmacehitmetalshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567751,
+      "path": "sound/item/weapons/mace1h/1hmacehitmetalshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567725,
+      "path": "sound/item/weapons/mace1h/1hmacehitplate1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567734,
+      "path": "sound/item/weapons/mace1h/1hmacehitplate1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567735,
+      "path": "sound/item/weapons/mace1h/1hmacehitplate1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567749,
+      "path": "sound/item/weapons/mace1h/1hmacehitplatecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567736,
+      "path": "sound/item/weapons/mace1h/1hmacehitstone1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567726,
+      "path": "sound/item/weapons/mace1h/1hmacehitstone1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567730,
+      "path": "sound/item/weapons/mace1h/1hmacehitstone1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567745,
+      "path": "sound/item/weapons/mace1h/1hmacehitstonecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567731,
+      "path": "sound/item/weapons/mace1h/1hmacehitwood1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567742,
+      "path": "sound/item/weapons/mace1h/1hmacehitwood1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567740,
+      "path": "sound/item/weapons/mace1h/1hmacehitwood1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567746,
+      "path": "sound/item/weapons/mace1h/1hmacehitwoodcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567733,
+      "path": "sound/item/weapons/mace1h/1hmacehitwoodshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567747,
+      "path": "sound/item/weapons/mace1h/1hmacehitwoodshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567728,
+      "path": "sound/item/weapons/mace1h/1hmacehitwoodshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567732,
+      "path": "sound/item/weapons/mace1h/1hmacehitwoodshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567761,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitchain1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567758,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitchain1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567768,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitchain1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567763,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitchaincrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567776,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitflesh1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567753,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitflesh1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567760,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitflesh1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567778,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitfleshcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567769,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitmetalshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567767,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitmetalshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567771,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitmetalshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567777,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitmetalshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567755,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitplate1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567754,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitplate1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567779,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitplate1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567757,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitplatecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567765,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitstone1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567759,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitstone1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567774,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitstone1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567770,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitstonecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567773,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwood1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567764,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwood1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567772,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwood1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567766,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwoodcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567756,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwoodshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567752,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwoodshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567775,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwoodshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567762,
+      "path": "sound/item/weapons/mace1hmetal/1hmacemetalhitwoodshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567780,
+      "path": "sound/item/weapons/mace2h/2hmacehitchain1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567793,
+      "path": "sound/item/weapons/mace2h/2hmacehitchain1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567807,
+      "path": "sound/item/weapons/mace2h/2hmacehitchain1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567802,
+      "path": "sound/item/weapons/mace2h/2hmacehitchaincrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567788,
+      "path": "sound/item/weapons/mace2h/2hmacehitflesh1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567803,
+      "path": "sound/item/weapons/mace2h/2hmacehitflesh1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567801,
+      "path": "sound/item/weapons/mace2h/2hmacehitflesh1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567787,
+      "path": "sound/item/weapons/mace2h/2hmacehitfleshcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567781,
+      "path": "sound/item/weapons/mace2h/2hmacehitmetalshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567790,
+      "path": "sound/item/weapons/mace2h/2hmacehitmetalshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567784,
+      "path": "sound/item/weapons/mace2h/2hmacehitmetalshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567792,
+      "path": "sound/item/weapons/mace2h/2hmacehitmetalshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567799,
+      "path": "sound/item/weapons/mace2h/2hmacehitplate1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567805,
+      "path": "sound/item/weapons/mace2h/2hmacehitplate1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567785,
+      "path": "sound/item/weapons/mace2h/2hmacehitplate1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567796,
+      "path": "sound/item/weapons/mace2h/2hmacehitplatecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567804,
+      "path": "sound/item/weapons/mace2h/2hmacehitstone1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567794,
+      "path": "sound/item/weapons/mace2h/2hmacehitstone1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567797,
+      "path": "sound/item/weapons/mace2h/2hmacehitstone1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567789,
+      "path": "sound/item/weapons/mace2h/2hmacehitstonecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567791,
+      "path": "sound/item/weapons/mace2h/2hmacehitwood1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567800,
+      "path": "sound/item/weapons/mace2h/2hmacehitwood1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567786,
+      "path": "sound/item/weapons/mace2h/2hmacehitwood1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567806,
+      "path": "sound/item/weapons/mace2h/2hmacehitwoodcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567795,
+      "path": "sound/item/weapons/mace2h/2hmacehitwoodshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567783,
+      "path": "sound/item/weapons/mace2h/2hmacehitwoodshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567798,
+      "path": "sound/item/weapons/mace2h/2hmacehitwoodshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567782,
+      "path": "sound/item/weapons/mace2h/2hmacehitwoodshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567811,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitchain1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567826,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitchain1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567810,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitchain1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567833,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitflesh1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567831,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitflesh1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567808,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitflesh1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567814,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitfleshcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567820,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitmetalshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567817,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitmetalshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567830,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitmetalshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567821,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitmetalshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567824,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitplate1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567832,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitplate1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567825,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitplate1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567827,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitplatecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567822,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitstone1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567823,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitstone1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567812,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitstone1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567809,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitstonecrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567834,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwood1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567816,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwood1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567819,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwood1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567829,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwoodcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567813,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwoodshield1a.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567828,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwoodshield1b.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567815,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwoodshield1c.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567818,
+      "path": "sound/item/weapons/mace2hmetal/2hmacemetalhitwoodshieldcrit.ogg",
+      "weapon": "blunt"
+    },
+    {
+      "file_data_id": 567835,
+      "path": "sound/item/weapons/missswings/misswhoosh1handed.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567836,
+      "path": "sound/item/weapons/missswings/misswhoosh2handed.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567838,
+      "path": "sound/item/weapons/parry/parrymetalhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567837,
+      "path": "sound/item/weapons/parry/parrymetalhitmetalcrit.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567841,
+      "path": "sound/item/weapons/parry/parrywoodhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567839,
+      "path": "sound/item/weapons/parry/parrywoodhitmetalcrit.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567842,
+      "path": "sound/item/weapons/parry/parrywoodhitwood.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567840,
+      "path": "sound/item/weapons/parry/parrywoodhitwoodcrit.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567843,
+      "path": "sound/item/weapons/parrysounds/1hparrymetalhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567850,
+      "path": "sound/item/weapons/parrysounds/1hparrymetalhitmetalcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567848,
+      "path": "sound/item/weapons/parrysounds/1hparrymetalhitwood.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567845,
+      "path": "sound/item/weapons/parrysounds/1hparrymetalhitwoodcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567856,
+      "path": "sound/item/weapons/parrysounds/1hparrywoodhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567857,
+      "path": "sound/item/weapons/parrysounds/1hparrywoodhitmetalcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567854,
+      "path": "sound/item/weapons/parrysounds/1hparrywoodhitwood.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567851,
+      "path": "sound/item/weapons/parrysounds/1hparrywoodhitwoodcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567849,
+      "path": "sound/item/weapons/parrysounds/2hparrymetalhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567853,
+      "path": "sound/item/weapons/parrysounds/2hparrymetalhitmetalcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567847,
+      "path": "sound/item/weapons/parrysounds/2hparrymetalhitwood.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567844,
+      "path": "sound/item/weapons/parrysounds/2hparrymetalhitwoodcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567855,
+      "path": "sound/item/weapons/parrysounds/2hparrywoodhitmetal.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567846,
+      "path": "sound/item/weapons/parrysounds/2hparrywoodhitmetalcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567858,
+      "path": "sound/item/weapons/parrysounds/2hparrywoodhitwood.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567852,
+      "path": "sound/item/weapons/parrysounds/2hparrywoodhitwoodcritical.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567863,
+      "path": "sound/item/weapons/shields/metalshieldblock1.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567864,
+      "path": "sound/item/weapons/shields/metalshieldblock2.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567860,
+      "path": "sound/item/weapons/shields/metalshieldblock3.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567859,
+      "path": "sound/item/weapons/shields/woodenshieldblock1.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567861,
+      "path": "sound/item/weapons/shields/woodenshieldblock2.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567862,
+      "path": "sound/item/weapons/shields/woodenshieldblock3.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567866,
+      "path": "sound/item/weapons/sword1h/m1hswordhitchain1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567871,
+      "path": "sound/item/weapons/sword1h/m1hswordhitchain1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567868,
+      "path": "sound/item/weapons/sword1h/m1hswordhitchain1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567890,
+      "path": "sound/item/weapons/sword1h/m1hswordhitchaincrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567880,
+      "path": "sound/item/weapons/sword1h/m1hswordhitflesh1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567881,
+      "path": "sound/item/weapons/sword1h/m1hswordhitflesh1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567883,
+      "path": "sound/item/weapons/sword1h/m1hswordhitflesh1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567878,
+      "path": "sound/item/weapons/sword1h/m1hswordhitfleshcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567865,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalshield1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567877,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalshield1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567873,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalshield1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567879,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalshieldcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567885,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalweapon1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567886,
+      "path": "sound/item/weapons/sword1h/m1hswordhitmetalweaponcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567867,
+      "path": "sound/item/weapons/sword1h/m1hswordhitplate1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567887,
+      "path": "sound/item/weapons/sword1h/m1hswordhitplate1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567882,
+      "path": "sound/item/weapons/sword1h/m1hswordhitplate1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567869,
+      "path": "sound/item/weapons/sword1h/m1hswordhitplatecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567888,
+      "path": "sound/item/weapons/sword1h/m1hswordhitstone1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567876,
+      "path": "sound/item/weapons/sword1h/m1hswordhitstone1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567889,
+      "path": "sound/item/weapons/sword1h/m1hswordhitstone1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567874,
+      "path": "sound/item/weapons/sword1h/m1hswordhitstonecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567884,
+      "path": "sound/item/weapons/sword1h/m1hswordhitwood1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567875,
+      "path": "sound/item/weapons/sword1h/m1hswordhitwood1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567870,
+      "path": "sound/item/weapons/sword1h/m1hswordhitwood1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567872,
+      "path": "sound/item/weapons/sword1h/m1hswordhitwoodcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567898,
+      "path": "sound/item/weapons/sword2h/m2hswordhitchain1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567913,
+      "path": "sound/item/weapons/sword2h/m2hswordhitchain1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567906,
+      "path": "sound/item/weapons/sword2h/m2hswordhitchain1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567910,
+      "path": "sound/item/weapons/sword2h/m2hswordhitchaincrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567899,
+      "path": "sound/item/weapons/sword2h/m2hswordhitflesh1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567909,
+      "path": "sound/item/weapons/sword2h/m2hswordhitflesh1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567915,
+      "path": "sound/item/weapons/sword2h/m2hswordhitflesh1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567894,
+      "path": "sound/item/weapons/sword2h/m2hswordhitfleshcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567907,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalshield1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567897,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalshield1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567902,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalshield1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567912,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalshieldcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567895,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalweapon1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567911,
+      "path": "sound/item/weapons/sword2h/m2hswordhitmetalweaponcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567916,
+      "path": "sound/item/weapons/sword2h/m2hswordhitplate1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567891,
+      "path": "sound/item/weapons/sword2h/m2hswordhitplate1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567896,
+      "path": "sound/item/weapons/sword2h/m2hswordhitplate1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567914,
+      "path": "sound/item/weapons/sword2h/m2hswordhitplatecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567908,
+      "path": "sound/item/weapons/sword2h/m2hswordhitstone1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567893,
+      "path": "sound/item/weapons/sword2h/m2hswordhitstone1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567892,
+      "path": "sound/item/weapons/sword2h/m2hswordhitstone1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567904,
+      "path": "sound/item/weapons/sword2h/m2hswordhitstonecrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567900,
+      "path": "sound/item/weapons/sword2h/m2hswordhitwood1a.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567901,
+      "path": "sound/item/weapons/sword2h/m2hswordhitwood1b.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567905,
+      "path": "sound/item/weapons/sword2h/m2hswordhitwood1c.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567903,
+      "path": "sound/item/weapons/sword2h/m2hswordhitwoodcrit.ogg",
+      "weapon": "blade"
+    },
+    {
+      "file_data_id": 567920,
+      "path": "sound/item/weapons/unarmed/unarmedattacklargea.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567930,
+      "path": "sound/item/weapons/unarmed/unarmedattacklargeb.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567918,
+      "path": "sound/item/weapons/unarmed/unarmedattacklargec.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567925,
+      "path": "sound/item/weapons/unarmed/unarmedattacklargecrit.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567927,
+      "path": "sound/item/weapons/unarmed/unarmedattackmediuma.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567922,
+      "path": "sound/item/weapons/unarmed/unarmedattackmediumb.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567921,
+      "path": "sound/item/weapons/unarmed/unarmedattackmediumc.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567926,
+      "path": "sound/item/weapons/unarmed/unarmedattackmediumcrit.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567919,
+      "path": "sound/item/weapons/unarmed/unarmedattacksmalla.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567928,
+      "path": "sound/item/weapons/unarmed/unarmedattacksmallb.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567924,
+      "path": "sound/item/weapons/unarmed/unarmedattacksmallc.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567932,
+      "path": "sound/item/weapons/unarmed/unarmedattacksmallcrit.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567931,
+      "path": "sound/item/weapons/unarmed/unarmedhitmetalshielda.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567923,
+      "path": "sound/item/weapons/unarmed/unarmedhitwoodshielda.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567917,
+      "path": "sound/item/weapons/unarmed/unarmedparrymetala.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567929,
+      "path": "sound/item/weapons/unarmed/unarmedparrywooda.ogg",
+      "weapon": "fist"
+    },
+    {
+      "file_data_id": 567936,
+      "path": "sound/item/weapons/weaponswings/mwooshlarge1.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567943,
+      "path": "sound/item/weapons/weaponswings/mwooshlarge2.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567941,
+      "path": "sound/item/weapons/weaponswings/mwooshlarge3.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567940,
+      "path": "sound/item/weapons/weaponswings/mwooshlargecrit.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567938,
+      "path": "sound/item/weapons/weaponswings/mwooshmedium1.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567935,
+      "path": "sound/item/weapons/weaponswings/mwooshmedium2.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567939,
+      "path": "sound/item/weapons/weaponswings/mwooshmedium3.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567944,
+      "path": "sound/item/weapons/weaponswings/mwooshmediumcrit.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567937,
+      "path": "sound/item/weapons/weaponswings/mwooshsmall1.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567934,
+      "path": "sound/item/weapons/weaponswings/mwooshsmall2.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567942,
+      "path": "sound/item/weapons/weaponswings/mwooshsmall3.ogg",
+      "weapon": "shared"
+    },
+    {
+      "file_data_id": 567933,
+      "path": "sound/item/weapons/weaponswings/mwooshsmallcrit.ogg",
+      "weapon": "shared"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ local defaults = {
     cast = true,
     channel = "SFX",
     soundPack = "magic",
+    meleeInterval = 0.25,
     minimapAngle = 145,
     minimapHidden = false,
 }
@@ -40,6 +41,7 @@ local warmedOriginalSounds = {}
 local previous = {}
 local playerGUID
 local activeSounds = {}
+local lastMeleePlayed = {}
 local seenCasts = {}
 local currentPlayerCast
 local playbackFailed = false
@@ -50,8 +52,12 @@ addon.stats = { hit = 0, crit = 0, resist = 0, miss = 0, absorb = 0, graze = 0, 
 function addon.GetBank(school, weapon)
     local pack = addon.soundPacks[addon.db.soundPack] or addon.soundPacks.magic
     if pack.weapons then
-        weapon = weapon or (pack.mageOnly and "frostbolt") or addon.ResolveWeapon(UnitGUID("player")) or "wand"
-        if pack.mageOnly and not addon.mageSpells[weapon] then return addon.voiceShared, pack, weapon end
+        if not weapon then
+            if pack.mageOnly then weapon = "frostbolt"
+            elseif pack.meleeOnly then weapon = addon.ResolveMeleeWeapon(UnitGUID("player")) or "blade"
+            else weapon = addon.ResolveWeapon(UnitGUID("player")) or "wand" end
+        end
+        if (pack.mageOnly and not addon.mageSpells[weapon]) or (pack.meleeOnly and not addon.meleeLabels[weapon]) then return addon.voiceShared, pack, weapon end
         -- Auto Shot cannot identify an unseen hunter's weapon. If both native
         -- weapon banks are muted, use spoken wand takes as a neutral reserve
         -- without caching a guessed bow/gun identification.
@@ -83,6 +89,7 @@ local function StopSoundForSource(source)
 end
 
 local function StopAllSounds()
+    wipe(lastMeleePlayed)
     for source in pairs(activeSounds) do
         StopSoundForSource(source)
     end
@@ -99,6 +106,7 @@ local function ReleaseOriginals()
     addon.frostboltOriginalsMuted = false
     addon.bowOriginalsMuted = false
     addon.gunOriginalsMuted = false
+    addon.meleeOriginalsMuted = false
     addon.mageOriginalsMuted = {}
 end
 
@@ -127,8 +135,8 @@ end
 function addon.IsSpokenOnly()
     local db = addon.db
     local pack = db and addon.soundPacks[db.soundPack]
-    return not not (pack and pack.weapons and not pack.mageOnly and db.muteOriginal and db.allSources and db.cast
-        and db.hit and db.crit and db.resist and db.miss and db.absorb)
+    return not not (pack and pack.weapons and not pack.mageOnly and not pack.meleeOnly and db.muteOriginal and db.allSources and db.cast
+        and db.hit and db.crit and db.resist and db.miss and db.absorb and db.graze)
 end
 
 function addon.UpdateOriginalMuting()
@@ -138,10 +146,10 @@ function addon.UpdateOriginalMuting()
         and db.allSources and db.hit and db.crit and db.resist and db.miss and db.absorb
         and not playbackFailed
         and type(MuteSoundFile) == "function" and type(UnmuteSoundFile) == "function"
-    local wandMute = canMute and not pack.mageOnly and (pack.weapon == "wand" or pack.weapons)
-    local frostMute = canMute and CompleteVoiceBank(pack, "frostbolt", db)
-    local bowMute = canMute and not pack.mageOnly and CompleteVoiceBank(pack, "bow", db)
-    local gunMute = canMute and not pack.mageOnly and CompleteVoiceBank(pack, "gun", db)
+    local wandMute = canMute and not pack.mageOnly and not pack.meleeOnly and (pack.weapon == "wand" or pack.weapons)
+    local frostMute = canMute and not pack.meleeOnly and CompleteVoiceBank(pack, "frostbolt", db)
+    local bowMute = canMute and not pack.mageOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "bow", db)
+    local gunMute = canMute and not pack.mageOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "gun", db)
     -- Unknown foreign Auto Shots need a normal/crit reserve when both types
     -- are silent. Do not mute them if that reserve is incomplete.
     if pack and pack.weapons and not pack.mageOnly and not CompleteVoiceBank(pack, "wand", db) then
@@ -151,10 +159,18 @@ function addon.UpdateOriginalMuting()
     addon.frostboltOriginalsMuted = not not frostMute
     addon.bowOriginalsMuted = not not bowMute
     addon.gunOriginalsMuted = not not gunMute
+    -- Native swings and parries are shared across weapon types. Mute them
+    -- only when all four melee banks and glancing replacements are covered.
+    local meleeMute = canMute and pack.weapons and not pack.mageOnly and db.graze
+    for _, key in ipairs(addon.meleeOrder) do
+        if not CompleteVoiceBank(pack, key, db) then meleeMute = false end
+    end
+    addon.meleeOriginalsMuted = not not meleeMute
     local wanted = {}
+    if meleeMute then for _, id in ipairs(addon.meleeOriginalIDs) do wanted[id] = true end end
     addon.mageOriginalsMuted = {}
     for key, spell in pairs(addon.mageSpells) do
-        local covered = canMute and (pack.weapons or pack.weapon == key)
+        local covered = canMute and not pack.meleeOnly and (pack.weapons or pack.weapon == key)
         local bank = covered and (pack.weapons and pack.weapons[key] or pack.categories)
         if covered and key ~= "frostbolt" then
             covered = db.cast and bank and bank.cast and #bank.cast > 0
@@ -179,7 +195,7 @@ function addon.UpdateOriginalMuting()
             mutedByUs[id] = nil
         end
     end
-    local warmGroups = { frostboltOriginalIDs, bowOriginalIDs, gunOriginalIDs }
+    local warmGroups = { frostboltOriginalIDs, bowOriginalIDs, gunOriginalIDs, addon.meleeOriginalIDs }
     for _, spell in pairs(addon.mageSpells) do warmGroups[#warmGroups + 1] = spell.originalIDs end
     local warmedThisUpdate = {}
     for _, group in ipairs(warmGroups) do
@@ -228,6 +244,8 @@ function addon.SetOption(key, value)
         if value ~= "SFX" and value ~= "Master" then
             return false
         end
+    elseif key == "meleeInterval" then
+        if type(value) ~= "number" or value ~= value or value < 0 or value > 2 then return false end
     elseif key == "minimapAngle" then
         if type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge then return false end
         value = value % 360
@@ -253,7 +271,7 @@ function addon.SetOption(key, value)
     return true
 end
 
-function addon.PlayCategory(category, preview, sourceGUID, school, weapon)
+function addon.PlayCategory(category, preview, sourceGUID, school, weapon, melee)
     local db = addon.db
     if not db then return false end
     school = school or (preview and addon.PreviewSchool()) or "neutral"
@@ -278,6 +296,22 @@ function addon.PlayCategory(category, preview, sourceGUID, school, weapon)
     end
     if not preview and (not db.enabled or not db[category]) then
         return false
+    end
+    local now = GetTime()
+    for source, active in pairs(activeSounds) do
+        if active.expires <= now then activeSounds[source] = nil end
+    end
+    local source = preview and "preview" or sourceGUID or playerGUID or "player"
+    if not preview and category == "cast" then source = source .. ":cast" end
+    if not preview and melee then
+        source = source .. ":melee"
+        for key, time in pairs(lastMeleePlayed) do
+            if now - time > 30 then lastMeleePlayed[key] = nil end
+        end
+        if category == "hit" and lastMeleePlayed[source] and now - lastMeleePlayed[source] < db.meleeInterval then return false end
+        local active = activeSounds[source]
+        local priority = category == "crit" and 3 or category == "hit" and 1 or 2
+        if active and (active.priority > priority or (priority > 1 and active.priority == priority)) then return false end
     end
     local count = #pool
     local common = category == "miss" or category == "graze" or category == "resist" or category == "absorb"
@@ -307,16 +341,7 @@ function addon.PlayCategory(category, preview, sourceGUID, school, weapon)
     else
         index = math.random(count)
     end
-    local now = GetTime()
-    for source, active in pairs(activeSounds) do
-        if active.expires <= now then
-            activeSounds[source] = nil
-        end
-    end
-    local source = preview and "preview" or sourceGUID or playerGUID or "player"
-    if not preview and category == "cast" then source = source .. ":cast" end
-    -- A new shot replaces only the same shooter's previous tail. Different
-    -- shooters can overlap without cutting each other's sounds off.
+    -- Each caster has independent playback; melee reactions survive normal hits.
     StopSoundForSource(source)
     local played, handle = PlaySoundFile(
         "Interface\\AddOns\\" .. addonName .. "\\Sounds\\" .. pool[index], db.channel, false)
@@ -331,8 +356,10 @@ function addon.PlayCategory(category, preview, sourceGUID, school, weapon)
         return false
     end
     previous[key] = index
+    if melee and not preview then lastMeleePlayed[source] = now end
     if handle then
-        activeSounds[source] = { handle = handle, expires = now + addon.soundDurations[pool[index]] }
+        activeSounds[source] = { handle = handle, expires = now + addon.soundDurations[pool[index]],
+            priority = category == "crit" and 3 or category == "hit" and 1 or 2 }
     end
     if playbackFailed then
         playbackFailed = false
@@ -353,7 +380,7 @@ function addon.PlayMageCast(sourceGUID, castGUID, spellID)
         or not sourceGUID or not sourceGUID:match("^Player%-")
         or (not db.allSources and sourceGUID ~= playerGUID) then return end
     local pack = addon.soundPacks[db.soundPack]
-    if not pack.weapons and pack.weapon ~= spellKey then return end
+    if pack.meleeOnly or (not pack.weapons and pack.weapon ~= spellKey) then return end
     local now = GetTime()
     for id, time in pairs(seenCasts) do
         if now - time > 30 then seenCasts[id] = nil end
@@ -376,6 +403,7 @@ local function HandleCombatLog()
     if not sourceGUID or (not addon.db.allSources and sourceGUID ~= playerGUID) then
         return
     end
+    if addon.HandleMeleeCombatLog(event, sourceGUID, select(12, CombatLogGetCurrentEventInfo())) then return end
     if addon.HandleMageCombatLog(event, sourceGUID, spellID, spellName, arg15, resisted, blocked, critical) then return end
     local isFrostbolt = frostboltRanks[spellID] and sourceGUID:match("^Player%-")
     if not isFrostbolt and spellID ~= 5019 and spellID ~= 75 and spellID ~= 2480 and spellID ~= 7918 and spellID ~= 7919 then return end
@@ -383,7 +411,7 @@ local function HandleCombatLog()
     if isFrostbolt and event ~= "SPELL_DAMAGE" and event ~= "SPELL_MISSED" then return end
     local weapon = isFrostbolt and "frostbolt" or addon.ResolveWeapon(sourceGUID, spellID)
     local pack = addon.soundPacks[addon.db.soundPack]
-    if pack.mageOnly and not addon.mageSpells[weapon] then return end
+    if pack.meleeOnly or (pack.mageOnly and not addon.mageSpells[weapon]) then return end
     if not pack.weapons and pack.weapon ~= weapon
         and not (weapon == "ranged" and (pack.weapon == "bow" or pack.weapon == "gun")) then return end
     -- Classic 1.15.9 reports Shoot as RANGE_DAMAGE / RANGE_MISSED. The spell
@@ -418,7 +446,8 @@ local function Initialize()
         if (key == "channel" and value ~= "SFX" and value ~= "Master")
             or (key == "soundPack" and (type(value) ~= "string" or not addon.soundPacks[value]))
             or (key == "minimapAngle" and (type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge))
-            or (key ~= "channel" and key ~= "soundPack" and key ~= "minimapAngle" and type(value) ~= "boolean") then
+            or (key == "meleeInterval" and (type(value) ~= "number" or value ~= value or value < 0 or value > 2))
+            or (key ~= "channel" and key ~= "soundPack" and key ~= "minimapAngle" and key ~= "meleeInterval" and type(value) ~= "boolean") then
             GabbaSoundsDB[key] = default
         end
     end
@@ -456,6 +485,8 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         playerGUID = UnitGUID("player")
         addon.ResetSchools()
         addon.ResetWeapons()
+        addon.ResetMeleeWeapons()
+        StopAllSounds()
         wipe(seenCasts)
         addon.ResetMageResults()
         currentPlayerCast = nil
@@ -475,12 +506,14 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         and castGUID == currentPlayerCast and addon.mageSpellByID[spellID] then
         StopSoundForSource(playerGUID .. ":cast")
         currentPlayerCast = nil
-    elseif event == "PLAYER_EQUIPMENT_CHANGED" and loadedName == 18 then
+    elseif event == "PLAYER_EQUIPMENT_CHANGED" and (loadedName == 16 or loadedName == 17 or loadedName == 18) then
+        addon.ResetMeleeWeapons("player")
         addon.ResetSchools("player")
         addon.ResetWeapons("player")
     elseif event == "UNIT_INVENTORY_CHANGED" and type(loadedName) == "string" then
         addon.ResetSchools(loadedName)
         addon.ResetWeapons(loadedName)
+        addon.ResetMeleeWeapons(loadedName)
     elseif event == "PLAYER_LOGOUT" then
         addon.ResetMageResults()
         StopAllSounds()
@@ -504,7 +537,8 @@ SlashCmdList.GABBASOUNDS = function(message)
         addon.Print(command == "on" and "Aktiviert." or "Deaktiviert; Original-Stummschaltung aufgehoben.")
     elseif command == "pack" then
         local aliases = { magie = "magic", custom = "spoken", eigene = "spoken", wand = "spoken_wand", bow = "spoken_bow", gun = "spoken_gun", pfeile = "spoken_bow", gewehr = "spoken_gun", frostbolt = "spoken_frostbolt", frostblitz = "spoken_frostbolt", mage = "spoken_mage", magier = "spoken_mage" }
-        local selected = aliases[argument] or (addon.mageSpells[argument] and "spoken_" .. argument) or argument
+        aliases.melee, aliases.nahkampf = "spoken_melee", "spoken_melee"
+        local selected = aliases[argument] or ((addon.mageSpells[argument] or addon.meleeLabels[argument]) and "spoken_" .. argument) or argument
         if addon.SetOption("soundPack", selected) then
             addon.Print("Soundpaket: " .. addon.soundPacks[selected].label)
         else
@@ -513,14 +547,15 @@ SlashCmdList.GABBASOUNDS = function(message)
     elseif command == "test" then
         local category, school = argument:match("^(%S+)%s*(%S*)$")
         local previewSpell = addon.mageSpells[school] and school
+        local previewMelee = addon.meleeLabels[school] and school
         local aliases = { schatten = "shadow", feuer = "fire", frost = "frost", kaelte = "frost", arkan = "arcane", natur = "nature", heilig = "holy" }
         school = aliases[school] or school
         if school == "" then school = nil end
-        if (not addon.sounds[category] and category ~= "graze" and category ~= "cast") or (school and not previewSpell and not addon.schoolSounds[school]) then
+        if (not addon.sounds[category] and category ~= "graze" and category ~= "cast") or (school and not previewSpell and not previewMelee and not addon.schoolSounds[school]) then
             addon.Print("Hörprobe: /gws test hit|crit|resist|miss|absorb|graze|cast [Schadensart oder Zauber, z.B. fireball]")
         else
-            addon.PlayCategory(category, true, nil, previewSpell and addon.mageSpells[previewSpell].school or school,
-                previewSpell or category == "cast" and "frostbolt" or nil)
+            addon.PlayCategory(category, true, nil, previewSpell and addon.mageSpells[previewSpell].school or previewMelee and "neutral" or school,
+                previewMelee or previewSpell or category == "cast" and "frostbolt" or nil)
         end
     elseif command == "spokenonly" or command == "mute" or command == "all" or command == "hit" or command == "crit" or command == "resist" or command == "miss" or command == "absorb" or command == "graze" or command == "cast" then
         if argument ~= "on" and argument ~= "off" then
@@ -529,6 +564,10 @@ SlashCmdList.GABBASOUNDS = function(message)
             addon.SetOption(command == "spokenonly" and "spokenOnly" or command == "mute" and "muteOriginal" or command == "all" and "allSources" or command, argument == "on")
             addon.Print(command .. ": " .. argument)
         end
+    elseif command == "meleeinterval" then
+        if addon.SetOption("meleeInterval", tonumber(argument)) then
+            addon.Print("Nahkampf-Mindestpause: " .. addon.db.meleeInterval .. " Sekunden")
+        else addon.Print("/gws meleeinterval 0 bis 2 (Sekunden)") end
     elseif command == "minimap" then
         if argument == "on" or argument == "off" then
             addon.SetOption("minimapHidden", argument == "off")
@@ -550,6 +589,7 @@ SlashCmdList.GABBASOUNDS = function(message)
             .. "; Frostblitz-Originale: " .. (addon.frostboltOriginalsMuted and "stumm" or "hörbar")
             .. "; Bogen/Armbrust-Originale: " .. (addon.bowOriginalsMuted and "stumm" or "hörbar")
             .. "; Gewehr-Originale: " .. (addon.gunOriginalsMuted and "stumm" or "hörbar")
+            .. "; Nahkampf-Originale: " .. (addon.meleeOriginalsMuted and "stumm" or "hörbar")
             .. "; Magier-Stummschaltung: " .. mutedMage .. "/15 Zauber abgedeckt"
             .. "; Soundpaket: " .. addon.soundPacks[addon.db.soundPack].label
             .. "; Magier-Cast: " .. (addon.db.cast and "an" or "aus") .. " (" .. addon.stats.cast .. " abgespielt)"
