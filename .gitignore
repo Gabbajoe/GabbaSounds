@@ -1,0 +1,29 @@
+# Local recordings and editable cuts; published clips live in Sounds/.
+*.wav
+/spoken/clips/
+
+# Generated listening pages, comparisons and reference downloads.
+*.html
+/Hoerprobe.ogg
+/Sounds/spoken_*.ogg
+/references/
+/reference/
+/analysis/*
+!/analysis/frostbolt_original_sounds.json
+!/analysis/hunter_original_sounds.json
+!/analysis/mage_spells.json
+
+# Build outputs and developer caches.
+/dist/
+*.zip
+*.sha256
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+WoWCombatLog*.txt
+.DS_Store
+.idea/
+.vscode/

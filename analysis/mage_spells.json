@@ -1,0 +1,366 @@
+{
+  "sound_source_url": "https://www.curseforge.com/wow/addons/resonance/files/8899894",
+  "sound_source_sha256": "971c850d70cc7d7ebd089c79c5f477b813d59f3dd3542ebd40b272100cc3a129",
+  "sound_source_file": "Resonance_Data/data/SpellMuteData_Vanilla.lua",
+  "rank_source": "https://github.com/wowsims/classic/tree/master/sim/mage",
+  "additional_rank_sources": [
+    "https://classicdb.ch/?spell=10230",
+    "https://classicdb.ch/?spell=10161",
+    "https://classicdb.ch/?spell=28609",
+    "https://classicdb.ch/?spell=10187"
+  ],
+  "spells": [
+    {
+      "key": "frostbolt",
+      "label": "Frostblitz",
+      "school": "frost",
+      "castMode": "start",
+      "ranks": [
+        116,
+        205,
+        837,
+        7322,
+        8406,
+        8407,
+        8408,
+        10179,
+        10180,
+        10181,
+        25304
+      ],
+      "damage": true,
+      "aoe": false,
+      "canCrit": true,
+      "originalIDs": [
+        568119,
+        568128,
+        568493,
+        568542,
+        568843,
+        569145,
+        569304,
+        569765,
+        569781
+      ]
+    },
+    {
+      "key": "frostnova",
+      "label": "Frostnova",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        122,
+        865,
+        6131,
+        10230
+      ],
+      "damage": true,
+      "aoe": true,
+      "canCrit": true,
+      "originalIDs": [
+        568119,
+        568741,
+        569378
+      ]
+    },
+    {
+      "key": "blizzard",
+      "label": "Blizzard",
+      "school": "frost",
+      "castMode": "channel",
+      "ranks": [
+        10,
+        6141,
+        8427,
+        10185,
+        10186,
+        10187
+      ],
+      "damage": true,
+      "aoe": true,
+      "canCrit": false,
+      "originalIDs": [
+        568119,
+        568128,
+        568493,
+        568542,
+        568805,
+        568843,
+        569145,
+        569304,
+        569765
+      ]
+    },
+    {
+      "key": "coneofcold",
+      "label": "Kältekegel",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        120,
+        8492,
+        10159,
+        10160,
+        10161
+      ],
+      "damage": true,
+      "aoe": true,
+      "canCrit": true,
+      "originalIDs": [
+        568119,
+        568128,
+        568493,
+        568542,
+        568843,
+        568982,
+        569145,
+        569304
+      ]
+    },
+    {
+      "key": "icebarrier",
+      "label": "Eisbarriere",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        11426,
+        13031,
+        13032,
+        13033
+      ],
+      "damage": false,
+      "aoe": false,
+      "canCrit": false,
+      "originalIDs": [
+        569018,
+        569765
+      ]
+    },
+    {
+      "key": "iceblock",
+      "label": "Eisblock",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        11958
+      ],
+      "damage": false,
+      "aoe": false,
+      "canCrit": false,
+      "originalIDs": [
+        568119,
+        568316,
+        569765
+      ]
+    },
+    {
+      "key": "coldsnap",
+      "label": "Kälteeinbruch",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        12472
+      ],
+      "damage": false,
+      "aoe": false,
+      "canCrit": false,
+      "originalIDs": [
+        568083,
+        569765
+      ]
+    },
+    {
+      "key": "frostward",
+      "label": "Frostzauberschutz",
+      "school": "frost",
+      "castMode": "success",
+      "ranks": [
+        6143,
+        8461,
+        8462,
+        10177,
+        28609
+      ],
+      "damage": false,
+      "aoe": false,
+      "canCrit": false,
+      "originalIDs": [
+        568083,
+        568119,
+        569765
+      ]
+    },
+    {
+      "key": "fireball",
+      "label": "Feuerball",
+      "school": "fire",
+      "castMode": "start",
+      "ranks": [
+        133,
+        143,
+        145,
+        3140,
+        8400,
+        8401,
+        8402,
+        10148,
+        10149,
+        10150,
+        10151,
+        25306
+      ],
+      "damage": true,
+      "aoe": false,
+      "canCrit": true,
+      "originalIDs": [
+        568429,
+        568461,
+        569045,
+        569449,
+        569559,
+        569764,
+        569777
+      ]
+    },
+    {
+      "key": "fireblast",
+      "label": "Feuerschlag",
+      "school": "fire",
+      "castMode": "success",
+      "ranks": [
+        2136,
+        2137,
+        2138,
+        8412,
+        8413,
+        10197,
+        10199
+      ],
+      "damage": true,
+      "aoe": false,
+      "canCrit": true,
+      "originalIDs": [
+        568429,
+        568461,
+        569449,
+        569559,
+        569764
+      ]
+    },
+    {
+      "key": "scorch",
+      "label": "Versengen",
+      "school": "fire",
+      "castMode": "start",
+      "ranks": [
+        2948,
+        8444,
+        8445,
+        8446,
+        10205,
+        10206,
+        10207
+      ],
+      "damage": true,
+      "aoe": false,
+      "canCrit": true,
+      "originalIDs": [
+        568429,
+        568461,
+        569045,
+        569449,
+        569559,
+        569764
+      ]
+    },
+    {
+      "key": "pyroblast",
+      "label": "Pyroschlag",
+      "school": "fire",
+      "castMode": "start",
+      "ranks": [
+        11366,
+        12505,
+        12522,
+        12523,
+        12524,
+        12525,
+        12526,
+        18809
+      ],
+      "damage": true,
+      "aoe": false,
+      "canCrit": true,
+      "originalIDs": [
+        568429,
+        568461,
+        569045,
+        569449,
+        569559,
+        569764,
+        569777
+      ]
+    },
+    {
+      "key": "flamestrike",
+      "label": "Flammenstoß",
+      "school": "fire",
+      "castMode": "start",
+      "ranks": [
+        2120,
+        2121,
+        8422,
+        8423,
+        10215,
+        10216
+      ],
+      "damage": true,
+      "aoe": true,
+      "canCrit": true,
+      "originalIDs": [
+        568641,
+        569045,
+        569366,
+        569764
+      ]
+    },
+    {
+      "key": "blastwave",
+      "label": "Druckwelle",
+      "school": "fire",
+      "castMode": "success",
+      "ranks": [
+        11113,
+        13018,
+        13019,
+        13020,
+        13021
+      ],
+      "damage": true,
+      "aoe": true,
+      "canCrit": true,
+      "originalIDs": [
+        569045,
+        569062
+      ]
+    },
+    {
+      "key": "combustion",
+      "label": "Verbrennung",
+      "school": "fire",
+      "castMode": "success",
+      "ranks": [
+        11129
+      ],
+      "damage": false,
+      "aoe": false,
+      "canCrit": false,
+      "originalIDs": [
+        569045,
+        569262,
+        569764
+      ]
+    }
+  ],
+  "blizzard_damage": "Rank IDs plus localized Blizzard name from the client, because tick IDs can differ from cast IDs. Only player sources are eligible."
+}

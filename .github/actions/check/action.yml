@@ -1,0 +1,50 @@
+name: Check GabbaSounds
+description: Test Classic Lua behavior, validate all encoded sounds, and build the ZIP.
+inputs:
+  tag:
+    description: Optional release tag that must match the TOC version.
+    required: false
+outputs:
+  version:
+    description: Version from the addon TOC.
+    value: ${{ steps.package.outputs.version }}
+  archive:
+    description: Absolute path to the installable ZIP.
+    value: ${{ steps.package.outputs.archive }}
+  checksum:
+    description: Absolute path to its SHA256 file.
+    value: ${{ steps.package.outputs.checksum }}
+  notes:
+    description: Absolute path to the versioned release notes.
+    value: ${{ steps.package.outputs.notes }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      with:
+        python-version: '3.12'
+        cache: pip
+        cache-dependency-path: requirements-dev.txt
+    - name: Install test tools
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lua5.1 ffmpeg
+        python -m pip install -r requirements-dev.txt
+    - name: Tests
+      shell: bash
+      env:
+        GABBA_RUNTIME_ONLY: '1'
+      run: bash tests/run_tests.sh
+    - name: Validate shipped audio
+      shell: bash
+      run: python tools/validate_sounds.py --pack all --runtime-only
+    - name: Build installable package
+      id: package
+      shell: bash
+      env:
+        RELEASE_TAG: ${{ inputs.tag }}
+      run: |
+        args=(--output-dir dist --github-output "$GITHUB_OUTPUT")
+        if [[ -n "$RELEASE_TAG" ]]; then args+=(--tag "$RELEASE_TAG"); fi
+        python tools/build_package.py "${args[@]}"

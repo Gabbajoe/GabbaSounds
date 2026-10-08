@@ -1,0 +1,57 @@
+# CurseForge project setup
+
+Prepared for GabbaSounds 1.0.0. CurseForge project ID supplied by the author: **1733615**. No release has been uploaded by this workspace yet.
+
+Source repository: https://github.com/Gabbajoe/GabbaSounds
+
+## General
+
+| Field | Value |
+| --- | --- |
+| Game | World of Warcraft |
+| Project name | GabbaSounds |
+| Logo | `logo.png` in this directory (512 × 512 PNG, rendered from the original addon icon) |
+| Summary | Randomized German voice clips and magic sounds for wands, ranged weapons, and 15 mage spells in WoW Classic Era. |
+| Class | Addons |
+| Main category | Audio & Video |
+| Additional categories | Optional: Mage, Hunter, Priest, if offered by the form |
+| Allow Comments | Enabled, recommended for feedback |
+| Unlisted project | Disabled, for public discovery |
+| Social links | Source: https://github.com/Gabbajoe/GabbaSounds |
+
+The final public project URL should be recorded after CurseForge confirms the project slug and moderation status.
+
+## Description
+
+Paste `DESCRIPTION.md` using the Markdown editor. The page is in English; the included spoken recordings and current options interface are German.
+
+## License
+
+No license has been chosen for the source workspace. Choose the project's license deliberately on the License tab; an open-source license would grant reuse rights beyond downloading and playing the addon. Do not select MIT just because a sound-ID reference uses MIT: that is a separate project.
+
+If you want to keep the rights to your code and voice recordings, the proposed starting selection is **All Rights Reserved**, if offered. This is a suggestion, not a license already applied to the package. Decide this before uploading.
+
+## First file
+
+| Field | Value |
+| --- | --- |
+| Upload | `GabbaSounds-1.0.0.zip` in the workspace root |
+| Display name | GabbaSounds 1.0.0 |
+| Release type | Release |
+| Game flavor | Classic / Classic Era (the matching label offered by the form) |
+| Game version | 1.15.9 |
+| Changelog | Contents of `CHANGELOG-1.0.0.md` |
+| Dependencies | None |
+
+Do not select Retail, Burning Crusade, Wrath or other unverified clients. The package targets Interface 11509.
+
+The ZIP contains one top-level `GabbaSounds` directory with the TOC, runtime Lua, icon, documentation and 305 OGGs. It excludes microphone source WAVs, logs, saved variables, research data, development tools and these submission materials.
+
+Upload the ZIP to submit the release for moderation. Approval of both project and file is required for public availability. The TOC includes the confirmed numeric project ID. Future automated uploads are described in `docs/RELEASING.md`.
+
+## Official instructions
+
+- [Creating and submitting a project](https://support.curseforge.com/support/solutions/articles/9000197241)
+- [Project submission guide and tips](https://support.curseforge.com/support/solutions/articles/9000199552-project-submission-guide-and-tips)
+
+Prepared on 2026-10-08. Form labels and available client versions may change.

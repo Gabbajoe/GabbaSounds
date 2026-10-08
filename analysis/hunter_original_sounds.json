@@ -1,0 +1,129 @@
+{
+  "source": "Installed Leatrix Sounds Classic Era 1.15.157",
+  "source_url": "https://www.curseforge.com/wow/addons/leatrix-sounds",
+  "source_data_file": "Leatrix_Sounds_Effects.lua",
+  "source_data_sha256": "249eaf1d2dcbfef0b974749c8821576332d9cb063f5e8ba0b22914f3bf12a7fb",
+  "classic_release_cross_check": {
+    "source_url": "https://www.curseforge.com/wow/addons/resonance/files/8899894",
+    "source_archive_sha256": "971c850d70cc7d7ebd089c79c5f477b813d59f3dd3542ebd40b272100cc3a129",
+    "source_data_file": "Resonance/Core.lua",
+    "bow": [
+      567674,
+      567673,
+      567682
+    ],
+    "gun": [
+      567721,
+      567718,
+      567722
+    ]
+  },
+  "sounds": [
+    {
+      "file_data_id": 567672,
+      "path": "sound/item/weapons/bow/arrowhita.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567681,
+      "path": "sound/item/weapons/bow/arrowhitb.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567671,
+      "path": "sound/item/weapons/bow/arrowhitc.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567680,
+      "path": "sound/item/weapons/bow/bowarrowinflightloop.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567670,
+      "path": "sound/item/weapons/bow/bowprecastloop.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567677,
+      "path": "sound/item/weapons/bow/bowpullback.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567675,
+      "path": "sound/item/weapons/bow/bowpullback02.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567676,
+      "path": "sound/item/weapons/bow/bowpullback03.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567678,
+      "path": "sound/item/weapons/bow/bowpullback1.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567683,
+      "path": "sound/item/weapons/bow/bowpullback2.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567679,
+      "path": "sound/item/weapons/bow/bowpullback3.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567674,
+      "path": "sound/item/weapons/bow/bowrelease.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567673,
+      "path": "sound/item/weapons/bow/bowrelease02.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567682,
+      "path": "sound/item/weapons/bow/bowrelease03.ogg",
+      "weapon": "bow"
+    },
+    {
+      "file_data_id": 567721,
+      "path": "sound/item/weapons/gun/gunfire01.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567718,
+      "path": "sound/item/weapons/gun/gunfire02.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567722,
+      "path": "sound/item/weapons/gun/gunfire03.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567719,
+      "path": "sound/item/weapons/gun/gunload01.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567720,
+      "path": "sound/item/weapons/gun/gunload02.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567723,
+      "path": "sound/item/weapons/gun/gunload03.ogg",
+      "weapon": "gun"
+    },
+    {
+      "file_data_id": 567617,
+      "path": "sound/item/weapons/gunfire01.ogg",
+      "weapon": "gun"
+    }
+  ],
+  "scope": "MuteSoundFile is global per asset; shared NPC and special-shot uses may also lose native audio. Bow and crossbow share the Classic release sounds."
+}

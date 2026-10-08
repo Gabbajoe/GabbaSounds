@@ -1,0 +1,67 @@
+{
+  "source_url": "https://www.curseforge.com/wow/addons/resonance/files/8899894",
+  "source_archive_sha256": "971c850d70cc7d7ebd089c79c5f477b813d59f3dd3542ebd40b272100cc3a129",
+  "source_data_file": "Resonance_Data/data/SpellMuteData_Vanilla.lua",
+  "dataset_build": "wow_classic_era 1.15.8.66129, shipped for Interface 11509 in v1.13.1",
+  "ranks": [
+    116,
+    205,
+    837,
+    7322,
+    8406,
+    8407,
+    8408,
+    10179,
+    10180,
+    10181,
+    25304
+  ],
+  "sounds": [
+    {
+      "file_data_id": 568119,
+      "path": "sound/spells/precastfrostmagiclow.ogg",
+      "shared_by_spell_count": 224
+    },
+    {
+      "file_data_id": 568128,
+      "path": "sound/spells/blizzardimpact1f.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 568493,
+      "path": "sound/spells/blizzardimpact1c.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 568542,
+      "path": "sound/spells/blizzardimpact1a.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 568843,
+      "path": "sound/spells/blizzardimpact1b.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 569145,
+      "path": "sound/spells/blizzardimpact1e.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 569304,
+      "path": "sound/spells/blizzardimpact1d.ogg",
+      "shared_by_spell_count": 143
+    },
+    {
+      "file_data_id": 569765,
+      "path": "sound/spells/cast/icecast.ogg",
+      "shared_by_spell_count": 203
+    },
+    {
+      "file_data_id": 569781,
+      "path": "sound/spells/missile/icemissileloop.ogg",
+      "shared_by_spell_count": 193
+    }
+  ],
+  "note": "All nine sound files are reused by other spells. Persistent muting also affects Blizzard, Cone of Cold and cast sounds of other frost spells; no per-spell isolation is possible with MuteSoundFile."
+}
