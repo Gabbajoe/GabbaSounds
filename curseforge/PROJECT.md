@@ -1,8 +1,11 @@
 # CurseForge project setup
 
-Prepared for GabbaSounds 1.0.0. CurseForge project ID supplied by the author: **1733615**. No release has been uploaded by this workspace yet.
+Prepared for GabbaSounds 1.0.0. CurseForge project ID supplied by the author: **1733615**. The release pipeline successfully uploaded version 1.0.0 on 2026-10-08; CurseForge file ID: **9099386**. API acceptance does not confirm moderation approval.
 
 Source repository: https://github.com/Gabbajoe/GabbaSounds
+
+Published GitHub release: https://github.com/Gabbajoe/GabbaSounds/releases/tag/v1.0.0
+Verified release workflow: https://github.com/Gabbajoe/GabbaSounds/actions/runs/37798495297
 
 ## General
 
