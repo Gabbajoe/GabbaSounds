@@ -3,7 +3,7 @@
 [GitHub](https://github.com/Gabbajoe/GabbaSounds) ·
 [Releases und Downloads](https://github.com/Gabbajoe/GabbaSounds/releases) ·
 [Fehler melden](https://github.com/Gabbajoe/GabbaSounds/issues) ·
-[Build- und Release-Anleitung](docs/RELEASING.md)
+[Build- und Release-Anleitung](https://github.com/Gabbajoe/GabbaSounds/blob/main/docs/RELEASING.md)
 
 GitHub Actions prüft Änderungen und baut ZIPs. Versions-Tags veröffentlichen
 geprüfte Releases; der CurseForge-Upload verwendet Projekt **1733615** und
