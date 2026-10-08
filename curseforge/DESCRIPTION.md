@@ -92,4 +92,4 @@ This release targets **WoW Classic Era / Hardcore 1.15.9**, Interface **11509**.
 - **Zeldazar:** fire spell sounds, by special request.
 - **Gabbajoe:** addon and original voice recordings; inspired by a wand priest's endlessly repeating default whoosh.
 
-Sound identifiers were checked using Resonance and Leatrix Sounds catalogs; Classic mage rank identifiers were cross-checked with WoWSims Classic and spell database entries. No Blizzard audio or those projects' runtime code is bundled. Reference details are included in `THIRD_PARTY_NOTICES.md`.
+Sound identifiers were checked using Resonance and Leatrix Sounds catalogs; Classic mage rank identifiers were cross-checked with WoWSims Classic and spell database entries. No Blizzard audio or those projects' runtime code is bundled. Reference details are included in [Third-party notices](https://github.com/Gabbajoe/GabbaSounds/blob/main/THIRD_PARTY_NOTICES.md).
