@@ -43,6 +43,11 @@ If you want to keep the rights to your code and voice recordings, the proposed s
 
 ## Prepared next file (1.1.0)
 
+**Release hold requested by the author on 2026-10-08:** upload 1.1.0 to
+CurseForge only after the initial 1.0.0 addon release is approved. The Discord
+ZIP is ready; confirm moderation approval in the author dashboard before
+starting the next CurseForge upload or its automated release-tag workflow.
+
 | Field | Value |
 | --- | --- |
 | Upload | `GabbaSounds-1.1.0.zip` in the workspace root |

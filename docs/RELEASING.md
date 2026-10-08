@@ -33,6 +33,12 @@ Official API details: https://support.curseforge.com/support/solutions/articles/
 
 The prepared local version is **1.1.0**. Its Discord package and notes are ready; pushing `main` does not publish a release or upload to CurseForge. A release tag explicitly starts that publishing workflow.
 
+**Author instruction (2026-10-08): hold the CurseForge 1.1.0 release until the
+initial 1.0.0 addon release has been approved.** Check the author dashboard for
+approval before starting that upload. API upload acceptance is insufficient.
+Because the tag workflow uploads to CurseForge automatically when configured,
+do not push the `v1.1.0` release tag while this hold applies.
+
 ## Prepare the next version
 
 1. Update addon code and any sound mappings. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`.
