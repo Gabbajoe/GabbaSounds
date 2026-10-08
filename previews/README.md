@@ -16,3 +16,8 @@ Aufnahmen und bearbeitbare WAV-Schnitte bleiben unter `spoken/`; die WAVs sind
 lokal. Die Importer erzeugen dieselben Seiten nach einem neuen Audio-Import.
 Optionale Referenzvergleiche landen unter `reference/`, historische Einzelimporte
 unter `legacy/`. Diese enthalten ggf. eingebettete Audiodaten und bleiben lokal.
+
+Bereits vorhandene ältere Hörproben liegen gesammelt unter `archive/`, darunter
+`Anhoeren-v0.4.html` und `Anhoeren-v0.5.html`. Sie wurden unverändert aus dem
+Addon-Hauptordner verschoben. Das Archiv bleibt lokal und ist von Git sowie
+dem Installations-ZIP ausgeschlossen; die aktuellen Hörproben sind oben verlinkt.
