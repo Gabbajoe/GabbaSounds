@@ -11,7 +11,7 @@ It started with a wand priest and one very repetitive whoosh. It now includes se
 - **219 spoken clips** from original microphone recordings, plus **126 synthetic wand sounds**.
 - Separate sound pools for normal hits and critical hits, with shared comments for misses, resisted or fully absorbed attacks, and partial hits.
 - Mage sounds at cast start, channel start or successful activation, as appropriate for the spell, in addition to impact sounds for damaging spells.
-- Melee auto attacks with separate main-hand/off-hand detection; six normal hits and four critical-hit reactions per weapon group.
+- **40 melee voice clips** with separate main-hand/off-hand detection; six normal hits and four critical-hit reactions per weapon group.
 - Shared glancing-hit reactions and protection against fast normal hits cutting off longer melee comments.
 - Adjustable minimum interval for normal melee reactions.
 - Random selection that avoids immediate repeats where alternatives exist.
@@ -65,6 +65,8 @@ Useful commands:
 ```
 
 `/gws pack mage` selects only the supported mage spells. `/gws pack spoken` selects the automatic weapon-and-mage voice pack. You can also select an individual mage spell, such as `/gws pack frostbolt` or `/gws pack pyroblast`.
+
+`/gws pack melee` selects only ordinary melee auto attacks. Individual melee groups are available through `/gws pack blade`, `/gws pack blunt`, `/gws pack dagger` and `/gws pack fist`. The normal melee reaction interval defaults to 0.25 seconds and can be changed in the options or with `/gws meleeinterval 0.5`.
 
 ## Original-sound muting
 

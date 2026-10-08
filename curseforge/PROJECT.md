@@ -1,6 +1,6 @@
 # CurseForge project setup
 
-Prepared for GabbaSounds 1.0.0. CurseForge project ID supplied by the author: **1733615**. The release pipeline successfully uploaded version 1.0.0 on 2026-10-08; CurseForge file ID: **9099386**. API acceptance does not confirm moderation approval.
+Description and next-file metadata prepared for GabbaSounds **1.1.0**. CurseForge project ID supplied by the author: **1733615**. The release pipeline successfully uploaded version 1.0.0 on 2026-10-08; CurseForge file ID: **9099386**. API acceptance does not confirm moderation approval.
 
 Source repository: https://github.com/Gabbajoe/GabbaSounds
 
@@ -14,7 +14,7 @@ Verified release workflow: https://github.com/Gabbajoe/GabbaSounds/actions/runs/
 | Game | World of Warcraft |
 | Project name | GabbaSounds |
 | Logo | `logo.png` in this directory (512 × 512 PNG, rendered from the original addon icon) |
-| Summary | Randomized German voice clips and magic sounds for wands, ranged weapons, and 15 mage spells in WoW Classic Era. |
+| Summary | Randomized German voice clips for wands, ranged weapons, melee auto attacks and 15 mage spells, plus synthetic wand sounds for WoW Classic Era. |
 | Class | Addons |
 | Main category | Audio & Video |
 | Additional categories | Optional: Mage, Hunter, Priest, if offered by the form |
@@ -27,6 +27,13 @@ The final public project URL should be recorded after CurseForge confirms the pr
 ## Description
 
 Paste `DESCRIPTION.md` using the Markdown editor. The page is in English; the included spoken recordings and current options interface are German.
+
+For the 1.1.0 update, replace the existing project description with the current
+`DESCRIPTION.md` and update the Summary field above. The text now includes the
+four melee groups, 40 new melee clips, 219 spoken clips in total, main-hand/off-hand
+routing, glancing reactions, adjustable playback timing and Tsukimo's credit.
+Changing these repository files prepares the text; it does not change the live
+CurseForge project page.
 
 ## License
 
