@@ -8,6 +8,37 @@ CurseForge project ID: **1733615**. The project page must be created through the
 
 Pushes to `main` and pull requests run the Lua 5.1 tests, Python tests and encoded-audio validation, then build an installable ZIP and SHA256 checksum. Successful CI runs retain these as downloadable workflow artifacts for 14 days.
 
+## Branches and pull requests
+
+All changes must start on a separate branch, such as `feature/melee-skills`,
+`fix/sound-routing` or `docs/curseforge-description`. Open a pull request targeting
+`main`. The active repository ruleset requires the GitHub Actions check
+**Tests, audio and package** to succeed and the pull request to be up to date
+with `main` before merging. Its definition is kept in `.github/main-ruleset.json`.
+That JSON documents the live GitHub configuration; editing the file alone does
+not update the ruleset.
+
+Direct pushes, force pushes and deletion of `main` are blocked. There are no
+bypass actors, so the same rules apply to the repository owner. A second person's
+review approval is not required; the owner can merge their own pull request once
+CI succeeds. The separate CurseForge access test is not the required CI check.
+
+```sh
+git switch main
+git pull --ff-only
+git switch -c feature/my-change
+# Make changes, then run the relevant local checks.
+git add <changed-files>
+git commit -m 'Describe the change'
+git push -u origin feature/my-change
+gh pr create --base main --fill
+gh pr checks --watch
+gh pr merge --squash --delete-branch
+```
+
+If another pull request changes `main`, update your branch and wait for CI again.
+Pull requests and merges build packages; only release tags publish releases.
+
 Pushing a stable tag such as `v1.0.0` performs the same checks. The tag must match `## Version` in `GabbaSounds.toc`, and `curseforge/CHANGELOG-1.0.0.md` must exist. On success the workflow publishes the ZIP and checksum as a GitHub Release. An existing GitHub release is retained on a workflow rerun.
 
 The ZIP always contains a top-level `GabbaSounds` directory, even if a checkout is named differently. It includes only the explicit runtime allowlist and audio files referenced by the manifests. Microphone source WAVs, logs, research downloads, listening HTML, tools, tests and Git metadata are excluded. Package entry timestamps and file modes are fixed so identical contents produce identical bytes with the same Python/zlib environment.
@@ -53,9 +84,13 @@ python3 tools/validate_sounds.py --pack all
 python3 tools/build_package.py --output-dir dist --tag v1.0.1
 ```
 
-5. Commit, push `main`, and wait for CI to pass. Then tag that commit:
+5. Commit and push your change branch, open a pull request to `main`, and merge
+only after **Tests, audio and package** succeeds. Update your local `main` to the
+merged commit, then tag it:
 
 ```sh
+git switch main
+git pull --ff-only
 git tag -a v1.0.1 -m 'GabbaSounds 1.0.1'
 git push origin v1.0.1
 ```
