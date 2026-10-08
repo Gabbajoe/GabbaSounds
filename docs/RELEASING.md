@@ -23,6 +23,8 @@ Create an author upload token at https://authors.curseforge.com/#/api-token and 
 
 Direct settings link: https://github.com/Gabbajoe/GabbaSounds/settings/secrets/actions/new
 
+To check the configured token without uploading, run the **Check CurseForge access** workflow from the Actions tab. It queries the authenticated author API and resolves the exact client version. This read-only check does not prove project-specific upload permission; the first actual upload verifies that separately.
+
 The release workflow skips CurseForge when either setting is absent. With both present, it resolves the exact client version from the TOC Interface via the author API and uploads the same checked ZIP with the version's changelog as Markdown. Missing or ambiguous client versions fail rather than falling back to a different client. GitHub Release publishing happens first, so a CurseForge outage does not erase a successful GitHub release.
 
 Uploads still pass through CurseForge moderation. The token is not passed through command-line arguments, committed, printed, or forwarded across redirects. Upload POSTs are not automatically retried: check the author dashboard before rerunning a failed or interrupted upload. Rerunning an already successful CurseForge upload can create a duplicate; do not do that.

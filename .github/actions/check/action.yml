@@ -35,6 +35,8 @@ runs:
       shell: bash
       env:
         GABBA_RUNTIME_ONLY: '1'
+        LUA: lua5.1
+        LUAC: luac5.1
       run: bash tests/run_tests.sh
     - name: Validate shipped audio
       shell: bash
