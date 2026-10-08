@@ -34,21 +34,21 @@ No license has been chosen for the source workspace. Choose the project's licens
 
 If you want to keep the rights to your code and voice recordings, the proposed starting selection is **All Rights Reserved**, if offered. This is a suggestion, not a license already applied to the package. Decide this before uploading.
 
-## First file
+## Prepared next file (1.1.0)
 
 | Field | Value |
 | --- | --- |
-| Upload | `GabbaSounds-1.0.0.zip` in the workspace root |
-| Display name | GabbaSounds 1.0.0 |
+| Upload | `GabbaSounds-1.1.0.zip` in the workspace root |
+| Display name | GabbaSounds 1.1.0 |
 | Release type | Release |
 | Game flavor | Classic / Classic Era (the matching label offered by the form) |
 | Game version | 1.15.9 |
-| Changelog | Contents of `CHANGELOG-1.0.0.md` |
+| Changelog | Contents of `CHANGELOG-1.1.0.md` |
 | Dependencies | None |
 
 Do not select Retail, Burning Crusade, Wrath or other unverified clients. The package targets Interface 11509.
 
-The ZIP contains one top-level `GabbaSounds` directory with the TOC, runtime Lua, icon, documentation and 305 OGGs. It excludes microphone source WAVs, logs, saved variables, research data, development tools and these submission materials.
+The ZIP contains one top-level `GabbaSounds` directory with the TOC, runtime Lua, icon, documentation and 345 OGGs. It excludes microphone source WAVs, logs, saved variables, research data, development tools and these submission materials.
 
 Upload the ZIP to submit the release for moderation. Approval of both project and file is required for public availability. The TOC includes the confirmed numeric project ID. Future automated uploads are described in `docs/RELEASING.md`.
 

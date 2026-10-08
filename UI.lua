@@ -6,17 +6,21 @@ local statsText
 local noteText
 local schoolButton
 local previewIndex = 0
+local intervalButton
 local packButton
 local previewWeaponIndex = 0
 local weaponOrder = { "wand", "bow", "gun" }
 for _, key in ipairs(addon.mageOrder) do weaponOrder[#weaponOrder + 1] = key end
+for _, key in ipairs(addon.meleeOrder) do weaponOrder[#weaponOrder + 1] = key end
 local weaponLabels = { wand = "Zauberstab", bow = "Pfeile / Armbrust", gun = "Schusswaffen", frostbolt = "Frostblitz", ranged = "unbekannte Fernkampfwaffe" }
 
 for key, spell in pairs(addon.mageSpells) do weaponLabels[key] = spell.label end
+for key, label in pairs(addon.meleeLabels) do weaponLabels[key] = label end
 
 local function PreviewWeapon()
     local pack = addon.db and addon.soundPacks[addon.db.soundPack]
     if pack and not pack.weapons then return pack.weapon end
+    if pack and pack.meleeOnly then return addon.meleeOrder[previewWeaponIndex] or addon.ResolveMeleeWeapon(UnitGUID("player")) or "blade" end
     if pack and pack.mageOnly then return addon.mageOrder[previewWeaponIndex] or "frostbolt" end
     return weaponOrder[previewWeaponIndex] or addon.ResolveWeapon(UnitGUID("player")) or "wand"
 end
@@ -39,12 +43,13 @@ function addon.RefreshUI()
             check:SetChecked(addon.db[key])
         end
     end
+    intervalButton:SetText(string.format("Nahkampf-Mindestpause: %.2f s", addon.db.meleeInterval))
     channelButton:SetText("Kanal: " .. (addon.db.channel == "SFX" and "Soundeffekte" or "Gesamtlautstärke"))
     schoolButton:SetText(pack.weapons and "Hörprobe: " .. weaponLabels[PreviewWeapon()] .. (previewWeaponIndex == 0 and " (automatisch)" or "")
         or pack.categories and "Hörprobe: " .. weaponLabels[pack.weapon]
         or previewIndex == 0 and "Hörprobe: eigener Zauberstab (" .. addon.schoolLabels[addon.PreviewSchool()] .. ")"
         or "Hörprobe: " .. addon.schoolLabels[addon.schoolOrder[previewIndex]])
-    local labels = { hit = "Normale Treffer", crit = "Kritische Treffer", resist = "Widerstand", miss = "Verfehlen / Abprallen", absorb = "Absorbierte Schüsse", graze = "Teiltreffer (nur gesprochen)" }
+    local labels = { hit = "Normale Treffer", crit = "Kritische Treffer", resist = "Widerstand", miss = "Verfehlen / Abprallen", absorb = "Absorbierte Angriffe", graze = "Teiltreffer (nur gesprochen)" }
     local bank = addon.GetBank("neutral", PreviewWeapon())
     for category, label in pairs(labels) do
         local pool = bank[category] or (category == "graze" and addon.sharedGraze) or {}
@@ -61,7 +66,8 @@ function addon.RefreshUI()
         .. "Originale: Stab " .. (addon.originalsMuted and "stumm" or "hörbar")
         .. ", Bogen " .. (addon.bowOriginalsMuted and "stumm" or "hörbar")
         .. ", Gewehr " .. (addon.gunOriginalsMuted and "stumm" or "hörbar")
-        .. ". Magier-Stummschaltung: " .. mutedMage .. "/15 Zauber abgedeckt. Dateien global, teils geteilt.")
+        .. ", Nahkampf " .. (addon.meleeOriginalsMuted and "stumm" or "hörbar")
+        .. ". Magier: " .. mutedMage .. "/15 stumm. Dateien global, teils geteilt.")
     statsText:SetText(string.format("Diese Sitzung: %d Treffer · %d Crits · %d Widerstände\n%d Fehlschläge · %d Absorptionen · %d Teiltreffer\n%d Magier-Casts",
         addon.stats.hit, addon.stats.crit, addon.stats.resist, addon.stats.miss, addon.stats.absorb, addon.stats.graze, addon.stats.cast))
 end
@@ -128,7 +134,7 @@ local function BuildPanel()
     Checkbox("crit", "Kritische Treffer", -333)
     Checkbox("resist", "Widerstand", -365)
     Checkbox("miss", "Verfehlen / Abprallen", -397)
-    Checkbox("absorb", "Absorbierte Schüsse", -429)
+    Checkbox("absorb", "Absorbierte Angriffe", -429)
     Checkbox("graze", "Teiltreffer-Sprüche nutzen", -461)
 
     schoolButton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
@@ -136,7 +142,7 @@ local function BuildPanel()
     schoolButton:SetPoint("TOPLEFT", 25, -508)
     schoolButton:SetScript("OnClick", function()
         if addon.soundPacks[addon.db.soundPack].weapons then
-            local choices = addon.soundPacks[addon.db.soundPack].mageOnly and #addon.mageOrder or #weaponOrder
+            local choices = addon.soundPacks[addon.db.soundPack].mageOnly and #addon.mageOrder or addon.soundPacks[addon.db.soundPack].meleeOnly and #addon.meleeOrder or #weaponOrder
             previewWeaponIndex = (previewWeaponIndex + 1) % (choices + 1)
             addon.RefreshUI()
             return
@@ -155,6 +161,15 @@ local function BuildPanel()
         button:SetScript("OnClick", function() addon.PlayCategory(category, true, nil, addon.schoolOrder[previewIndex], PreviewWeapon()) end)
     end
     Checkbox("cast", "Magier-Casts", -620)
+    intervalButton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    intervalButton:SetSize(375, 22)
+    intervalButton:SetPoint("TOPLEFT", 25, -651)
+    intervalButton:SetScript("OnClick", function()
+        local choices = { 0, 0.25, 0.5, 0.75, 1 }
+        local selected = 1
+        for index, value in ipairs(choices) do if addon.db.meleeInterval == value then selected = index; break end end
+        addon.SetOption("meleeInterval", choices[selected % #choices + 1])
+    end)
     local castPreview = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     castPreview:SetSize(110, 25)
     castPreview:SetPoint("TOPLEFT", 290, -677)

@@ -10,7 +10,7 @@ local function Supported(key, source)
     if not db or not db.enabled or not source or not source:match("^Player%-")
         or (not db.allSources and source ~= UnitGUID("player")) then return false end
     local pack = addon.soundPacks[db.soundPack]
-    return pack and (pack.weapons or pack.weapon == key)
+    return pack and not pack.meleeOnly and (pack.weapons or pack.weapon == key)
 end
 
 function addon.ResetMageResults()

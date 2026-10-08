@@ -1,8 +1,8 @@
 # Nahkampf-Aufnahmen
 
 Diese Ordner sind für normale Waffenangriffe mit Haupt- und Nebenhand vorgesehen.
-Klassenfähigkeiten und Cast-Sounds kommen später. Die Nahkampf-Pakete sind noch
-nicht in der veröffentlichten Version eingebaut; zunächst nehmen wir die Laute auf.
+Klassenfähigkeiten und Cast-Sounds kommen später. Die Nahkampf-Pakete sind ab
+Version 1.1.0 integriert, auf Wunsch von **Tsukimo**.
 
 ## Ordner und Dateinamen
 
@@ -64,7 +64,11 @@ Die Texte sind Vorschläge: Du kannst sie durch eigene Laute und Sprüche ersetz
 
 Die vollständigen Aufnahmen werden anschließend in einzelne Spiel-Clips
 geschnitten und ins Addon integriert. Deine Quelldateien bleiben dabei erhalten.
-Die neuen Ordner werden vom bisherigen Importer noch nicht eingelesen.
+Die Ordner werden durch `python3 tools/import_spoken_library.py --melee-only`
+importiert. Die geprüften Schnitte stehen in `cuts.json`; neue Aufnahmen benötigen
+neue überprüfte Grenzen und einen passenden Quellhash. Hörproben liegen zentral
+unter `previews/melee/index.html` im Addon-Hauptordner.
+Im Spiel: `/gws pack melee` oder `/gws spokenonly on`.
 
 ## Gemeinsame Fehler- und Teiltreffer-Sprüche
 
@@ -76,7 +80,6 @@ GabbaSounds/spoken/shared/graze.wav
 ```
 
 Sie müssen nicht in die vier Waffenordner kopiert oder erneut aufgenommen werden.
-Geplant ist, `miss.wav` auch für ausgewichene, parierte und vollständig geblockte
-Angriffe zu verwenden. `graze.wav` soll Streifschläge und passende Teiltreffer
-abdecken. Getrennte Dodge-, Parry- und Block-Aufnahmen sind für den ersten Ausbau
+`miss.wav` wird auch für ausgewichene, parierte und vollständig geblockte
+Angriffe verwendet. `graze.wav` deckt Streifschläge und passende Teiltreffer ab. Getrennte Dodge-, Parry- und Block-Aufnahmen sind für den ersten Ausbau
 nicht erforderlich.

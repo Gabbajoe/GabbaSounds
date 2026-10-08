@@ -33,7 +33,7 @@ class ReleaseTools(unittest.TestCase):
                 names = package.namelist()
                 self.assertEqual(count, len(names))
                 self.assertTrue(all(name.startswith('GabbaSounds/') for name in names))
-                self.assertEqual(sum(name.endswith('.ogg') for name in names), 305)
+                self.assertEqual(sum(name.endswith('.ogg') for name in names), 345)
                 self.assertTrue(all('/tools/' not in name and not name.endswith('.wav') for name in names))
             for name in RUNTIME:
                 (checkout / name).touch()

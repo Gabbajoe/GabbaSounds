@@ -5,7 +5,7 @@ local function equal(actual, expected, message)
 end
 
 local function setup(saved, legacy)
-    local state = { frames = {}, played = {}, stopped = {}, muted = {}, unmuted = {}, warmed = {}, warmStops = {}, muteDepth = {}, muteCalls = {}, messages = {}, guid = "Player-Test-Gabbaophant", time = 0, units = {}, links = {}, tooltipLines = {}, itemSubclasses = {} }
+    local state = { frames = {}, played = {}, stopped = {}, muted = {}, unmuted = {}, warmed = {}, warmStops = {}, muteDepth = {}, muteCalls = {}, messages = {}, guid = "Player-Test-Gabbaophant", time = 0, units = {}, links = {}, meleeLinks = {}, classes = {}, tooltipLines = {}, itemSubclasses = {} }
     local methods = {}
     for _, name in ipairs({ "SetFrameStrata", "SetBackdrop", "SetMovable", "EnableMouse", "RegisterForDrag", "StartMoving", "StopMovingOrSizing", "SetWidth", "SetJustifyH", "SetFrameLevel", "ClearAllPoints", "RegisterForClicks", "SetHighlightTexture" }) do
         methods[name] = function() end
@@ -66,7 +66,13 @@ local function setup(saved, legacy)
     function UnitTokenFromGUID(guid)
         for unit, source in pairs(state.units) do if source == guid then return unit end end
     end
-    function GetInventoryItemLink(unit, slot) equal(slot, 18); return state.links[unit] end
+    function GetInventoryItemLink(unit, slot)
+        if slot == 18 then return state.links[unit] end
+        assert(slot == 16 or slot == 17)
+        return state.meleeLinks[unit] and state.meleeLinks[unit][slot]
+    end
+    function UnitClass(unit) return "Class", state.classes[unit] end
+    function GetShapeshiftFormID() return state.form end
     C_TooltipInfo = { GetInventoryItem = function(unit, slot)
         equal(slot, 18)
         local lines = {}
@@ -123,7 +129,7 @@ local function setup(saved, legacy)
     GabbaSoundsDB = saved
     GabbaWandSoundsDB = legacy
     local addon = {}
-    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MageSpells.lua", "MageEvents.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
+    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
         assert(loadfile(file))("GabbaSounds", addon)
     end
     state.addon = addon
@@ -140,6 +146,20 @@ local function setup(saved, legacy)
             [15] = missType or amount or 50, [16] = -1, [17] = school or 32,
             [18] = resisted or 0, [19] = blocked or 0, [20] = absorbed or 0, [21] = critical,
         }
+        self:fire("COMBAT_LOG_EVENT_UNFILTERED")
+    end
+    function state:swing(options)
+        local o = options or {}
+        self.currentEvent = { [1] = self.time, [2] = o.miss and "SWING_MISSED" or "SWING_DAMAGE",
+            [3] = false, [4] = o.source or self.guid, [5] = "Player", [6] = 0x511, [7] = 0,
+            [8] = "Creature-Test", [9] = "Target", [10] = 0x10a48, [11] = 0 }
+        if o.miss then
+            self.currentEvent[12], self.currentEvent[13], self.currentEvent[14] = o.miss, o.offHand, 0
+        else
+            self.currentEvent[12], self.currentEvent[13], self.currentEvent[14] = 50, -1, 1
+            self.currentEvent[15], self.currentEvent[16], self.currentEvent[17] = o.resisted or 0, o.blocked or 0, o.absorbed or 0
+            self.currentEvent[18], self.currentEvent[19], self.currentEvent[20], self.currentEvent[21] = o.crit, o.glancing, o.crushing, o.offHand
+        end
         self:fire("COMBAT_LOG_EVENT_UNFILTERED")
     end
     state:fire("ADDON_LOADED", "OtherAddon")
@@ -624,7 +644,7 @@ end)
 
 test("categorized recordings have distinct hit and crit pools and common failure pools", function()
     local state = setup()
-    equal(#state.addon.packOrder, 7)
+    equal(#state.addon.packOrder, 12)
     equal(state.addon.packOrder[2], "spoken")
     for _, category in ipairs({ "hit", "crit", "resist", "miss", "absorb" }) do
         local pool = state.addon.soundPacks.spoken.categories[category]
@@ -925,6 +945,7 @@ test("automatic UI previews select all three weapons and leave combat weapon rou
     selector.scripts.OnClick(selector) -- Frostbolt preview
     assert(selector.text:find("Frostblitz", 1, true))
     for _ = 2, #state.addon.mageOrder do selector.scripts.OnClick(selector) end
+    for _ = 1, #state.addon.meleeOrder do selector.scripts.OnClick(selector) end
     selector.scripts.OnClick(selector) -- back to actual equipment
     preview.scripts.OnClick(preview)
     voicePath(state, "gun", "hit")
@@ -1208,7 +1229,7 @@ test("package changes independently release wand and Frostbolt original mutes", 
     end
     state.addon.SetOption("soundPack", "spoken")
     for _, id in ipairs(frostOriginals) do equal(state.muteDepth[id], 1) end
-    equal(#state.warmed, 48)
+    equal(#state.warmed, 349)
 end)
 
 test("incomplete Frostbolt coverage restores originals and graze-off falls back to hit", function()
@@ -1255,7 +1276,7 @@ test("Frostbolt playback failure restores originals and leaves another addon's m
     equal(state.muteDepth[568119], 2)
     state.addon.SetOption("enabled", false)
     equal(state.muteDepth[568119], 1)
-    equal(#state.warmed, 48)
+    equal(#state.warmed, 349)
 end)
 
 test("minimap disable and logout restore Frostbolt as well as wand originals", function()
@@ -1311,7 +1332,7 @@ test("spoken-only mode enables complete replacement and off restores originals w
     equal(state.addon.gunOriginalsMuted, true)
     local count = 0
     for _ in pairs(state.muted) do count = count + 1 end
-    equal(count, 56)
+    equal(count, 357)
     SlashCmdList.GABBASOUNDS("spokenonly off")
     equal(next(state.muted), nil)
     equal(state.addon.IsSpokenOnly(), false)
@@ -1326,8 +1347,8 @@ end)
 
 test("hunter originals warm once, release owned mutes only and recover after playback failure", function()
     local state = setup({ soundPack = "spoken" })
-    equal(#state.warmed, 48)
-    equal(#state.warmStops, 48)
+    equal(#state.warmed, 349)
+    equal(#state.warmStops, 349)
     for _, group in ipairs({ bowOriginals, gunOriginals }) do
         for _, id in ipairs(group) do
             equal(state.muteDepth[id], 1)
@@ -1346,7 +1367,7 @@ test("hunter originals warm once, release owned mutes only and recover after pla
     state.addon.PlayCategory("hit", true, nil, "neutral", "gun")
     equal(state.addon.gunOriginalsMuted, true)
     equal(state.muteDepth[567721], 2)
-    equal(#state.warmed, 48)
+    equal(#state.warmed, 349)
     state:fire("PLAYER_LOGOUT")
     equal(state.addon.bowOriginalsMuted, false)
     equal(state.addon.gunOriginalsMuted, false)
@@ -1798,6 +1819,277 @@ test("replay real Classic mage channel and AoE logs without speaking for every t
     equal(state.addon.stats.hit, fixture.expected.hit)
     equal(state.addon.stats.crit, fixture.expected.crit)
     equal(#state.played, fixture.expected.cast + fixture.expected.hit + fixture.expected.crit)
+end)
+
+local function equipMelee(state, main, off, unit)
+    unit = unit or "player"
+    state.meleeLinks[unit] = {}
+    for slot, subclass in pairs({ [16] = main, [17] = off }) do
+        local link = unit .. ":" .. slot .. ":" .. subclass
+        state.meleeLinks[unit][slot] = link
+        state.itemSubclasses[link] = subclass
+    end
+    state:fire("UNIT_INVENTORY_CHANGED", unit)
+end
+
+test("melee identifies the four weapon groups and never treats offhand as critical", function()
+    local state = setup({ soundPack = "spoken" })
+    for _, pair in ipairs({ {0,"blade"}, {1,"blade"}, {7,"blade"}, {8,"blade"},
+        {4,"blunt"}, {5,"blunt"}, {10,"blunt"}, {15,"dagger"}, {13,"fist"} }) do
+        equipMelee(state, pair[1], 15)
+        state:advance(3)
+        state:swing()
+        voicePath(state, pair[2], "hit")
+        state:advance(3)
+        state:swing({offHand = true})
+        voicePath(state, "dagger", "hit")
+        state:swing({crit = true, offHand = true})
+        voicePath(state, "dagger", "crit")
+    end
+    equal(state.addon.stats.crit, 9)
+    equal(state.addon.stats.hit, 18)
+end)
+
+test("unarmed mainhand is fist but empty offhand and unsupported weapons stay silent", function()
+    local state = setup({ soundPack = "spoken" })
+    state:swing()
+    voicePath(state, "fist", "hit")
+    state:advance(3)
+    state:swing({offHand = true})
+    equal(#state.played, 1)
+    for _, subclass in ipairs({6,20,2,19}) do
+        equipMelee(state, subclass)
+        state:swing()
+        equal(#state.played, 1)
+    end
+end)
+
+test("melee crit glancing partial block and absorption use the SWING payload", function()
+    local state = setup({ soundPack = "spoken" })
+    equipMelee(state, 7, 15)
+    for _, options in ipairs({ {glancing = true}, {blocked = 5}, {resisted = 5} }) do
+        state:advance(3)
+        state:swing(options)
+        voicePath(state, "shared", "graze")
+    end
+    state:advance(3)
+    state:swing({crit = 1, glancing = 1, offHand = 1})
+    voicePath(state, "dagger", "crit")
+    state:advance(3)
+    state:swing({absorbed = 10, crushing = true})
+    voicePath(state, "blade", "hit")
+    state.addon.SetOption("graze", false)
+    state:advance(3)
+    state:swing({glancing = true})
+    voicePath(state, "blade", "hit")
+end)
+
+test("melee failures reuse shared comments and offhand miss uses slot 17", function()
+    local state = setup({ soundPack = "spoken" })
+    equipMelee(state, 6, 15)
+    for _, miss in ipairs({ "MISS", "DODGE", "PARRY", "BLOCK", "RESIST", "ABSORB", "IMMUNE" }) do
+        state:advance(3)
+        state:swing({miss = miss, offHand = true})
+        voicePath(state, "shared", "miss")
+    end
+    equal(state.addon.stats.miss, 5)
+    equal(state.addon.stats.resist, 1)
+    equal(state.addon.stats.absorb, 1)
+end)
+
+test("fast dual wield limits normals and protects reactions while allowing crit priority", function()
+    local state = setup({ soundPack = "spoken" })
+    equipMelee(state, 7, 15)
+    state:swing()
+    state:advance(0.1)
+    state:swing({offHand = true})
+    equal(#state.played, 1)
+    state:advance(0.2)
+    state:swing({offHand = true})
+    equal(#state.played, 2)
+    state:swing({miss = "MISS"})
+    equal(#state.played, 3)
+    state:advance(0.3)
+    state:swing()
+    equal(#state.played, 3)
+    state:swing({crit = true})
+    equal(#state.played, 4)
+    state:advance(0.3)
+    state:swing({crit = true, offHand = true})
+    state:swing({miss = "DODGE"})
+    state:swing()
+    equal(#state.played, 4)
+    state:advance(3)
+    state:swing()
+    equal(#state.played, 5)
+    equal(state.addon.stats.crit, 1)
+end)
+
+test("melee scope filters pets creatures specials and independent foreign players", function()
+    local state = setup({ soundPack = "spoken" })
+    equipMelee(state, 7)
+    state:swing({crit = true})
+    local stopped = #state.stopped
+    state:swing({source = "Player-Other"})
+    voicePath(state, "blade", "hit")
+    equal(#state.stopped, stopped)
+    for _, source in ipairs({"Creature-1", "Pet-1", "Vehicle-1"}) do state:swing({source = source}) end
+    state:combat("SPELL_DAMAGE", 78) -- Heroic Strike is not an auto attack.
+    equal(#state.played, 2)
+    state.addon.SetOption("allSources", false)
+    state:advance(3)
+    state:swing({source = "Player-Other"})
+    equal(#state.played, 2)
+    state:swing()
+    equal(#state.played, 3)
+end)
+
+test("melee packs isolate their events and native sound ownership from mage and ranged", function()
+    for _, pack in ipairs({ "magic", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_mage", "spoken_fireball" }) do
+        local state = setup({soundPack = pack})
+        equipMelee(state, 7)
+        state:swing()
+        equal(#state.played, 0)
+        equal(state.addon.meleeOriginalsMuted, false)
+    end
+    local state = setup({soundPack = "spoken_melee"})
+    equipMelee(state, 7)
+    equal(state.addon.originalsMuted, false)
+    equal(state.addon.frostboltOriginalsMuted, false)
+    equal(state.addon.bowOriginalsMuted, false)
+    equal(state.addon.meleeOriginalsMuted, true)
+    equal(#state.warmed, 301)
+    state:combat("SPELL_DAMAGE", 133)
+    state:combat("SPELL_CAST_SUCCESS", 133)
+    state:fire("UNIT_SPELLCAST_START", "player", "Cast-1", 133)
+    state:combat("RANGE_DAMAGE", 5019)
+    state:combat("RANGE_DAMAGE", 75)
+    state:advance(1)
+    equal(#state.played, 0)
+    state:swing()
+    voicePath(state, "blade", "hit")
+    state.addon.SetOption("soundPack", "spoken_dagger")
+    equal(state.addon.meleeOriginalsMuted, false, "Shared native assets require all four banks")
+    state:swing()
+    equal(#state.played, 1)
+    equipMelee(state, 15)
+    state:swing()
+    voicePath(state, "dagger", "hit")
+end)
+
+test("melee equipment cache changes per hand and expires for invisible players", function()
+    local state = setup({soundPack = "spoken"})
+    local guid = "Player-Visible"
+    state.units.target = guid
+    equipMelee(state, 7, 15, "target")
+    equal(state.addon.ResolveMeleeWeapon(guid, false), "blade")
+    equal(state.addon.ResolveMeleeWeapon(guid, true), "dagger")
+    state.units.target = nil
+    equal(state.addon.ResolveMeleeWeapon(guid, true), "dagger")
+    state:advance(121)
+    equal(state.addon.ResolveMeleeWeapon(guid, true), "melee")
+    state.units.target = guid
+    equipMelee(state, 4, nil, "target")
+    equal(state.addon.ResolveMeleeWeapon(guid, false), "blunt")
+    equal(state.addon.ResolveMeleeWeapon(guid, true), nil)
+    state:fire("PLAYER_ENTERING_WORLD")
+    state.units.target = nil
+    equal(state.addon.ResolveMeleeWeapon(guid, false), "melee")
+end)
+
+test("melee item API fallback works and druid forms are excluded", function()
+    local state = setup({soundPack = "spoken"})
+    equipMelee(state, 15)
+    GetItemInfoInstant = C_Item.GetItemInfoInstant
+    C_Item = nil
+    equal(state.addon.ResolveMeleeWeapon(state.guid), "dagger")
+    state.classes.player = "DRUID"
+    state.form = 0
+    equal(state.addon.ResolveMeleeWeapon(state.guid), "dagger")
+    state.form = 1
+    state:swing()
+    equal(#state.played, 0)
+    state.form = nil
+    state:swing()
+    voicePath(state, "dagger", "hit")
+end)
+
+test("melee native mutes fail open and preserve another owner's mute", function()
+    local state = setup({soundPack = "spoken"})
+    local id = state.addon.meleeOriginalIDs[1]
+    equal(#state.addon.meleeOriginalIDs, 301)
+    MuteSoundFile(id)
+    state.failPlayback = true
+    state:swing()
+    equal(state.addon.meleeOriginalsMuted, false)
+    equal(state.muteDepth[id], 1)
+    state.failPlayback = false
+    state.addon.PlayCategory("hit", true, nil, "neutral", "fist")
+    equal(state.addon.meleeOriginalsMuted, true)
+    equal(state.muteDepth[id], 2)
+    state.addon.SetOption("graze", false)
+    equal(state.addon.meleeOriginalsMuted, false)
+    equal(state.muteDepth[id], 1)
+    state.addon.SetOption("graze", true)
+    state.addon.voiceBanks.blade.crit = {}
+    state.addon.UpdateOriginalMuting()
+    equal(state.addon.meleeOriginalsMuted, false)
+    state:fire("PLAYER_LOGOUT")
+    equal(state.muteDepth[id], 1)
+end)
+
+test("melee interval settings and UI previews cover every new bank", function()
+    local state = setup({soundPack = "spoken_melee", meleeInterval = "bad"})
+    equal(state.addon.db.meleeInterval, 0.25)
+    for _, value in ipairs({-1,3,math.huge,"0.5",false}) do equal(state.addon.SetOption("meleeInterval", value), false) end
+    equal(state.addon.SetOption("meleeInterval", 0/0), false)
+    SlashCmdList.GABBASOUNDS("meleeinterval 0.5")
+    equal(state.addon.db.meleeInterval, 0.5)
+    equipMelee(state, 7)
+    state.addon.SetOption("meleeInterval", 2)
+    state:swing()
+    state:advance(1.5)
+    state:swing()
+    equal(#state.played, 1, "Interval applies even after the previous clip has ended")
+    state:advance(0.6)
+    state:swing()
+    equal(#state.played, 2)
+    state.addon.SetOption("meleeInterval", 0.5)
+    state.addon.OpenUI()
+    local selector, hit, interval
+    for _, frame in ipairs(state.frames) do
+        if frame.text and frame.text:find("Hörprobe:",1,true) then selector = frame end
+        if frame.text == "Treffer hören" then hit = frame end
+        if frame.text and frame.text:find("Nahkampf-Mindestpause:",1,true) then interval = frame end
+    end
+    assert(interval and selector and hit)
+    interval.scripts.OnClick(interval)
+    equal(state.addon.db.meleeInterval, 0.75)
+    for _, key in ipairs(state.addon.meleeOrder) do
+        selector.scripts.OnClick(selector)
+        assert(selector.text:find(state.addon.meleeLabels[key],1,true))
+        hit.scripts.OnClick(hit)
+        voicePath(state, key, "hit")
+        SlashCmdList.GABBASOUNDS("test crit " .. key)
+        voicePath(state, key, "crit")
+    end
+    SlashCmdList.GABBASOUNDS("pack melee")
+    equal(state.addon.db.soundPack, "spoken_melee")
+    SlashCmdList.GABBASOUNDS("pack blade")
+    equal(state.addon.db.soundPack, "spoken_blade")
+end)
+
+test("replay anonymized Classic melee results including real glances and failures", function()
+    local state = setup({soundPack = "spoken"})
+    local fixture = assert(loadfile("tests/fixtures/classic_melee.lua"))()
+    local expected = { hit = 0, crit = 0, graze = 0, miss = 0, resist = 0, absorb = 0 }
+    for _, event in ipairs(fixture) do
+        state:advance(3)
+        state:swing(event)
+        expected[event.expected] = expected[event.expected] + 1
+    end
+    equal(#state.played, #fixture)
+    for category, count in pairs(expected) do equal(state.addon.stats[category], count, category) end
 end)
 
 print(string.format("GabbaSounds: %d tests passed", total))

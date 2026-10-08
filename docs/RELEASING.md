@@ -31,6 +31,8 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
+The prepared local version is **1.1.0**. Its Discord package and notes are ready; pushing `main` does not publish a release or upload to CurseForge. A release tag explicitly starts that publishing workflow.
+
 ## Prepare the next version
 
 1. Update addon code and any sound mappings. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`.
@@ -56,7 +58,7 @@ Replace `1.0.1` with the actual next version. Published tags should remain fixed
 
 ## Public checkout versus local recording workspace
 
-The public repository contains the finished OGGs, manifests, addon source, tools, documentation and anonymized combat-event fixtures. Source WAVs and generated editable cuts stay in the original recording workspace. `.gitignore` preserves these local files without uploading them.
+The public repository contains the finished OGGs, manifests, addon source, tools, documentation and anonymized combat-event fixtures. Browser previews under `previews/` are also checked in, with relative links to the shipped OGGs. `python3 tools/build_previews.py` rebuilds them without source recordings. Source WAVs and generated editable cuts stay in the original recording workspace. `.gitignore` preserves these local files without uploading them.
 
 On a fresh public checkout, run:
 
@@ -66,7 +68,7 @@ python3 tools/validate_sounds.py --pack all --runtime-only
 python3 tools/build_package.py --output-dir dist
 ```
 
-Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 305 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
+Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 345 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
 
 The pipeline packages reviewed audio; it does not re-slice or re-encode recordings. `python3 tools/import_spoken_library.py --registry-only` can regenerate the spoken browser preview from the checked-in OGGs without any WAV recordings.
 

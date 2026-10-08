@@ -160,6 +160,38 @@ local banks = {
         absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
         cast = { "voice_combustion_cast_01.ogg", "voice_combustion_cast_02.ogg" },
     },
+    blade = {
+        hit = { "voice_blade_hit_01.ogg", "voice_blade_hit_02.ogg", "voice_blade_hit_03.ogg", "voice_blade_hit_04.ogg", "voice_blade_hit_05.ogg", "voice_blade_hit_06.ogg" },
+        crit = { "voice_blade_crit_01.ogg", "voice_blade_crit_02.ogg", "voice_blade_crit_03.ogg", "voice_blade_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    blunt = {
+        hit = { "voice_blunt_hit_01.ogg", "voice_blunt_hit_02.ogg", "voice_blunt_hit_03.ogg", "voice_blunt_hit_04.ogg", "voice_blunt_hit_05.ogg", "voice_blunt_hit_06.ogg" },
+        crit = { "voice_blunt_crit_01.ogg", "voice_blunt_crit_02.ogg", "voice_blunt_crit_03.ogg", "voice_blunt_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    dagger = {
+        hit = { "voice_dagger_hit_01.ogg", "voice_dagger_hit_02.ogg", "voice_dagger_hit_03.ogg", "voice_dagger_hit_04.ogg", "voice_dagger_hit_05.ogg", "voice_dagger_hit_06.ogg" },
+        crit = { "voice_dagger_crit_01.ogg", "voice_dagger_crit_02.ogg", "voice_dagger_crit_03.ogg", "voice_dagger_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    fist = {
+        hit = { "voice_fist_hit_01.ogg", "voice_fist_hit_02.ogg", "voice_fist_hit_03.ogg", "voice_fist_hit_04.ogg", "voice_fist_hit_05.ogg", "voice_fist_hit_06.ogg" },
+        crit = { "voice_fist_crit_01.ogg", "voice_fist_crit_02.ogg", "voice_fist_crit_03.ogg", "voice_fist_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
 }
 local groups = {
     ["voice_wand_crit_01.ogg"] = "spoken/wand/crit.wav:1",
@@ -341,12 +373,53 @@ local groups = {
     ["voice_shared_graze_06.ogg"] = "spoken/shared/graze.wav:6",
     ["voice_shared_graze_07.ogg"] = "spoken/shared/graze.wav:7",
     ["voice_shared_graze_08.ogg"] = "spoken/shared/graze.wav:8",
+    ["voice_blade_crit_01.ogg"] = "spoken/melee/blade/crit.wav:1",
+    ["voice_blade_crit_02.ogg"] = "spoken/melee/blade/crit.wav:2",
+    ["voice_blade_crit_03.ogg"] = "spoken/melee/blade/crit.wav:3",
+    ["voice_blade_crit_04.ogg"] = "spoken/melee/blade/crit.wav:4",
+    ["voice_blade_hit_01.ogg"] = "spoken/melee/blade/hit.wav:1",
+    ["voice_blade_hit_02.ogg"] = "spoken/melee/blade/hit.wav:2",
+    ["voice_blade_hit_03.ogg"] = "spoken/melee/blade/hit.wav:3",
+    ["voice_blade_hit_04.ogg"] = "spoken/melee/blade/hit.wav:4",
+    ["voice_blade_hit_05.ogg"] = "spoken/melee/blade/hit.wav:5",
+    ["voice_blade_hit_06.ogg"] = "spoken/melee/blade/hit.wav:6",
+    ["voice_blunt_crit_01.ogg"] = "spoken/melee/blunt/crit.wav:1",
+    ["voice_blunt_crit_02.ogg"] = "spoken/melee/blunt/crit.wav:2",
+    ["voice_blunt_crit_03.ogg"] = "spoken/melee/blunt/crit.wav:3",
+    ["voice_blunt_crit_04.ogg"] = "spoken/melee/blunt/crit.wav:4",
+    ["voice_blunt_hit_01.ogg"] = "spoken/melee/blunt/hit.wav:1",
+    ["voice_blunt_hit_02.ogg"] = "spoken/melee/blunt/hit.wav:2",
+    ["voice_blunt_hit_03.ogg"] = "spoken/melee/blunt/hit.wav:3",
+    ["voice_blunt_hit_04.ogg"] = "spoken/melee/blunt/hit.wav:4",
+    ["voice_blunt_hit_05.ogg"] = "spoken/melee/blunt/hit.wav:5",
+    ["voice_blunt_hit_06.ogg"] = "spoken/melee/blunt/hit.wav:6",
+    ["voice_dagger_crit_01.ogg"] = "spoken/melee/dagger/crit.wav:1",
+    ["voice_dagger_crit_02.ogg"] = "spoken/melee/dagger/crit.wav:2",
+    ["voice_dagger_crit_03.ogg"] = "spoken/melee/dagger/crit.wav:3",
+    ["voice_dagger_crit_04.ogg"] = "spoken/melee/dagger/crit.wav:4",
+    ["voice_dagger_hit_01.ogg"] = "spoken/melee/dagger/hit.wav:1",
+    ["voice_dagger_hit_02.ogg"] = "spoken/melee/dagger/hit.wav:2",
+    ["voice_dagger_hit_03.ogg"] = "spoken/melee/dagger/hit.wav:3",
+    ["voice_dagger_hit_04.ogg"] = "spoken/melee/dagger/hit.wav:4",
+    ["voice_dagger_hit_05.ogg"] = "spoken/melee/dagger/hit.wav:5",
+    ["voice_dagger_hit_06.ogg"] = "spoken/melee/dagger/hit.wav:6",
+    ["voice_fist_crit_01.ogg"] = "spoken/melee/fist/crit.wav:1",
+    ["voice_fist_crit_02.ogg"] = "spoken/melee/fist/crit.wav:2",
+    ["voice_fist_crit_03.ogg"] = "spoken/melee/fist/crit.wav:3",
+    ["voice_fist_crit_04.ogg"] = "spoken/melee/fist/crit.wav:4",
+    ["voice_fist_hit_01.ogg"] = "spoken/melee/fist/hit.wav:1",
+    ["voice_fist_hit_02.ogg"] = "spoken/melee/fist/hit.wav:2",
+    ["voice_fist_hit_03.ogg"] = "spoken/melee/fist/hit.wav:3",
+    ["voice_fist_hit_04.ogg"] = "spoken/melee/fist/hit.wav:4",
+    ["voice_fist_hit_05.ogg"] = "spoken/melee/fist/hit.wav:5",
+    ["voice_fist_hit_06.ogg"] = "spoken/melee/fist/hit.wav:6",
 }
-addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage" }
+addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage", "spoken_melee", "spoken_blade", "spoken_blunt", "spoken_dagger", "spoken_fist" }
 addon.soundPacks = {
     magic = { label = "Magie je Schadensart", schools = addon.schoolSounds, weapon = "wand" },
     spoken = { label = "Eigene Aufnahmen (automatisch)", categories = banks.wand, weapons = banks, repeatGroups = groups },
     spoken_mage = { label = "Gesprochen: Magier (Frost und Feuer)", categories = banks.frostbolt, weapons = banks, mageOnly = true, repeatGroups = groups },
+    spoken_melee = { label = "Gesprochen: Nahkampf (automatisch)", categories = banks.blade, weapons = banks, meleeOnly = true, repeatGroups = groups },
     spoken_wand = { label = "Gesprochen: Zauberstab", weapon = "wand", categories = banks.wand, repeatGroups = groups },
     spoken_bow = { label = "Gesprochen: Pfeile / Armbrust", weapon = "bow", categories = banks.bow, repeatGroups = groups },
     spoken_gun = { label = "Gesprochen: Schusswaffen", weapon = "gun", categories = banks.gun, repeatGroups = groups },
@@ -365,6 +438,10 @@ addon.soundPacks = {
     spoken_flamestrike = { label = "Gesprochen: Flammenstoß", weapon = "flamestrike", categories = banks.flamestrike, repeatGroups = groups },
     spoken_blastwave = { label = "Gesprochen: Druckwelle", weapon = "blastwave", categories = banks.blastwave, repeatGroups = groups },
     spoken_combustion = { label = "Gesprochen: Verbrennung", weapon = "combustion", categories = banks.combustion, repeatGroups = groups },
+    spoken_blade = { label = "Gesprochen: Schwerter / Äxte", weapon = "blade", categories = banks.blade, repeatGroups = groups },
+    spoken_blunt = { label = "Gesprochen: Streitkolben / Stäbe", weapon = "blunt", categories = banks.blunt, repeatGroups = groups },
+    spoken_dagger = { label = "Gesprochen: Dolche", weapon = "dagger", categories = banks.dagger, repeatGroups = groups },
+    spoken_fist = { label = "Gesprochen: Faustwaffen / unbewaffnet", weapon = "fist", categories = banks.fist, repeatGroups = groups },
 }
 addon.voiceBanks = banks
 addon.sharedGraze = banks.wand.graze
@@ -548,3 +625,43 @@ addon.soundDurations["voice_shared_graze_05.ogg"] = 0.87
 addon.soundDurations["voice_shared_graze_06.ogg"] = 1.43
 addon.soundDurations["voice_shared_graze_07.ogg"] = 1.18
 addon.soundDurations["voice_shared_graze_08.ogg"] = 0.6
+addon.soundDurations["voice_blade_crit_01.ogg"] = 1.25
+addon.soundDurations["voice_blade_crit_02.ogg"] = 1.43
+addon.soundDurations["voice_blade_crit_03.ogg"] = 1.09
+addon.soundDurations["voice_blade_crit_04.ogg"] = 1.07
+addon.soundDurations["voice_blade_hit_01.ogg"] = 1.27
+addon.soundDurations["voice_blade_hit_02.ogg"] = 0.95
+addon.soundDurations["voice_blade_hit_03.ogg"] = 0.72
+addon.soundDurations["voice_blade_hit_04.ogg"] = 1.28
+addon.soundDurations["voice_blade_hit_05.ogg"] = 0.6
+addon.soundDurations["voice_blade_hit_06.ogg"] = 1.23
+addon.soundDurations["voice_blunt_crit_01.ogg"] = 1.26
+addon.soundDurations["voice_blunt_crit_02.ogg"] = 0.96
+addon.soundDurations["voice_blunt_crit_03.ogg"] = 1.41
+addon.soundDurations["voice_blunt_crit_04.ogg"] = 1.29
+addon.soundDurations["voice_blunt_hit_01.ogg"] = 0.72
+addon.soundDurations["voice_blunt_hit_02.ogg"] = 0.75
+addon.soundDurations["voice_blunt_hit_03.ogg"] = 0.86
+addon.soundDurations["voice_blunt_hit_04.ogg"] = 0.83
+addon.soundDurations["voice_blunt_hit_05.ogg"] = 0.44
+addon.soundDurations["voice_blunt_hit_06.ogg"] = 0.78
+addon.soundDurations["voice_dagger_crit_01.ogg"] = 1.22
+addon.soundDurations["voice_dagger_crit_02.ogg"] = 1.28
+addon.soundDurations["voice_dagger_crit_03.ogg"] = 1.4
+addon.soundDurations["voice_dagger_crit_04.ogg"] = 1.68
+addon.soundDurations["voice_dagger_hit_01.ogg"] = 0.82
+addon.soundDurations["voice_dagger_hit_02.ogg"] = 0.87
+addon.soundDurations["voice_dagger_hit_03.ogg"] = 0.69
+addon.soundDurations["voice_dagger_hit_04.ogg"] = 0.68
+addon.soundDurations["voice_dagger_hit_05.ogg"] = 0.66
+addon.soundDurations["voice_dagger_hit_06.ogg"] = 0.86
+addon.soundDurations["voice_fist_crit_01.ogg"] = 0.94
+addon.soundDurations["voice_fist_crit_02.ogg"] = 1.38501
+addon.soundDurations["voice_fist_crit_03.ogg"] = 0.91
+addon.soundDurations["voice_fist_crit_04.ogg"] = 1.36
+addon.soundDurations["voice_fist_hit_01.ogg"] = 0.68
+addon.soundDurations["voice_fist_hit_02.ogg"] = 0.7
+addon.soundDurations["voice_fist_hit_03.ogg"] = 0.86
+addon.soundDurations["voice_fist_hit_04.ogg"] = 1.31
+addon.soundDurations["voice_fist_hit_05.ogg"] = 0.66501
+addon.soundDurations["voice_fist_hit_06.ogg"] = 1.06

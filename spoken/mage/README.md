@@ -13,7 +13,7 @@ Alle 15 Zauber sind ab Version 1.0.0 im automatischen Sprachpaket oder
 Magierpaket zugeordnet. Die aufgenommenen Varianten sind importiert.
 Für weitere Takes werden `cast*.wav`, `hit*.wav` und `crit*.wav` erkannt.
 Nach Änderungen müssen Import, Audioprüfung, Paketbau und Installation
-wiederholt werden. Die Browser-Vorschau liegt unter `../Anhoeren.html`.
+wiederholt werden. Die Browser-Vorschau liegt unter `previews/spoken/index.html` im Addon-Hauptordner.
 Flächenzauber sprechen einmal pro Anwendung bzw. beim ersten Blizzard-Tick,
 nicht pro Ziel oder jedem weiteren Tick. Frostnova enthält drei Casts;
 Frostblitz behält die sieben bisherigen Treffer- und Crit-Varianten.

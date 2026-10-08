@@ -10,7 +10,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = (
     'GabbaSounds.toc', 'SoundData.lua', 'CustomSoundData.lua', 'Schools.lua',
-    'Weapons.lua', 'MageSpells.lua', 'MageEvents.lua', 'Core.lua', 'UI.lua',
+    'Weapons.lua', 'MeleeSoundIDs.lua', 'Melee.lua', 'MageSpells.lua', 'MageEvents.lua', 'Core.lua', 'UI.lua',
     'Minimap.lua', 'Assets/minimap.tga', 'README.md', 'THIRD_PARTY_NOTICES.md',
 )
 
