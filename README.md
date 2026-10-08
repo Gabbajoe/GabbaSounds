@@ -20,7 +20,7 @@
 
 <p align="center">
   <a href="https://github.com/Gabbajoe/GabbaSounds/releases"><strong>📦 Downloads</strong></a> ·
-  <a href="previews/README.md"><strong>🎧 Hörproben</strong></a> ·
+  <a href="https://gabbajoe.github.io/GabbaSounds/"><strong>🎧 Hörproben</strong></a> ·
   <a href="https://github.com/Gabbajoe/GabbaSounds/issues"><strong>💬 Ideen &amp; Fehler</strong></a> ·
   <a href="docs/RELEASING.md"><strong>🛠️ Entwicklung</strong></a>
 </p>
@@ -88,9 +88,10 @@ werden lokal abgespielt; andere Spieler erhalten deine Audiodateien nicht.
 
 ## 🎧 Hör dir die Pakete an
 
-Die [Browser-Hörproben](previews/README.md) zeigen dir alle Sprachclips,
+Die [Browser-Hörproben](https://gabbajoe.github.io/GabbaSounds/) zeigen dir alle Sprachclips,
 die vier Nahkampf-Pakete und die synthetischen Zauberstab-Sounds.
-Lade das vollständige Repository herunter und öffne `previews/index.html`.
+**Direkt öffnen und abspielen — kein Download nötig.**
+Für die [Offline-Nutzung und den Bau der Player](previews/README.md) gibt es eine eigene Anleitung.
 Im Spiel findest du die Hörproben direkt unter **`/gws`**.
 
 ## 💜 Auf Wunsch der Community

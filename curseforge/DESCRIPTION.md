@@ -6,6 +6,8 @@ It started with a wand priest and one very repetitive whoosh. It now includes se
 
 **The spoken clips and current options interface are German.** The addon also includes a synthetic magic sound pack for wands, with variations for each damage school.
 
+[**Listen to the sound packs in your browser**](https://gabbajoe.github.io/GabbaSounds/) — no download required.
+
 ## Features
 
 - **219 spoken clips** from original microphone recordings, plus **126 synthetic wand sounds**.
