@@ -8,7 +8,7 @@ Spoken melee auto-attack packs, requested by **Tsukimo**.
 - Added an automatic melee-only pack and individual weapon-group selections.
 - Protected critical-hit and failure reactions from rapid normal hits, with an adjustable minimum interval for normal melee reactions.
 - Added global original-melee sound muting when the automatic pack fully covers all four groups and glancing reactions.
-- Organized browser previews under `previews/`, with a public tool to rebuild them from the shipped OGGs without microphone source files.
+- Published directly playable [browser previews](https://gabbajoe.github.io/GabbaSounds/), with public tools to rebuild the players and website from the shipped OGGs without microphone source files.
 - Included 219 spoken clips and 126 synthetic wand sounds; existing recordings remain unchanged.
 
 Class-specific melee abilities, polearms and druid-form sound packs are outside this update. Native sound muting is global and can also affect shared files used by NPCs and unsupported abilities. Actual in-game playback needs client testing.

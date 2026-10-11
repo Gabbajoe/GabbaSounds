@@ -1,10 +1,10 @@
 # CurseForge project setup
 
-Description and next-file metadata prepared for GabbaSounds **1.1.0**. CurseForge project ID supplied by the author: **1733615**. The release pipeline successfully uploaded version 1.0.0 on 2026-10-08; CurseForge file ID: **9099386**. API acceptance does not confirm moderation approval.
+Description and release-file metadata for GabbaSounds **1.1.0**. CurseForge project ID supplied by the author: **1733615**. The release pipeline successfully uploaded version 1.0.0 on 2026-10-08; CurseForge file ID: **9099386**. On 2026-10-11 the author reported that the initial addon was approved and explicitly authorized the 1.1.0 release.
 
 Source repository: https://github.com/Gabbajoe/GabbaSounds
 
-Published GitHub release: https://github.com/Gabbajoe/GabbaSounds/releases/tag/v1.0.0
+GitHub release target: https://github.com/Gabbajoe/GabbaSounds/releases/tag/v1.1.0
 Verified release workflow: https://github.com/Gabbajoe/GabbaSounds/actions/runs/37798495297
 
 ## General
@@ -41,16 +41,16 @@ No license has been chosen for the source workspace. Choose the project's licens
 
 If you want to keep the rights to your code and voice recordings, the proposed starting selection is **All Rights Reserved**, if offered. This is a suggestion, not a license already applied to the package. Decide this before uploading.
 
-## Prepared next file (1.1.0)
+## Release file (1.1.0)
 
-**Release hold requested by the author on 2026-10-08:** upload 1.1.0 to
-CurseForge only after the initial 1.0.0 addon release is approved. The Discord
-ZIP is ready; confirm moderation approval in the author dashboard before
-starting the next CurseForge upload or its automated release-tag workflow.
+**Release authorized by the author on 2026-10-11.** The initial addon approval
+and explicit release request lift the hold from 2026-10-08. Publish through the
+`v1.1.0` tag workflow after the required CI passes. It builds a fresh ZIP from
+the tagged checkout; the older Discord ZIP is not used for the upload.
 
 | Field | Value |
 | --- | --- |
-| Upload | `GabbaSounds-1.1.0.zip` in the workspace root |
+| Upload | `GabbaSounds-1.1.0.zip` built by the release workflow |
 | Display name | GabbaSounds 1.1.0 |
 | Release type | Release |
 | Game flavor | Classic / Classic Era (the matching label offered by the form) |

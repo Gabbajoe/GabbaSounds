@@ -35,9 +35,9 @@ Angefangen hat alles mit einem Zauberstab-Priester und einem viel zu oft
 gehörten **„wusch wusch“**. Daraus wurden **219 Sprachclips**, **126 synthetische
 Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
-> **Stand dieser README: vorbereitete Version 1.1.0.** Der veröffentlichte
-> GitHub-Release ist derzeit 1.0.0. Das Nahkampf-Update kommt erst auf CurseForge,
-> nachdem das initiale Addon freigegeben wurde und der Autor den Start bestätigt.
+> **Neu in Version 1.1.0: Nahkampf auf Wunsch von Tsukimo.**
+> 40 neue Sprachclips für Schwerter/Äxte, Streitkolben/Stäbe, Dolche und Fäuste —
+> mit eigenen Crits, gemeinsamen Fehlschlag-Sprüchen und Reaktionen auf Streifschläge.
 
 ## 🎯 Für jeden Angriff das passende Paket
 
