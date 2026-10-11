@@ -62,13 +62,15 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The prepared local version is **1.1.0**. Its Discord package and notes are ready; pushing `main` does not publish a release or upload to CurseForge. A release tag explicitly starts that publishing workflow.
+The current version is **1.1.0**. Pushing `main` does not publish a release or
+upload to CurseForge. A release tag explicitly starts that publishing workflow.
 
-**Author instruction (2026-10-08): hold the CurseForge 1.1.0 release until the
-initial 1.0.0 addon release has been approved.** Check the author dashboard for
-approval before starting that upload. API upload acceptance is insufficient.
-Because the tag workflow uploads to CurseForge automatically when configured,
-do not push the `v1.1.0` release tag while this hold applies.
+**Author release authorization (2026-10-11):** the author reported that the
+initial addon was approved and explicitly requested the 1.1.0 release.
+This lifts the release hold recorded on 2026-10-08. After the required CI passes,
+tag the merged `main` commit as `v1.1.0`; the configured workflow publishes to
+GitHub and submits the ZIP to CurseForge. The new file can require its own
+moderation even though the initial addon is approved.
 
 ## Prepare the next version
 
