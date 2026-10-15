@@ -100,6 +100,8 @@ Im Spiel findest du die Hörproben direkt unter **`/gws`**.
 | Wunschgeber | Soundpaket |
 | --- | --- |
 | **Tsukimo** | ⚔️ Nahkampf |
+| **Minibobse** | 🐭 Idee für die Noggenfogger-Stimme mit höherer Tonlage |
+| **Ragebobsle & Tuskimo** | 🗡️ Kriegerfähigkeiten und eigene Abwehrreaktionen (geplant; Aufnahmen in Vorbereitung) |
 | **Palaberd** | 🏹 Jäger: Pfeile und Gewehre |
 | **Bobselinchen aka Minibobsel** | ❄️ Frostblitz |
 | **Zeldazar** | 🔥 Feuerzauber |

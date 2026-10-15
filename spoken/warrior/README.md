@@ -1,5 +1,8 @@
 # Krieger-Aufnahmen
 
+**Auf Wunsch von Ragebobsle und Tuskimo.** Für die Credits in der Haupt-README
+vorgemerkt; die Kriegerfähigkeiten und eigenen Abwehrreaktionen sind noch in Vorbereitung.
+
 Hier legst du die neuen WAV-Aufnahmen ab. Die Ordner sind vorbereitet;
 Import, Schnitt und Einbindung der Kriegerfähigkeiten folgen nach den Aufnahmen.
 Die bestehenden Nahkampf-Pakete bleiben für normale Waffenangriffe zuständig.
