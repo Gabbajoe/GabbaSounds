@@ -44,7 +44,7 @@ def build_site(root, output):
     if output.exists():
         raise ValueError(f'Output already exists; choose an empty destination: {output}')
     files = list(PAGES) + ['curseforge/logo.png']
-    files += [name for name in package_files(root) if name.endswith('.ogg')]
+    files += [name for name in package_files(root) if name.endswith('.ogg') and '/noggenfogger/' not in name]
     for name in files:
         source = root / name
         if source.is_symlink() or not source.resolve().is_relative_to(root.resolve()):

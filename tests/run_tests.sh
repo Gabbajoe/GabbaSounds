@@ -6,6 +6,7 @@ LUAC="${LUAC:-luac}"
 "$LUAC" -p MageSpells.lua
 "$LUAC" -p MageEvents.lua
 "$LUAC" -p Core.lua
+"$LUAC" -p Noggenfogger.lua
 "$LUAC" -p UI.lua
 "$LUAC" -p SoundData.lua
 "$LUAC" -p CustomSoundData.lua

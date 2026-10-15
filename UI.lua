@@ -74,7 +74,7 @@ end
 
 local function BuildPanel()
     panel = CreateFrame("Frame", "GabbaSoundsPanel", UIParent, "BackdropTemplate")
-    panel:SetSize(430, 790)
+    panel:SetSize(430, 820)
     panel:SetPoint("CENTER")
     panel:SetFrameStrata("DIALOG")
     panel:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border", tile = true, tileSize = 32, edgeSize = 32, insets = { left = 11, right = 12, top = 12, bottom = 11 } })
@@ -183,8 +183,10 @@ local function BuildPanel()
         addon.SetOption("channel", addon.db.channel == "SFX" and "Master" or "SFX")
     end)
 
+    Checkbox("noggenfoggerPitch", "Noggenfogger: beim Schrumpfen höher", -708)
+
     statsText = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    statsText:SetPoint("TOPLEFT", 29, -721)
+    statsText:SetPoint("TOPLEFT", 29, -752)
     statsText:SetWidth(372)
     statsText:SetJustifyH("LEFT")
     panel:Hide()

@@ -27,13 +27,16 @@ class ReleaseTools(unittest.TestCase):
             (checkout / 'spoken').mkdir(exist_ok=True)
             shutil.copyfile(ROOT / 'manifest.json', checkout / 'manifest.json')
             shutil.copyfile(ROOT / 'spoken/manifest.json', checkout / 'spoken/manifest.json')
+            (checkout / 'noggenfogger').mkdir()
+            shutil.copyfile(ROOT / 'noggenfogger/manifest.json', checkout / 'noggenfogger/manifest.json')
             release, archive, checksum, count = build(checkout, base / 'dist', CURRENT_TAG)
             first = archive.read_bytes()
             with zipfile.ZipFile(archive) as package:
                 names = package.namelist()
                 self.assertEqual(count, len(names))
                 self.assertTrue(all(name.startswith('GabbaSounds/') for name in names))
-                self.assertEqual(sum(name.endswith('.ogg') for name in names), 345)
+                self.assertEqual(sum(name.endswith('.ogg') for name in names), 690)
+                self.assertEqual(sum('/Sounds/noggenfogger/' in name for name in names), 345)
                 self.assertTrue(all('/tools/' not in name and not name.endswith('.wav') for name in names))
             for name in RUNTIME:
                 (checkout / name).touch()
@@ -58,6 +61,8 @@ class ReleaseTools(unittest.TestCase):
                 path.write_bytes(b'test')
             (root / 'manifest.json').write_text(json.dumps([{'file': '../secret.txt'}]))
             (root / 'spoken/manifest.json').write_text('{"sounds": []}')
+            (root / 'noggenfogger').mkdir()
+            (root / 'noggenfogger/manifest.json').write_text('{"sounds": []}')
             with self.assertRaisesRegex(ValueError, 'Unsafe package path'):
                 package_files(root)
 

@@ -2,17 +2,38 @@
 
 [Zurück zur README](../README.md) · [Entwicklung und Releases](RELEASING.md)
 
-Diese Anleitung beschreibt Version **1.1.0** für Classic Era /
+Diese Anleitung beschreibt den vorbereiteten Stand **1.2.0** für Classic Era /
 Hardcore 1.15.9, Interface 11509. Veröffentlichungen und Paketbau sind in der
 [Release-Anleitung](RELEASING.md) dokumentiert.
 
+## Noggenfogger-Stimme (neu für 1.2.0)
+
+Mit dem Schrumpfeffekt des Noggenfogger-Elixiers klingen deine eigenen
+GabbaSounds automatisch **vier Halbtöne höher**. Die Spieldauer bleibt gleich.
+Das gilt für alle gesprochenen Pakete, Magier-Casts und synthetische Magie.
+Fremde Angriffe behalten ihre normale Tonhöhe. Skelettform und langsamer Fall
+allein aktivieren den Effekt nicht. Nach Ablauf oder Entfernen des Schrumpf-Buffs
+werden wieder die normalen Dateien verwendet, auch nach Login oder Reload.
+
+Die Option **„Noggenfogger: beim Schrumpfen höher“** ist pro Charakter
+standardmäßig an. Abschalten mit `/gws noggenfogger off`, wieder einschalten
+mit `/gws noggenfogger on`. `/gws status` zeigt den Zustand; die Hörproben im
+Addon folgen deinem Schrumpfeffekt. Fehlt eine höhere Datei, versucht das
+Addon den normalen Sound und meldet einmalig den nötigen vollständigen Neustart.
+
+Die Erkennung verwendet die sprachunabhängige
+[Schrumpf-Zauber-ID 16595](https://www.wowhead.com/spell=16595/noggenfogger-elixir).
+Die höheren Dateien liegen unter `Sounds/noggenfogger/`; `noggenfogger/manifest.json`
+verknüpft sie mit den Originalen. Neu bauen mit `python3 tools/build_noggenfogger.py`
+(FFmpeg mit Rubber Band, libvorbis und NumPy). Die Originaldateien bleiben erhalten.
+
 ## Installation und Auswahl
 
-`GabbaSounds-1.1.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`
+`GabbaSounds-1.2.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`
 entpacken. Darin muss anschließend `GabbaSounds/GabbaSounds.toc` liegen.
 Den WoW-Client vollständig schließen und neu starten, damit alle neuen
-Sounddateien geladen werden. Das ZIP enthält 345 fertige OGGs (219 Aufnahmen
-und 126 synthetische Sounds), ohne WAV-Quellen, Charakterdaten oder
+Sounddateien geladen werden. Das ZIP enthält 690 fertige OGGs: 219 Aufnahmen,
+126 synthetische Sounds und 345 höhere Noggenfogger-Varianten, ohne WAV-Quellen, Charakterdaten oder
 Entwicklerwerkzeuge. Die Einstellungen bleiben pro Charakter gespeichert;
 neue Charaktere starten wie bisher mit dem Magiepaket.
 

@@ -39,6 +39,19 @@ def main():
             for first, following in zip(custom['sounds'], custom['sounds'][1:]):
                 assert first['source_end'] <= following['source_start'], 'Clips overlap and contain repeated samples'
         manifest.extend(custom['sounds'])
+    base_manifest = list(manifest)
+    pitched = json.loads((ROOT / 'noggenfogger/manifest.json').read_text())
+    assert pitched['semitones'] == 4
+    sources = {item['file']: item for item in base_manifest}
+    selected = [item for item in pitched['sounds'] if item['source_file'] in sources]
+    assert len(selected) == len(sources), 'Incomplete Noggenfogger coverage'
+    for item in selected:
+        source = ROOT / item['source_file']
+        assert item['file'] == 'Sounds/noggenfogger/' + source.name
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == item['source_sha256'], 'Stale pitched sound'
+        assert hashlib.sha256((ROOT / item['file']).read_bytes()).hexdigest() == item['sha256']
+        assert abs(item['duration'] - sources[item['source_file']]['duration']) < .001
+    manifest.extend(selected)
     counts, hashes, measures = Counter(), set(), []
     for item in manifest:
         path = ROOT / item['file']
@@ -72,7 +85,8 @@ def main():
         measures.append({**item, 'decoded_peak_dbfs': round(20 * np.log10(peak), 2),
                          'decoded_rms_dbfs': round(20 * np.log10(rms), 2),
                          'energy_centroid_hz': round(centroid), 'peak_10ms_window_ms': peak_ms})
-        counts[item['school'], item['kind']] += 1
+        if 'source_file' not in item:
+            counts[item['school'], item['kind']] += 1
     if args.pack in ('magic', 'all'):
         for school in ('shadow', 'fire', 'frost', 'arcane', 'nature', 'holy', 'neutral'):
             for kind, expected in {'hit': 6, 'crit': 4, 'resist': 4, 'miss': 2, 'absorb': 2}.items():
@@ -96,7 +110,7 @@ def main():
     if args.runtime_only and args.pack in ('spoken', 'all'):
         print('Runtime-only validation: private source WAV hashes are checked locally, not in public CI.')
     for school in (() if args.pack == 'spoken' else ('shadow', 'fire', 'frost', 'arcane', 'nature', 'holy')):
-        hits = [m for m in measures if m['school'] == school and m['kind'] == 'hit']
+        hits = [m for m in measures if m['school'] == school and m['kind'] == 'hit' and 'source_file' not in m]
         print(school, 'normal spectral centroid:', round(np.mean([m['energy_centroid_hz'] for m in hits])),
               'Hz; peak windows:', [m['peak_10ms_window_ms'] for m in hits], 'ms')
 
