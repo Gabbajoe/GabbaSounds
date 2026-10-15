@@ -62,16 +62,18 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The next prepared version is **1.2.0** (Noggenfogger pitch); the published
-release is **1.1.0**. Pushing `main` does not publish a release or
-upload to CurseForge. A release tag explicitly starts that publishing workflow.
+The current version is **1.2.0** (Noggenfogger pitch). Pushing `main` does not
+publish a release or upload to CurseForge. A release tag explicitly starts that
+publishing workflow.
 
-**Author release authorization (2026-10-11):** the author reported that the
-initial addon was approved and explicitly requested the 1.1.0 release.
-This lifts the release hold recorded on 2026-10-08. After the required CI passes,
-tag the merged `main` commit as `v1.1.0`; the configured workflow publishes to
-GitHub and submits the ZIP to CurseForge. The new file can require its own
-moderation even though the initial addon is approved.
+**Author release authorization (2026-10-15):** the author explicitly requested
+publication of 1.2.0 after the Noggenfogger implementation, tests and local
+installation. After required CI passes, tag the merged `main` commit as `v1.2.0`.
+The configured workflow publishes to GitHub and submits the ZIP to CurseForge.
+A newly uploaded file can require its own moderation.
+
+The initial addon approval and the author's 1.1.0 release request on 2026-10-11
+lifted the earlier hold from 2026-10-08. Version 1.1.0 was published successfully.
 
 ## Prepare the next version
 

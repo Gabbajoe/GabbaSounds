@@ -2,7 +2,7 @@
 
 [Zurück zur README](../README.md) · [Entwicklung und Releases](RELEASING.md)
 
-Diese Anleitung beschreibt den vorbereiteten Stand **1.2.0** für Classic Era /
+Diese Anleitung beschreibt Version **1.2.0** für Classic Era /
 Hardcore 1.15.9, Interface 11509. Veröffentlichungen und Paketbau sind in der
 [Release-Anleitung](RELEASING.md) dokumentiert.
 
