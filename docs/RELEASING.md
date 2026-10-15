@@ -62,7 +62,8 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The current version is **1.1.0**. Pushing `main` does not publish a release or
+The next prepared version is **1.2.0** (Noggenfogger pitch); the published
+release is **1.1.0**. Pushing `main` does not publish a release or
 upload to CurseForge. A release tag explicitly starts that publishing workflow.
 
 **Author release authorization (2026-10-11):** the author reported that the
@@ -74,7 +75,7 @@ moderation even though the initial addon is approved.
 
 ## Prepare the next version
 
-1. Update addon code and any sound mappings. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`.
+1. Update addon code and any sound mappings. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`. After changing encoded sounds, run `python3 tools/build_noggenfogger.py` to refresh the +4-semitone variants and their source hashes (FFmpeg with Rubber Band and libvorbis required).
 2. Update `## Version` in `GabbaSounds.toc`, README version/install filename, and any changed feature/count documentation.
 3. Add `curseforge/CHANGELOG-<version>.md` with the release notes.
 4. Run local checks and build:
@@ -128,7 +129,7 @@ python3 tools/validate_sounds.py --pack all --runtime-only
 python3 tools/build_package.py --output-dir dist
 ```
 
-Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 345 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
+Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 690 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
 
 The pipeline packages reviewed audio; it does not re-slice or re-encode recordings. `python3 tools/import_spoken_library.py --registry-only` can regenerate the spoken browser preview from the checked-in OGGs without any WAV recordings.
 

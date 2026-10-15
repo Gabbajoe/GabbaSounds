@@ -52,6 +52,7 @@ Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
 ## ✨ Was GabbaSounds kann
 
+- 🐭 **Noggenfogger-Stimme (vorbereitet für 1.2.0):** Beim Schrumpfen werden deine eigenen Sounds automatisch um vier Halbtöne höher. Spieldauer und fremde Angriffe bleiben unverändert; der Effekt ist abschaltbar.
 - 🎲 **Abwechslung:** zufällige Auswahl, ohne direkte Wiederholung bei mehreren Varianten.
 - 💥 **Treffer & Crits:** eigene Pools für normale Treffer und kritische Treffer.
 - 🗣️ **Magier-Casts:** Laute beim Cast-Beginn, Kanalbeginn oder Aktivieren – passend zum Zauber.

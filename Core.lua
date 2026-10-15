@@ -14,6 +14,7 @@ local defaults = {
     channel = "SFX",
     soundPack = "magic",
     meleeInterval = 0.25,
+    noggenfoggerPitch = true,
     minimapAngle = 145,
     minimapHidden = false,
 }
@@ -46,6 +47,7 @@ local seenCasts = {}
 local currentPlayerCast
 local playbackFailed = false
 local warnedAboutPlayback = false
+local warnedAboutPitch = false
 local frame = CreateFrame("Frame")
 addon.stats = { hit = 0, crit = 0, resist = 0, miss = 0, absorb = 0, graze = 0, cast = 0 }
 
@@ -343,8 +345,17 @@ function addon.PlayCategory(category, preview, sourceGUID, school, weapon, melee
     end
     -- Each caster has independent playback; melee reactions survive normal hits.
     StopSoundForSource(source)
+    local filename = addon.NoggenfoggerSound(pool[index], preview, sourceGUID)
     local played, handle = PlaySoundFile(
-        "Interface\\AddOns\\" .. addonName .. "\\Sounds\\" .. pool[index], db.channel, false)
+        "Interface\\AddOns\\" .. addonName .. "\\Sounds\\" .. filename, db.channel, false)
+    if not played and filename ~= pool[index] then
+        played, handle = PlaySoundFile(
+            "Interface\\AddOns\\" .. addonName .. "\\Sounds\\" .. pool[index], db.channel, false)
+        if played and not warnedAboutPitch then
+            addon.Print("Noggenfogger-Sound nicht geladen; normale Tonhöhe verwendet. Addon vollständig installieren und WoW neu starten.")
+            warnedAboutPitch = true
+        end
+    end
     if not played then
         playbackFailed = true
         addon.UpdateOriginalMuting()
@@ -454,6 +465,7 @@ local function Initialize()
     addon.db = GabbaSoundsDB
     addon.db.minimapAngle = addon.db.minimapAngle % 360
     playerGUID = UnitGUID("player")
+    addon.RefreshNoggenfogger()
     addon.UpdateOriginalMuting()
     if addon.InitializeMinimap then addon.InitializeMinimap() end
 end
@@ -464,6 +476,7 @@ frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:RegisterEvent("PLAYER_LOGOUT")
 frame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 frame:RegisterEvent("UNIT_INVENTORY_CHANGED")
+frame:RegisterEvent("UNIT_AURA")
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 frame:RegisterEvent("UNIT_SPELLCAST_START")
 frame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -477,12 +490,14 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         self:UnregisterEvent("ADDON_LOADED")
     elseif event == "PLAYER_LOGIN" then
         playerGUID = UnitGUID("player")
+        addon.RefreshNoggenfogger()
         addon.UpdateOriginalMuting()
         if addon.db and addon.db.enabled then
             addon.Print("Aktiv – " .. addon.soundPacks[addon.db.soundPack].label .. "; " .. (addon.db.allSources and "eigene und fremde Angriffe" or "eigene Angriffe") .. ". Einstellungen: /gabbasounds")
         end
     elseif event == "PLAYER_ENTERING_WORLD" then
         playerGUID = UnitGUID("player")
+        addon.RefreshNoggenfogger()
         addon.ResetSchools()
         addon.ResetWeapons()
         addon.ResetMeleeWeapons()
@@ -514,7 +529,11 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         addon.ResetSchools(loadedName)
         addon.ResetWeapons(loadedName)
         addon.ResetMeleeWeapons(loadedName)
+    elseif event == "UNIT_AURA" and loadedName == "player" then
+        addon.RefreshNoggenfogger()
+        NotifyUI()
     elseif event == "PLAYER_LOGOUT" then
+        addon.noggenfoggerShrunk = false
         addon.ResetMageResults()
         StopAllSounds()
         ReleaseOriginals()
@@ -564,6 +583,11 @@ SlashCmdList.GABBASOUNDS = function(message)
             addon.SetOption(command == "spokenonly" and "spokenOnly" or command == "mute" and "muteOriginal" or command == "all" and "allSources" or command, argument == "on")
             addon.Print(command .. ": " .. argument)
         end
+    elseif command == "noggenfogger" then
+        if argument == "on" or argument == "off" then
+            addon.SetOption("noggenfoggerPitch", argument == "on")
+            addon.Print("Noggenfogger-Tonhöhe: " .. argument)
+        else addon.Print("/gws noggenfogger on oder off – eigene Sounds beim Schrumpfen höher") end
     elseif command == "meleeinterval" then
         if addon.SetOption("meleeInterval", tonumber(argument)) then
             addon.Print("Nahkampf-Mindestpause: " .. addon.db.meleeInterval .. " Sekunden")
@@ -592,6 +616,7 @@ SlashCmdList.GABBASOUNDS = function(message)
             .. "; Nahkampf-Originale: " .. (addon.meleeOriginalsMuted and "stumm" or "hörbar")
             .. "; Magier-Stummschaltung: " .. mutedMage .. "/15 Zauber abgedeckt"
             .. "; Soundpaket: " .. addon.soundPacks[addon.db.soundPack].label
+            .. "; Noggenfogger: " .. (not addon.db.noggenfoggerPitch and "aus" or addon.noggenfoggerShrunk and "+4 Halbtöne" or "an (normal groß)")
             .. "; Magier-Cast: " .. (addon.db.cast and "an" or "aus") .. " (" .. addon.stats.cast .. " abgespielt)"
             .. "; abgespielt: " .. addon.stats.hit .. " Treffer, " .. addon.stats.crit .. " Crits, " .. addon.stats.resist .. " Widerstände, " .. addon.stats.miss .. " Fehlschläge, " .. addon.stats.absorb .. " Absorptionen, " .. addon.stats.graze .. " Teiltreffer.")
     else

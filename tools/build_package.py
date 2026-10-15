@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = (
     'GabbaSounds.toc', 'SoundData.lua', 'CustomSoundData.lua', 'Schools.lua',
     'Weapons.lua', 'MeleeSoundIDs.lua', 'Melee.lua', 'MageSpells.lua', 'MageEvents.lua', 'Core.lua', 'UI.lua',
-    'Minimap.lua', 'Assets/minimap.tga', 'README.md', 'THIRD_PARTY_NOTICES.md',
+    'Minimap.lua', 'Noggenfogger.lua', 'Assets/minimap.tga', 'README.md', 'THIRD_PARTY_NOTICES.md',
 )
 
 
@@ -27,6 +27,7 @@ def package_files(root=ROOT):
     files = list(RUNTIME)
     files.extend(item['file'] for item in json.loads((root / 'manifest.json').read_text()))
     files.extend(item['file'] for item in json.loads((root / 'spoken/manifest.json').read_text())['sounds'])
+    files.extend(item['file'] for item in json.loads((root / 'noggenfogger/manifest.json').read_text())['sounds'])
     if len(set(files)) != len(files):
         raise ValueError('Duplicate package entry')
     for name in files:

@@ -4,9 +4,20 @@ local function equal(actual, expected, message)
     assert(actual == expected, (message or "Values differ") .. ": expected " .. tostring(expected) .. ", got " .. tostring(actual))
 end
 
-local function setup(saved, legacy)
+local function setup(saved, legacy, auras)
     local state = { frames = {}, played = {}, stopped = {}, muted = {}, unmuted = {}, warmed = {}, warmStops = {}, muteDepth = {}, muteCalls = {}, messages = {}, guid = "Player-Test-Gabbaophant", time = 0, units = {}, links = {}, meleeLinks = {}, classes = {}, tooltipLines = {}, itemSubclasses = {} }
     local methods = {}
+    state.auras = auras or {}
+    C_UnitAuras = { GetAuraDataByIndex = function(unit, index, filter)
+        equal(unit, "player"); equal(filter, "HELPFUL")
+        local id = state.auras[index]
+        if id then return { name = "Noggenfogger", spellId = id } end
+    end }
+    function UnitBuff(unit, index)
+        equal(unit, "player")
+        local id = state.auras[index]
+        if id then return "Noggenfogger", nil, nil, nil, nil, nil, nil, nil, nil, id end
+    end
     for _, name in ipairs({ "SetFrameStrata", "SetBackdrop", "SetMovable", "EnableMouse", "RegisterForDrag", "StartMoving", "StopMovingOrSizing", "SetWidth", "SetJustifyH", "SetFrameLevel", "ClearAllPoints", "RegisterForClicks", "SetHighlightTexture" }) do
         methods[name] = function() end
     end
@@ -106,6 +117,7 @@ local function setup(saved, legacy)
             return true, -path
         end
         table.insert(state.played, { path = path, channel = channel, forceNoDuplicates = forceNoDuplicates })
+        if state.failPitch and path:find("\\noggenfogger\\", 1, true) then return false end
         if state.failPlayback then return false end
         return true, #state.played
     end
@@ -129,7 +141,7 @@ local function setup(saved, legacy)
     GabbaSoundsDB = saved
     GabbaWandSoundsDB = legacy
     local addon = {}
-    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
+    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
         assert(loadfile(file))("GabbaSounds", addon)
     end
     state.addon = addon
@@ -2090,6 +2102,92 @@ test("replay anonymized Classic melee results including real glances and failure
     end
     equal(#state.played, #fixture)
     for category, count in pairs(expected) do equal(state.addon.stats[category], count, category) end
+end)
+
+test("Noggenfogger only pitches own sounds while the shrink aura is active", function()
+    local state = setup()
+    local function pitched()
+        return state.played[#state.played].path:find("\\noggenfogger\\", 1, true) ~= nil
+    end
+    equal(state.addon.db.noggenfoggerPitch, true)
+    state.auras = { 16593, 16591 }
+    state:fire("UNIT_AURA", "player")
+    state:combat("RANGE_DAMAGE")
+    equal(pitched(), false, "Other elixir effects must not trigger pitch")
+    state.auras = { 16593, 16595 }
+    state:fire("UNIT_AURA", "target")
+    state:combat("RANGE_DAMAGE")
+    equal(pitched(), false, "Foreign aura updates are ignored")
+    state:fire("UNIT_AURA", "player")
+    state:combat("RANGE_DAMAGE")
+    equal(pitched(), true)
+    state:combat("RANGE_DAMAGE", 5019, "Player-Other")
+    equal(pitched(), false, "Foreign attacks keep their normal voice")
+    state.addon.PlayCategory("crit", true)
+    equal(pitched(), true, "Preview follows the player's effect")
+    state.auras = {}
+    state:fire("UNIT_AURA", "player")
+    state:combat("RANGE_DAMAGE")
+    equal(pitched(), false)
+end)
+
+test("Noggenfogger survives reload and world changes with Classic aura fallback", function()
+    local state = setup(nil, nil, { 16595 })
+    equal(state.addon.noggenfoggerShrunk, true, "Detected during addon load")
+    C_UnitAuras = nil
+    state.auras = { 16591 }
+    state:fire("PLAYER_ENTERING_WORLD")
+    equal(state.addon.noggenfoggerShrunk, false)
+    state.auras = { 16591, 16595 }
+    state:fire("PLAYER_LOGIN")
+    equal(state.addon.noggenfoggerShrunk, true)
+    UnitBuff = nil
+    state:fire("UNIT_AURA", "player")
+    equal(state.addon.noggenfoggerShrunk, false, "Missing APIs safely keep normal pitch")
+end)
+
+test("Noggenfogger setting applies to spoken casts melee failures and all magic schools", function()
+    local state = setup(nil, nil, { 16595 })
+    for _, school in ipairs(state.addon.schoolOrder) do
+        state.addon.PlayCategory("hit", true, nil, school)
+        assert(state.played[#state.played].path:find("\\noggenfogger\\", 1, true))
+    end
+    state.addon.SetOption("soundPack", "spoken")
+    for _, item in ipairs({ { "cast", "fireball" }, { "hit", "wand" }, { "crit", "bow" },
+        { "hit", "gun" }, { "crit", "blade" }, { "miss", "dagger" }, { "graze", "fist" } }) do
+        state.addon.PlayCategory(item[1], false, state.guid, "neutral", item[2])
+        assert(state.played[#state.played].path:find("\\noggenfogger\\", 1, true))
+    end
+    SlashCmdList.GABBASOUNDS("noggenfogger off")
+    equal(state.addon.db.noggenfoggerPitch, false)
+    state.addon.PlayCategory("hit", true)
+    assert(not state.played[#state.played].path:find("\\noggenfogger\\", 1, true))
+    SlashCmdList.GABBASOUNDS("noggenfogger on")
+    equal(state.addon.db.noggenfoggerPitch, true)
+    state.addon.OpenUI()
+    local check
+    for _, frame in ipairs(state.frames) do
+        if frame.label and frame.label.text == "Noggenfogger: beim Schrumpfen höher" then check = frame end
+    end
+    assert(check and check.checked)
+    check:SetChecked(false); check.scripts.OnClick(check)
+    equal(state.addon.db.noggenfoggerPitch, false)
+end)
+
+test("Missing Noggenfogger audio falls back without losing original mute ownership", function()
+    local state = setup(nil, nil, { 16595 })
+    state.failPitch = true
+    state:combat("RANGE_DAMAGE")
+    equal(#state.played, 2)
+    equal(state.addon.stats.hit, 1)
+    equal(state.addon.originalsMuted, true)
+    assert(not state.played[2].path:find("\\noggenfogger\\", 1, true))
+    local messages = #state.messages
+    state:combat("RANGE_DAMAGE")
+    equal(#state.messages, messages, "Warn only once")
+    state.failPlayback = true
+    state:combat("RANGE_DAMAGE")
+    equal(state.addon.originalsMuted, false, "Failure of both variants still fails open")
 end)
 
 print(string.format("GabbaSounds: %d tests passed", total))
