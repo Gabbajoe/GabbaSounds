@@ -41,8 +41,10 @@ Alle Pfade beziehen sich auf `GabbaSounds/spoken/warrior/`.
 | Schildschlag / Shield Slam | `shieldslam/crit.wav` | 4 Crit-Sprüche |
 | **Du blockst** einen gegnerischen Angriff | `defense/block.wav` | 4 Abwehrreaktionen |
 | **Du parierst** einen gegnerischen Angriff | `defense/parry.wav` | 4 Abwehrreaktionen |
+| **Du weichst** einem gegnerischen Angriff **aus** | `defense/dodge.wav` | 4 Abwehrreaktionen |
+| **Du widerstehst** einem Zauber vollständig | `defense/resist.wav` | 4 Abwehrreaktionen |
 
-Das sind **31 WAV-Dateien mit insgesamt 144 Varianten** für den vollständigen Plan.
+Das sind **33 WAV-Dateien mit insgesamt 152 Varianten** für den vollständigen Plan.
 Du kannst zunächst einzelne Fähigkeiten aufnehmen. Sturmangriff, Berserkerwut,
 Blutrausch und Schlachtruf ergeben einen guten ersten Satz.
 
@@ -107,13 +109,19 @@ Du brauchst nur die Fähigkeiten aufzunehmen, die du vertonen möchtest.
 | --- | --- | --- | --- | --- |
 | `defense/block.wav` | Klonk! | Abgeblockt! | Nicht durch meinen Schild! | Nö! |
 | `defense/parry.wav` | Kling! | Abgewehrt! | Zu langsam! | Netter Versuch! |
+| `defense/dodge.wav` | Wusch! | Daneben! | Knapp vorbei! | Mich kriegste nicht! |
+| `defense/resist.wav` | Pffft! | Widerstanden! | Das wirkt nicht! | Schöner Versuch! |
 
-Diese Aufnahmen sind für erfolgreiche Abwehr **durch deinen Charakter** geplant.
+Diese Aufnahmen sind für erfolgreiche Abwehr **durch deinen Charakter** geplant:
+Blocken, Parieren, Ausweichen und vollständig widerstandene Zauber. Für Resist
+planen wir nur vollständiges Widerstehen, keine bloße Teilresistenz.
+Die automatische Abwehrreaktion gehört zu diesem Aufnahmeplan und ist noch
+nicht im Addon eingebunden.
 Wenn ein Gegner deinen Angriff abwehrt oder dein Angriff verfehlt, bleiben
 die vorhandenen gemeinsamen Aufnahmen unter `../shared/miss.wav` und
 `../shared/graze.wav` vorgesehen. Die müssen nicht kopiert oder neu aufgenommen werden.
-Für Wirbelwind planen wir eine Ergebnis-Reaktion pro Anwendung; für Block und
-Parieren eine gemeinsame Mindestpause gegen zu viele gleichzeitige Rufe.
+Für Wirbelwind planen wir eine Ergebnis-Reaktion pro Anwendung; für die vier Abwehrarten
+eine gemeinsame Mindestpause gegen zu viele gleichzeitige Rufe.
 
 ## Classic-Quellen
 
