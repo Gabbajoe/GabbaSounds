@@ -35,9 +35,9 @@ Angefangen hat alles mit einem Zauberstab-Priester und einem viel zu oft
 gehörten **„wusch wusch“**. Daraus wurden **219 Sprachclips**, **126 synthetische
 Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
-> **Neu in Version 1.1.0: Nahkampf auf Wunsch von Tsukimo.**
-> 40 neue Sprachclips für Schwerter/Äxte, Streitkolben/Stäbe, Dolche und Fäuste —
-> mit eigenen Crits, gemeinsamen Fehlschlag-Sprüchen und Reaktionen auf Streifschläge.
+> **Neu in Version 1.2.0: Klein geschrumpft, höher gepitcht!** 🐭
+> Noggenfogger macht deine eigenen Sounds automatisch vier Halbtöne höher —
+> mit gleicher Spieldauer. Nach dem Schrumpfeffekt klingt alles wieder normal.
 
 ## 🎯 Für jeden Angriff das passende Paket
 
@@ -52,7 +52,7 @@ Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
 ## ✨ Was GabbaSounds kann
 
-- 🐭 **Noggenfogger-Stimme (vorbereitet für 1.2.0):** Beim Schrumpfen werden deine eigenen Sounds automatisch um vier Halbtöne höher. Spieldauer und fremde Angriffe bleiben unverändert; der Effekt ist abschaltbar.
+- 🐭 **Noggenfogger-Stimme:** Beim Schrumpfen werden deine eigenen Sounds automatisch um vier Halbtöne höher. Spieldauer und fremde Angriffe bleiben unverändert; der Effekt ist abschaltbar.
 - 🎲 **Abwechslung:** zufällige Auswahl, ohne direkte Wiederholung bei mehreren Varianten.
 - 💥 **Treffer & Crits:** eigene Pools für normale Treffer und kritische Treffer.
 - 🗣️ **Magier-Casts:** Laute beim Cast-Beginn, Kanalbeginn oder Aktivieren – passend zum Zauber.

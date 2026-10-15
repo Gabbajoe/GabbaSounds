@@ -15,7 +15,15 @@ It started with a wand priest who had heard the same default whoosh one too many
 
 ---
 
-## ⚔️ New in 1.1.0: Let's get melee!
+## 🐭 New in 1.2.0: Small character, higher voice!
+
+Noggenfogger shrank you? Your GabbaSounds get **four semitones higher** while the shrink buff lasts! Your spoken attacks, mage casts and synthetic magic all join in — with the **same playback duration**. When the buff ends, your normal voice returns. 💜
+
+Your effect changes only **your own sounds**; other players keep their normal voice. Skeleton form and slow fall alone don't trigger it.
+
+The feature is **enabled by default** and can be switched off in `/gws` or with `/gws noggenfogger off`. **Fully restart WoW after updating** to load the 345 new pitched variants.
+
+## ⚔️ Let's get melee!
 
 **Made by special request from Tsukimo!**
 
