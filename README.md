@@ -123,6 +123,7 @@ Nahkampf-Stummschaltung benötigt ein automatisches Paket mit allen vier Gruppen
 | [Bedienung & Soundpakete](docs/USAGE.md) | Alle Befehle, Varianten, Einstellungen und die Grenzen der Original-Stummschaltung |
 | [Hörproben](previews/README.md) | Browser-Player öffnen und aus den fertigen OGGs neu bauen |
 | [Magier-Aufnahmen](spoken/mage/README.md) | Ordner, Dateinamen und Aufnahmevorlagen für Frost- und Feuerzauber |
+| [Minibobsels Buffwarnungen](spoken/mage/buffs/README.md) | Neue Warnlogik und Aufnahmeziele für 2-Minuten- und Fehlend-Meldungen (in Vorbereitung) |
 | [Nahkampf-Aufnahmen](spoken/melee/README.md) | Vorlagen und Ablage für Schwerter, Äxte, Kolben, Stäbe, Dolche und Fäuste |
 | [Entwicklung & Releases](docs/RELEASING.md) | Arbeitsbranches, Pull Requests, CI, Paketbau und Veröffentlichungen |
 | [Sound-ID-Quellen](THIRD_PARTY_NOTICES.md) | Herkunft der verwendeten Originalsound-Zuordnungen |

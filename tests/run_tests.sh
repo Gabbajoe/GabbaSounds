@@ -7,6 +7,8 @@ LUAC="${LUAC:-luac}"
 "$LUAC" -p MageEvents.lua
 "$LUAC" -p Core.lua
 "$LUAC" -p Noggenfogger.lua
+"$LUAC" -p MageBuffAlerts.lua
+"$LUAC" -p BuffAlertSoundData.lua
 "$LUAC" -p UI.lua
 "$LUAC" -p SoundData.lua
 "$LUAC" -p CustomSoundData.lua
@@ -16,4 +18,5 @@ LUAC="${LUAC:-luac}"
 "$LUAC" -p Weapons.lua
 "$LUAC" -p Minimap.lua
 "$LUA" tests/test_addon.lua
+"$LUA" tests/test_mage_buff_alerts.lua
 python3 -m unittest discover -s tests -p 'test_*.py'

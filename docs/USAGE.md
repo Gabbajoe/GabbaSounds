@@ -27,6 +27,26 @@ Die höheren Dateien liegen unter `Sounds/noggenfogger/`; `noggenfogger/manifest
 verknüpft sie mit den Originalen. Neu bauen mit `python3 tools/build_noggenfogger.py`
 (FFmpeg mit Rubber Band, libvorbis und NumPy). Die Originaldateien bleiben erhalten.
 
+## Minibobsels Magier-Buffwarnungen (in Vorbereitung)
+
+`/gws buffs` oder der Button „Buffwarnungen“ öffnet die Einstellungen. Nur für
+**Minibobsel mit Klasse Magier**: Arkane Intelligenz/Brillanz bei dir und den
+Mana-Klassen in deiner Gruppe oder deinem Raid sowie eine eigene Frost-, Eis-
+oder Magierrüstung. Verschiedene Ränge und Buffs anderer Magier zählen.
+
+Eine lokale Bildschirmwarnung kommt bei **höchstens zwei Minuten Restzeit** und
+erneut beim fehlenden/abgelaufenen Buff, jeweils einmal pro Zustand. Nachbuffen
+aktiviert sie wieder. Sprachausgabe hat getrennte Aufnahmen für die beiden
+Stufen und die beiden Kategorien; Gruppenmeldungen werden zusammengefasst.
+Es wird kein Chat an andere Spieler gesendet.
+
+Keine Prüfung ungelernter Buff-Kategorien, toter/offline/unsichtbarer Mitglieder
+oder während du tot/im Flugtaxi bist. Nach Ladebildschirmen fünf Sekunden Pause.
+Schalter für das Modul, Intelligenz, Rüstung und Ton sind standardmäßig an und
+pro Charakter gespeichert. Das ganze Addon ausschalten stoppt auch diese Warnungen.
+Fehlende WAV-Aufnahmen bedeuten vorerst nur Textwarnungen. Mehr zu Aufnahme,
+Hörproben und Import: [Aufnahmevorlagen](../spoken/mage/buffs/README.md).
+
 ## Installation und Auswahl
 
 `GabbaSounds-1.2.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`

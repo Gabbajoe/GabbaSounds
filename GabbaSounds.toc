@@ -16,6 +16,8 @@ Melee.lua
 MageSpells.lua
 MageEvents.lua
 Noggenfogger.lua
+BuffAlertSoundData.lua
+MageBuffAlerts.lua
 Core.lua
 UI.lua
 Minimap.lua

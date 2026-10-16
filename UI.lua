@@ -13,6 +13,77 @@ local weaponOrder = { "wand", "bow", "gun" }
 for _, key in ipairs(addon.mageOrder) do weaponOrder[#weaponOrder + 1] = key end
 for _, key in ipairs(addon.meleeOrder) do weaponOrder[#weaponOrder + 1] = key end
 local weaponLabels = { wand = "Zauberstab", bow = "Pfeile / Armbrust", gun = "Schusswaffen", frostbolt = "Frostblitz", ranged = "unbekannte Fernkampfwaffe" }
+local buffPanel, buffNote
+local buffChecks = {}
+
+function addon.RefreshMageBuffUI()
+    if not buffPanel or not buffPanel:IsShown() or not addon.db then return end
+    for key, check in pairs(buffChecks) do check:SetChecked(addon.db[key]) end
+    local count = 0
+    for _, bank in pairs(addon.buffAlertSounds) do
+        for _ in pairs(bank) do count = count + 1 end
+    end
+    buffNote:SetText((addon.IsMageBuffCharacter() and "Minibobsel (Magier): passend." or "Automatische Warnungen nur für Minibobsel (Magier).")
+        .. (addon.db.enabled and "" or " Addon ausgeschaltet.")
+        .. "\n" .. count .. "/4 Aufnahmen bereit. Ohne Aufnahme nur Textwarnung.")
+end
+
+function addon.OpenMageBuffUI()
+    if not addon.db then return end
+    if not buffPanel then
+        buffPanel = CreateFrame("Frame", "GabbaSoundsBuffPanel", UIParent, "BackdropTemplate")
+        buffPanel:SetSize(440, 430)
+        buffPanel:SetPoint("CENTER")
+        buffPanel:SetFrameStrata("DIALOG")
+        buffPanel:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border", tile = true, tileSize = 32, edgeSize = 32, insets = { left = 11, right = 12, top = 12, bottom = 11 } })
+        buffPanel:SetMovable(true)
+        buffPanel:EnableMouse(true)
+        buffPanel:RegisterForDrag("LeftButton")
+        buffPanel:SetScript("OnDragStart", function(self) self:StartMoving() end)
+        buffPanel:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+        buffPanel:SetScript("OnShow", addon.RefreshMageBuffUI)
+        tinsert(UISpecialFrames, "GabbaSoundsBuffPanel")
+        local close = CreateFrame("Button", nil, buffPanel, "UIPanelCloseButton")
+        close:SetPoint("TOPRIGHT", -5, -5)
+        local title = buffPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+        title:SetPoint("TOPLEFT", 25, -25)
+        title:SetText("Minibobsels Magier-Buffwarnungen")
+        for index, option in ipairs({
+            { "mageBuffAlerts", "Buffwarnungen aktiv" },
+            { "mageBuffIntellect", "Intelligenz / Brillanz (eigene und Gruppe)" },
+            { "mageBuffArmor", "Eigene Frost-, Eis- oder Magierrüstung" },
+            { "mageBuffSound", "Gesprochene Warnungen abspielen" },
+        }) do
+            local key = option[1]
+            local check = CreateFrame("CheckButton", nil, buffPanel, "UICheckButtonTemplate")
+            check:SetPoint("TOPLEFT", 22, -58 - (index - 1) * 33)
+            check.label = check:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+            check.label:SetPoint("LEFT", check, "RIGHT", 4, 0)
+            check.label:SetText(option[2])
+            check:SetScript("OnClick", function(self) addon.SetOption(key, self:GetChecked()) end)
+            buffChecks[key] = check
+        end
+        local help = buffPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        help:SetPoint("TOPLEFT", 29, -205)
+        help:SetWidth(380)
+        help:SetJustifyH("LEFT")
+        help:SetText("Eigene Bildschirmwarnung: bei höchstens 2 Minuten Restzeit und erneut, wenn der Buff fehlt. Nachbuffen aktiviert die Warnung erneut. Keine Nachrichten an die Gruppe.")
+        buffNote = buffPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        buffNote:SetPoint("TOPLEFT", 29, -272)
+        buffNote:SetWidth(380)
+        buffNote:SetJustifyH("LEFT")
+        for index, item in ipairs({ { "intellect", "expiring", "Int: bald abgelaufen" }, { "intellect", "missing", "Int: fehlt" },
+                                   { "armor", "expiring", "Rüstung: bald abgelaufen" }, { "armor", "missing", "Rüstung: fehlt" } }) do
+            local key, phase = item[1], item[2]
+            local button = CreateFrame("Button", nil, buffPanel, "UIPanelButtonTemplate")
+            button:SetSize(185, 25)
+            button:SetPoint("TOPLEFT", 25 + (index - 1) % 2 * 200, -335 - math.floor((index - 1) / 2) * 32)
+            button:SetText(item[3])
+            button:SetScript("OnClick", function() addon.PreviewMageBuff(key, phase) end)
+        end
+    end
+    buffPanel:Show()
+end
 
 for key, spell in pairs(addon.mageSpells) do weaponLabels[key] = spell.label end
 for key, label in pairs(addon.meleeLabels) do weaponLabels[key] = label end
@@ -92,6 +163,12 @@ local function BuildPanel()
     local title = panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOPLEFT", 25, -25)
     title:SetText("GabbaSounds")
+
+    local buffs = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    buffs:SetSize(125, 22)
+    buffs:SetPoint("TOPLEFT", 270, -25)
+    buffs:SetText("Buffwarnungen")
+    buffs:SetScript("OnClick", function() addon.OpenMageBuffUI() end)
 
     packButton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     packButton:SetSize(375, 25)

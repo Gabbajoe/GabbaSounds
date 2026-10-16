@@ -1,0 +1,3 @@
+-- Filled by tools/import_buff_alerts.py once the voice recordings are ready.
+local _, addon = ...
+addon.buffAlertSounds = { intellect = {}, armor = {} }

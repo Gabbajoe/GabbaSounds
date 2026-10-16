@@ -23,6 +23,11 @@ def main():
     if args.pack in ('magic', 'all'):
         manifest.extend(json.loads((ROOT / 'manifest.json').read_text()))
     if args.pack in ('spoken', 'all'):
+        alerts = json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())
+        for source in alerts['sources']:
+            if not args.runtime_only:
+                assert hashlib.sha256((ROOT / source['file']).read_bytes()).hexdigest() == source['sha256'], 'Buff recording was changed'
+        manifest.extend(alerts['sounds'])
         custom = json.loads((ROOT / 'spoken' / 'manifest.json').read_text())
         if custom.get('version') == 2:
             for source in custom['sources']:
