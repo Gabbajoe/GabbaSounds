@@ -14,7 +14,7 @@
   <a href="https://github.com/Gabbajoe/GabbaSounds/releases"><img src="https://img.shields.io/github/v/release/Gabbajoe/GabbaSounds?style=flat-square&amp;color=a78bfa&amp;label=Release" alt="Neuester veröffentlichter Release"></a>
   <img src="https://img.shields.io/badge/WoW-Classic_Era_%26_Hardcore-a78bfa?style=flat-square" alt="WoW Classic Era und Hardcore">
   <img src="https://img.shields.io/badge/Interface-11509-22d3ee?style=flat-square" alt="Interface 11509">
-  <img src="https://img.shields.io/badge/Sprachclips-219-f472b6?style=flat-square" alt="219 Sprachclips">
+  <img src="https://img.shields.io/badge/Sprachclips-223-f472b6?style=flat-square" alt="223 Sprachclips">
   <img src="https://img.shields.io/badge/Magie--Sounds-126-fbbf24?style=flat-square" alt="126 synthetische Magie-Sounds">
 </p>
 
@@ -32,12 +32,13 @@ Zauberstab-Laute, Pfeil- und Gewehr-Sounds, gesprochene Magier-Casts und
 Waffenangriffe mit passenden Crit- und Fehlschlag-Sprüchen.
 
 Angefangen hat alles mit einem Zauberstab-Priester und einem viel zu oft
-gehörten **„wusch wusch“**. Daraus wurden **219 Sprachclips**, **126 synthetische
+gehörten **„wusch wusch“**. Daraus wurden **223 Sprachclips**, **126 synthetische
 Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
-> **Neu in Version 1.2.0: Klein geschrumpft, höher gepitcht!** 🐭
-> Noggenfogger macht deine eigenen Sounds automatisch vier Halbtöne höher —
-> mit gleicher Spieldauer. Nach dem Schrumpfeffekt klingt alles wieder normal.
+> **Neu in Version 1.3.0: Minibobsel, nachbuffen!** 🧙
+> Vier eigene Sprachwarnungen für bald ablaufende und fehlende Magier-Buffs.
+> Automatisch nur für **Minibobsel als Magier**: Intelligenz/Brillanz in der
+> Gruppe und deine eigene Rüstung. Mit passenden Noggenfogger-Varianten. 💜
 
 ## 🎯 Für jeden Angriff das passende Paket
 
@@ -52,6 +53,7 @@ Magie-Sounds** und jede Menge Wünsche aus der Community. 💜
 
 ## ✨ Was GabbaSounds kann
 
+- 🧙 **Minibobsels Buffwarnungen:** getrennte Sprüche bei höchstens zwei Minuten Restzeit und bei fehlenden Buffs. Einstellungen und Hörproben unter `/gws buffs`; die automatischen Warnungen sind auf Minibobsel als Magier begrenzt.
 - 🐭 **Noggenfogger-Stimme:** Beim Schrumpfen werden deine eigenen Sounds automatisch um vier Halbtöne höher. Spieldauer und fremde Angriffe bleiben unverändert; der Effekt ist abschaltbar.
 - 🎲 **Abwechslung:** zufällige Auswahl, ohne direkte Wiederholung bei mehreren Varianten.
 - 💥 **Treffer & Crits:** eigene Pools für normale Treffer und kritische Treffer.
@@ -90,7 +92,7 @@ werden lokal abgespielt; andere Spieler erhalten deine Audiodateien nicht.
 ## 🎧 Hör dir die Pakete an
 
 Die [Browser-Hörproben](https://gabbajoe.github.io/GabbaSounds/) zeigen dir alle Sprachclips,
-die vier Nahkampf-Pakete und die synthetischen Zauberstab-Sounds.
+die vier Nahkampf-Pakete, [Minibobsels Buffwarnungen](https://gabbajoe.github.io/GabbaSounds/previews/buffs/index.html) und die synthetischen Zauberstab-Sounds.
 **Direkt öffnen und abspielen — kein Download nötig.**
 Für die [Offline-Nutzung und den Bau der Player](previews/README.md) gibt es eine eigene Anleitung.
 Im Spiel findest du die Hörproben direkt unter **`/gws`**.
@@ -123,6 +125,7 @@ Nahkampf-Stummschaltung benötigt ein automatisches Paket mit allen vier Gruppen
 | [Bedienung & Soundpakete](docs/USAGE.md) | Alle Befehle, Varianten, Einstellungen und die Grenzen der Original-Stummschaltung |
 | [Hörproben](previews/README.md) | Browser-Player öffnen und aus den fertigen OGGs neu bauen |
 | [Magier-Aufnahmen](spoken/mage/README.md) | Ordner, Dateinamen und Aufnahmevorlagen für Frost- und Feuerzauber |
+| [Minibobsels Buffwarnungen](spoken/mage/buffs/README.md) | Persönliche Warnungen, Hörproben und Aufnahmeziele für 2-Minuten- und Fehlend-Meldungen |
 | [Nahkampf-Aufnahmen](spoken/melee/README.md) | Vorlagen und Ablage für Schwerter, Äxte, Kolben, Stäbe, Dolche und Fäuste |
 | [Entwicklung & Releases](docs/RELEASING.md) | Arbeitsbranches, Pull Requests, CI, Paketbau und Veröffentlichungen |
 | [Sound-ID-Quellen](THIRD_PARTY_NOTICES.md) | Herkunft der verwendeten Originalsound-Zuordnungen |

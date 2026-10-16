@@ -1,0 +1,78 @@
+{
+  "sources": [
+    {
+      "file": "spoken/mage/buffs/intellect/expiring.wav",
+      "sha256": "12bebc2db6f0eab3a7758288e3a153c1dabe8c0a94e8e79e3d44a1766d03a815"
+    },
+    {
+      "file": "spoken/mage/buffs/intellect/missing.wav",
+      "sha256": "5790b93f1ebd5d941c3091280952bb3d5e08a2b842579ce9e6a799b0213b71e4"
+    },
+    {
+      "file": "spoken/mage/buffs/armor/expiring.wav",
+      "sha256": "2f318a9acb29119cd88ea5a9f64596b9933148ea871dbc089680e511bb3dc62e"
+    },
+    {
+      "file": "spoken/mage/buffs/armor/missing.wav",
+      "sha256": "693ad0d5a0881b0b703fcd2cf3182ae84f31bb483ade4cdf06629ab6065fdf44"
+    }
+  ],
+  "sounds": [
+    {
+      "file": "Sounds/voice_buff_intellect_expiring.ogg",
+      "name": "Intelligenz / Brillanz – läuft in 2 Minuten ab",
+      "buff": "intellect",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.2069160997732427,
+      "source": "spoken/mage/buffs/intellect/expiring.wav",
+      "source_start": 0.3294331065759637,
+      "source_end": 2.536349206349206,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_intellect_missing.ogg",
+      "name": "Intelligenz / Brillanz – fehlt / abgelaufen",
+      "buff": "intellect",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.7554195011337868,
+      "source": "spoken/mage/buffs/intellect/missing.wav",
+      "source_start": 0.3892517006802721,
+      "source_end": 3.144671201814059,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_armor_expiring.ogg",
+      "name": "Magier-Rüstungsbuff – läuft in 2 Minuten ab",
+      "buff": "armor",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.3248072562358275,
+      "source": "spoken/mage/buffs/armor/expiring.wav",
+      "source_start": 0.3191383219954649,
+      "source_end": 2.6439455782312926,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_armor_missing.ogg",
+      "name": "Magier-Rüstungsbuff – fehlt / abgelaufen",
+      "buff": "armor",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 1.904421768707483,
+      "source": "spoken/mage/buffs/armor/missing.wav",
+      "source_start": 0.35873015873015873,
+      "source_end": 2.263151927437642,
+      "sample_rate": 44100,
+      "channels": 2
+    }
+  ]
+}

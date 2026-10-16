@@ -2,7 +2,7 @@
 
 [Zurück zur README](../README.md) · [Entwicklung und Releases](RELEASING.md)
 
-Diese Anleitung beschreibt Version **1.2.0** für Classic Era /
+Diese Anleitung beschreibt Version **1.3.0** für Classic Era /
 Hardcore 1.15.9, Interface 11509. Veröffentlichungen und Paketbau sind in der
 [Release-Anleitung](RELEASING.md) dokumentiert.
 
@@ -27,13 +27,33 @@ Die höheren Dateien liegen unter `Sounds/noggenfogger/`; `noggenfogger/manifest
 verknüpft sie mit den Originalen. Neu bauen mit `python3 tools/build_noggenfogger.py`
 (FFmpeg mit Rubber Band, libvorbis und NumPy). Die Originaldateien bleiben erhalten.
 
+## Minibobsels Magier-Buffwarnungen (neu für 1.3.0)
+
+`/gws buffs` oder der Button „Buffwarnungen“ öffnet die Einstellungen. Nur für
+**Minibobsel mit Klasse Magier**: Arkane Intelligenz/Brillanz bei dir und den
+Mana-Klassen in deiner Gruppe oder deinem Raid sowie eine eigene Frost-, Eis-
+oder Magierrüstung. Verschiedene Ränge und Buffs anderer Magier zählen.
+
+Eine lokale Bildschirmwarnung kommt bei **höchstens zwei Minuten Restzeit** und
+erneut beim fehlenden/abgelaufenen Buff, jeweils einmal pro Zustand. Nachbuffen
+aktiviert sie wieder. Sprachausgabe hat getrennte Aufnahmen für die beiden
+Stufen und die beiden Kategorien; Gruppenmeldungen werden zusammengefasst.
+Es wird kein Chat an andere Spieler gesendet.
+
+Keine Prüfung ungelernter Buff-Kategorien, toter/offline/unsichtbarer Mitglieder
+oder während du tot/im Flugtaxi bist. Nach Ladebildschirmen fünf Sekunden Pause.
+Schalter für das Modul, Intelligenz, Rüstung und Ton sind standardmäßig an und
+pro Charakter gespeichert. Das ganze Addon ausschalten stoppt auch diese Warnungen.
+Vier Warnaufnahmen und vier höhere Noggenfogger-Varianten sind enthalten. Mehr zu Aufnahme,
+Hörproben und Import: [Aufnahmevorlagen](../spoken/mage/buffs/README.md).
+
 ## Installation und Auswahl
 
-`GabbaSounds-1.2.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`
+`GabbaSounds-1.3.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`
 entpacken. Darin muss anschließend `GabbaSounds/GabbaSounds.toc` liegen.
 Den WoW-Client vollständig schließen und neu starten, damit alle neuen
-Sounddateien geladen werden. Das ZIP enthält 690 fertige OGGs: 219 Aufnahmen,
-126 synthetische Sounds und 345 höhere Noggenfogger-Varianten, ohne WAV-Quellen, Charakterdaten oder
+Sounddateien geladen werden. Das ZIP enthält 698 fertige OGGs: 223 Aufnahmen,
+126 synthetische Sounds und 349 höhere Noggenfogger-Varianten, ohne WAV-Quellen, Charakterdaten oder
 Entwicklerwerkzeuge. Die Einstellungen bleiben pro Charakter gespeichert;
 neue Charaktere starten wie bisher mit dem Magiepaket.
 
@@ -94,7 +114,8 @@ deaktiviertem Addon und verändern keine Kampfzähler.
 
 ## Deine Aufnahmen
 
-51 WAV-Quelldateien wurden in 219 unterschiedliche OGG-Clips geschnitten.
+51 WAV-Quelldateien wurden in 219 unterschiedliche Angriffsclips geschnitten.
+Vier weitere Aufnahmen liefern Minibobsels Buffwarnungen: insgesamt 223 Sprachclips.
 
 | Waffe / Zauber | Cast / Aktivieren | Normale Treffer | Crits |
 | --- | ---: | ---: | ---: |
@@ -142,7 +163,8 @@ unverändert. WAV-Clips liegen unter `spoken/clips/`, WoW-Dateien unter `Sounds/
 
 Die [Browser-Hörproben](https://gabbajoe.github.io/GabbaSounds/) sind direkt online
 abspielbar. Für die Offline-Nutzung verlinkt `previews/index.html` dieselben Player. `previews/spoken/index.html`
-enthält alle 219 Sprachclips; `previews/melee/` die Nahkampf-Pakete und
+enthält die 219 Angriffsclips; `previews/buffs/` die vier Buffwarnungen,
+`previews/melee/` die Nahkampf-Pakete und
 `previews/magic/` die synthetischen Sounds. Die kleinen HTML-Seiten sind im Repo
 enthalten und laden OGGs aus `Sounds/`, ohne Internet oder Webserver. Lade dafür
 das vollständige Repository herunter. `python3 tools/build_previews.py` baut

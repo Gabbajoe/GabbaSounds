@@ -141,7 +141,7 @@ local function setup(saved, legacy, auras)
     GabbaSoundsDB = saved
     GabbaWandSoundsDB = legacy
     local addon = {}
-    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
+    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "BuffAlertSoundData.lua", "MageBuffAlerts.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
         assert(loadfile(file))("GabbaSounds", addon)
     end
     state.addon = addon
@@ -2188,6 +2188,37 @@ test("Missing Noggenfogger audio falls back without losing original mute ownersh
     state.failPlayback = true
     state:combat("RANGE_DAMAGE")
     equal(state.addon.originalsMuted, false, "Failure of both variants still fails open")
+end)
+
+test("mage buff options validate persist and expose separate warning previews", function()
+    local state = setup({ mageBuffAlerts = "invalid", mageBuffIntellect = false, mageBuffSound = "invalid" })
+    equal(state.addon.db.mageBuffAlerts, true)
+    equal(state.addon.db.mageBuffIntellect, false)
+    equal(state.addon.db.mageBuffArmor, true)
+    equal(state.addon.db.mageBuffSound, true)
+    SlashCmdList.GABBASOUNDS("buffs off")
+    equal(state.addon.db.mageBuffAlerts, false)
+    SlashCmdList.GABBASOUNDS("buffs on")
+    equal(state.addon.db.mageBuffAlerts, true)
+    SlashCmdList.GABBASOUNDS("buffs")
+    assert(GabbaSoundsBuffPanel:IsShown())
+    local check
+    for _, frame in ipairs(state.frames) do
+        if frame.label and frame.label.text == "Gesprochene Warnungen abspielen" then check = frame end
+    end
+    assert(check and check.checked)
+    check:SetChecked(false); check.scripts.OnClick(check)
+    equal(state.addon.db.mageBuffSound, false)
+    state.addon.buffAlertSounds.intellect.expiring = "test_buff_expiring.ogg"
+    SlashCmdList.GABBASOUNDS("buffs intellect expiring")
+    equal(#state.played, 1)
+    assert(state.played[1].path:find("test_buff_expiring.ogg", 1, true))
+    state.addon.OpenUI()
+    local button
+    for _, frame in ipairs(state.frames) do if frame.text == "Buffwarnungen" then button = frame end end
+    assert(button)
+    GabbaSoundsBuffPanel:Hide(); button.scripts.OnClick()
+    assert(GabbaSoundsBuffPanel:IsShown())
 end)
 
 print(string.format("GabbaSounds: %d tests passed", total))

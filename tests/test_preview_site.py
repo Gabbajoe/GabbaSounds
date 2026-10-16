@@ -1,5 +1,6 @@
 """Verify the hosted listening site and its separation from the addon package."""
 from pathlib import Path
+import json
 import sys
 import tempfile
 import unittest
@@ -16,8 +17,11 @@ class PreviewSite(unittest.TestCase):
             count = build_site(ROOT, site)
             files = {p.relative_to(site).as_posix() for p in site.rglob('*') if p.is_file()}
             self.assertEqual(count, len(files))
-            self.assertEqual(sum(n.endswith('.ogg') for n in files), 345)
-            self.assertEqual(sum(n.endswith('.html') for n in files), 9)
+            alerts = len(json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())['sounds'])
+            self.assertEqual(sum(n.endswith('.ogg') for n in files), 345 + alerts)
+            self.assertEqual(sum(n.endswith('.html') for n in files), 10)
+            self.assertIn('previews/buffs/index.html', files)
+            self.assertIn('Buffwarnungen', (site / 'index.html').read_text())
             self.assertFalse(any(n.endswith('.wav') or '/archive/' in n for n in files))
             self.assertTrue(all(n.endswith(('.ogg', '.html')) or n in
                                 ('.nojekyll', 'curseforge/logo.png') for n in files))

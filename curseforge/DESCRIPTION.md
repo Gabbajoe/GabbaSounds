@@ -5,7 +5,7 @@
 **Pew pew. Whoosh. Bamm. And something extra for that epic crit.** 💥
 
 ![Classic Era and Hardcore](https://img.shields.io/badge/WoW-Classic_Era_%26_Hardcore-a78bfa?style=flat-square)
-![German voice clips](https://img.shields.io/badge/German_voice_clips-219-f472b6?style=flat-square)
+![German voice clips](https://img.shields.io/badge/German_voice_clips-223-f472b6?style=flat-square)
 ![Magic sounds](https://img.shields.io/badge/Magic_sounds-126-fbbf24?style=flat-square)
 [![Latest release](https://img.shields.io/github/v/release/Gabbajoe/GabbaSounds?style=flat-square&color=22d3ee&label=Release)](https://github.com/Gabbajoe/GabbaSounds/releases)
 
@@ -15,13 +15,19 @@ It started with a wand priest who had heard the same default whoosh one too many
 
 ---
 
-## 🐭 New in 1.2.0: Small character, higher voice!
+## 🧙 New in 1.3.0: Minibobsel, time to rebuff!
+
+Four original voice reminders give **Minibobsel the mage** a heads-up when buffs have **two minutes or less remaining**, and a different reminder when they're missing. Intellect/Brilliance covers you and visible mana-using group members; your own Frost, Ice or Mage Armor counts as one armor buff. 💜
+
+**This personal automatic reminder is restricted to a mage named Minibobsel.** Everyone can listen to the four clips in `/gws buffs` or [in the browser](https://gabbajoe.github.io/GabbaSounds/previews/buffs/index.html). Reminders stay on your own screen, share one voice reaction across affected group members and support the higher Noggenfogger voice. No messages are sent to your party or raid.
+
+## 🐭 Small character, higher voice!
 
 Noggenfogger shrank you? Your GabbaSounds get **four semitones higher** while the shrink buff lasts! Your spoken attacks, mage casts and synthetic magic all join in — with the **same playback duration**. When the buff ends, your normal voice returns. 💜
 
 Your effect changes only **your own sounds**; other players keep their normal voice. Skeleton form and slow fall alone don't trigger it.
 
-The feature is **enabled by default** and can be switched off in `/gws` or with `/gws noggenfogger off`. **Fully restart WoW after updating** to load the 345 new pitched variants.
+The feature is **enabled by default** and can be switched off in `/gws` or with `/gws noggenfogger off`. **Fully restart WoW after updating** to load all 349 pitched variants.
 
 ## ⚔️ Let's get melee!
 

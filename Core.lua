@@ -15,6 +15,10 @@ local defaults = {
     soundPack = "magic",
     meleeInterval = 0.25,
     noggenfoggerPitch = true,
+    mageBuffAlerts = true,
+    mageBuffIntellect = true,
+    mageBuffArmor = true,
+    mageBuffSound = true,
     minimapAngle = 145,
     minimapHidden = false,
 }
@@ -255,6 +259,7 @@ function addon.SetOption(key, value)
         return false
     end
     addon.db[key] = value
+    addon.MageBuffOptionsChanged(key)
     -- An explicit enable/muting change permits retry after fixing missing files.
     if (key == "enabled" or key == "muteOriginal" or key == "soundPack") and value then
         playbackFailed = false
@@ -466,6 +471,7 @@ local function Initialize()
     addon.db.minimapAngle = addon.db.minimapAngle % 360
     playerGUID = UnitGUID("player")
     addon.RefreshNoggenfogger()
+    addon.InitializeMageBuffAlerts()
     addon.UpdateOriginalMuting()
     if addon.InitializeMinimap then addon.InitializeMinimap() end
 end
@@ -583,6 +589,17 @@ SlashCmdList.GABBASOUNDS = function(message)
             addon.SetOption(command == "spokenonly" and "spokenOnly" or command == "mute" and "muteOriginal" or command == "all" and "allSources" or command, argument == "on")
             addon.Print(command .. ": " .. argument)
         end
+    elseif command == "buffs" then
+        if argument == "on" or argument == "off" then
+            addon.SetOption("mageBuffAlerts", argument == "on")
+            addon.Print("Magier-Buffwarnungen für Minibobsel: " .. argument)
+        else
+            local key, phase = argument:match("^(intellect)%s+(%S+)$")
+            if not key then key, phase = argument:match("^(armor)%s+(%S+)$") end
+            if key and (phase == "expiring" or phase == "missing") then addon.PreviewMageBuff(key, phase)
+            elseif argument == "" then addon.OpenMageBuffUI()
+            else addon.Print("/gws buffs [on|off|intellect expiring|intellect missing|armor expiring|armor missing]") end
+        end
     elseif command == "noggenfogger" then
         if argument == "on" or argument == "off" then
             addon.SetOption("noggenfoggerPitch", argument == "on")
@@ -620,6 +637,6 @@ SlashCmdList.GABBASOUNDS = function(message)
             .. "; Magier-Cast: " .. (addon.db.cast and "an" or "aus") .. " (" .. addon.stats.cast .. " abgespielt)"
             .. "; abgespielt: " .. addon.stats.hit .. " Treffer, " .. addon.stats.crit .. " Crits, " .. addon.stats.resist .. " Widerstände, " .. addon.stats.miss .. " Fehlschläge, " .. addon.stats.absorb .. " Absorptionen, " .. addon.stats.graze .. " Teiltreffer.")
     else
-        addon.Print("/gws öffnet Einstellungen. Befehle: on, off, pack magic|spoken, spokenonly on|off, test hit|crit|resist|miss|absorb, all on|off, mute on|off, channel sfx|master, status")
+        addon.Print("/gws öffnet Einstellungen. Befehle: on, off, pack magic|spoken, spokenonly on|off, test hit|crit|resist|miss|absorb, buffs, all on|off, mute on|off, channel sfx|master, status")
     end
 end

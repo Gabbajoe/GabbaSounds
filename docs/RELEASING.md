@@ -62,22 +62,24 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The current version is **1.2.0** (Noggenfogger pitch). Pushing `main` does not
+The current version is **1.3.0** (personal mage buff reminders). Pushing `main` does not
 publish a release or upload to CurseForge. A release tag explicitly starts that
 publishing workflow.
 
-**Author release authorization (2026-10-15):** the author explicitly requested
-publication of 1.2.0 after the Noggenfogger implementation, tests and local
-installation. After required CI passes, tag the merged `main` commit as `v1.2.0`.
-The configured workflow publishes to GitHub and submits the ZIP to CurseForge.
-A newly uploaded file can require its own moderation.
+**Author release authorization (2026-10-16):** the author explicitly requested
+local installation and publication of 1.3.0 after the personal Minibobsel mage
+reminders and their four voice recordings were prepared and checked. After
+required CI passes, tag the merged `main` commit as `v1.3.0`. The configured
+workflow publishes to GitHub and submits the ZIP to CurseForge. A newly uploaded
+file can require its own moderation. Version 1.2.0 was published on 2026-10-15.
+The separately held community-credits PR is not included in this release.
 
 The initial addon approval and the author's 1.1.0 release request on 2026-10-11
 lifted the earlier hold from 2026-10-08. Version 1.1.0 was published successfully.
 
 ## Prepare the next version
 
-1. Update addon code and any sound mappings. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`. After changing encoded sounds, run `python3 tools/build_noggenfogger.py` to refresh the +4-semitone variants and their source hashes (FFmpeg with Rubber Band and libvorbis required).
+1. Update addon code and any sound mappings. Buff warning recordings have a separate importer: `python3 tools/import_buff_alerts.py`; it preserves attack clips and renders only their four matching Noggenfogger variants. If you have new recordings locally, import them first with `python3 tools/import_spoken_library.py`. After changing encoded sounds, run `python3 tools/build_noggenfogger.py` to refresh the +4-semitone variants and their source hashes (FFmpeg with Rubber Band and libvorbis required).
 2. Update `## Version` in `GabbaSounds.toc`, README version/install filename, and any changed feature/count documentation.
 3. Add `curseforge/CHANGELOG-<version>.md` with the release notes.
 4. Run local checks and build:
@@ -113,8 +115,8 @@ and audio links, then deploys through GitHub Pages after relevant changes reach
 Actions publishing source in the repository settings.
 
 `python3 tools/build_preview_site.py --output-dir dist/site` creates the site in
-a destination that does not yet exist. Only the eight current player pages,
-the landing page, logo, `.nojekyll` and 345 manifest-listed OGGs are included.
+a destination that does not yet exist. Only the nine current player pages,
+the landing page, logo, `.nojekyll` and 349 manifest-listed OGGs are included.
 Private recordings and archived players are excluded. This workflow neither
 creates an addon release nor uploads to CurseForge. The release ZIP continues
 to use its independent runtime allowlist.
@@ -131,7 +133,7 @@ python3 tools/validate_sounds.py --pack all --runtime-only
 python3 tools/build_package.py --output-dir dist
 ```
 
-Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 690 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
+Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 698 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
 
 The pipeline packages reviewed audio; it does not re-slice or re-encode recordings. `python3 tools/import_spoken_library.py --registry-only` can regenerate the spoken browser preview from the checked-in OGGs without any WAV recordings.
 
