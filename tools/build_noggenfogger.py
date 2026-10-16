@@ -16,7 +16,8 @@ RATE = 44100
 def source_sounds(root=ROOT):
     return json.loads((root / 'manifest.json').read_text()) + json.loads(
         (root / 'spoken/manifest.json').read_text())['sounds'] + json.loads(
-        (root / 'spoken/mage/buffs/manifest.json').read_text())['sounds']
+        (root / 'spoken/mage/buffs/manifest.json').read_text())['sounds'] + json.loads(
+        (root / 'spoken/herbalism/manifest.json').read_text())['sounds']
 
 
 def render(item):

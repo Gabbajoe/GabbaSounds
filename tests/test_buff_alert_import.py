@@ -30,6 +30,8 @@ class BuffAlertImport(unittest.TestCase):
                     sources[source] = hashlib.sha256(source.read_bytes()).hexdigest()
             for name, data in [('manifest.json', []), ('spoken/manifest.json', {'sounds': []})]:
                 (root / name).write_text(json.dumps(data))
+            (root / 'spoken/herbalism').mkdir()
+            (root / 'spoken/herbalism/manifest.json').write_text('{"sounds": []}')
             (root / 'noggenfogger').mkdir()
             existing = {'source_file': 'Sounds/previous.ogg', 'file': 'Sounds/noggenfogger/previous.ogg'}
             (root / existing['file']).parent.mkdir(parents=True)

@@ -62,7 +62,7 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The current version is **1.3.0** (personal mage buff reminders). Pushing `main` does not
+The published version is **1.3.0** (personal mage buff reminders). Pushing `main` does not
 publish a release or upload to CurseForge. A release tag explicitly starts that
 publishing workflow.
 
@@ -73,6 +73,14 @@ required CI passes, tag the merged `main` commit as `v1.3.0`. The configured
 workflow publishes to GitHub and submits the ZIP to CurseForge. A newly uploaded
 file can require its own moderation. Version 1.2.0 was published on 2026-10-15.
 The separately held community-credits PR is not included in this release.
+
+The separate `feature/herbalism-tooltip-alerts` branch prepares **1.4.0** as a
+local test build. The author selected tooltip-based herb detection on 2026-10-16
+after automatic scanning proved unavailable. Two herb recordings and their
+pitched variants bring this development build to **702 OGGs**. It is not yet
+published; validate real herb tooltips in-game before a future release. Import
+these recordings with `python3 tools/import_herbalism.py`. The existing 1.3.0
+release authorization does not by itself mark 1.4.0 as published.
 
 The initial addon approval and the author's 1.1.0 release request on 2026-10-11
 lifted the earlier hold from 2026-10-08. Version 1.1.0 was published successfully.

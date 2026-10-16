@@ -19,6 +19,7 @@ local defaults = {
     mageBuffIntellect = true,
     mageBuffArmor = true,
     mageBuffSound = true,
+    herbAlerts = true,
     minimapAngle = 145,
     minimapHidden = false,
 }
@@ -80,6 +81,7 @@ function addon.Print(message)
 end
 
 local function NotifyUI()
+    if addon.RefreshHerbUI then addon.RefreshHerbUI() end
     if addon.RefreshMinimap then addon.RefreshMinimap() end
     if addon.RefreshUI then
         addon.RefreshUI()
@@ -259,6 +261,7 @@ function addon.SetOption(key, value)
         return false
     end
     addon.db[key] = value
+    if (key == "enabled" or key == "herbAlerts") and not value then addon.StopHerbSound() end
     addon.MageBuffOptionsChanged(key)
     -- An explicit enable/muting change permits retry after fixing missing files.
     if (key == "enabled" or key == "muteOriginal" or key == "soundPack") and value then
@@ -472,6 +475,7 @@ local function Initialize()
     playerGUID = UnitGUID("player")
     addon.RefreshNoggenfogger()
     addon.InitializeMageBuffAlerts()
+    addon.InitializeHerbAlerts()
     addon.UpdateOriginalMuting()
     if addon.InitializeMinimap then addon.InitializeMinimap() end
 end
@@ -483,6 +487,8 @@ frame:RegisterEvent("PLAYER_LOGOUT")
 frame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 frame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 frame:RegisterEvent("UNIT_AURA")
+frame:RegisterEvent("SPELLS_CHANGED")
+frame:RegisterEvent("SKILL_LINES_CHANGED")
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 frame:RegisterEvent("UNIT_SPELLCAST_START")
 frame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -496,6 +502,7 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         self:UnregisterEvent("ADDON_LOADED")
     elseif event == "PLAYER_LOGIN" then
         playerGUID = UnitGUID("player")
+        addon.InitializeHerbAlerts()
         addon.RefreshNoggenfogger()
         addon.UpdateOriginalMuting()
         if addon.db and addon.db.enabled then
@@ -503,6 +510,8 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         end
     elseif event == "PLAYER_ENTERING_WORLD" then
         playerGUID = UnitGUID("player")
+        addon.ResetHerbAlerts()
+        addon.RefreshHerbalism()
         addon.RefreshNoggenfogger()
         addon.ResetSchools()
         addon.ResetWeapons()
@@ -535,10 +544,15 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         addon.ResetSchools(loadedName)
         addon.ResetWeapons(loadedName)
         addon.ResetMeleeWeapons(loadedName)
+    elseif event == "SPELLS_CHANGED" or event == "SKILL_LINES_CHANGED" then
+        addon.RefreshHerbalism()
+        if not addon.isHerbalist then addon.StopHerbSound() end
+        NotifyUI()
     elseif event == "UNIT_AURA" and loadedName == "player" then
         addon.RefreshNoggenfogger()
         NotifyUI()
     elseif event == "PLAYER_LOGOUT" then
+        addon.ResetHerbAlerts()
         addon.noggenfoggerShrunk = false
         addon.ResetMageResults()
         StopAllSounds()
@@ -589,6 +603,13 @@ SlashCmdList.GABBASOUNDS = function(message)
             addon.SetOption(command == "spokenonly" and "spokenOnly" or command == "mute" and "muteOriginal" or command == "all" and "allSources" or command, argument == "on")
             addon.Print(command .. ": " .. argument)
         end
+    elseif command == "herbs" then
+        if argument == "on" or argument == "off" then
+            addon.SetOption("herbAlerts", argument == "on")
+            addon.Print("Kräuter-Alarm beim Darüberfahren: " .. argument)
+        elseif addon.herbLabels[argument] then addon.PlayHerb(argument, true)
+        elseif argument == "" then addon.OpenHerbUI()
+        else addon.Print("/gws herbs [on|off|gromsblood|blacklotus]") end
     elseif command == "buffs" then
         if argument == "on" or argument == "off" then
             addon.SetOption("mageBuffAlerts", argument == "on")
@@ -633,10 +654,11 @@ SlashCmdList.GABBASOUNDS = function(message)
             .. "; Nahkampf-Originale: " .. (addon.meleeOriginalsMuted and "stumm" or "hörbar")
             .. "; Magier-Stummschaltung: " .. mutedMage .. "/15 Zauber abgedeckt"
             .. "; Soundpaket: " .. addon.soundPacks[addon.db.soundPack].label
+            .. "; Kräuter-Tooltip-Alarm: " .. (addon.db.herbAlerts and "an" or "aus")
             .. "; Noggenfogger: " .. (not addon.db.noggenfoggerPitch and "aus" or addon.noggenfoggerShrunk and "+4 Halbtöne" or "an (normal groß)")
             .. "; Magier-Cast: " .. (addon.db.cast and "an" or "aus") .. " (" .. addon.stats.cast .. " abgespielt)"
             .. "; abgespielt: " .. addon.stats.hit .. " Treffer, " .. addon.stats.crit .. " Crits, " .. addon.stats.resist .. " Widerstände, " .. addon.stats.miss .. " Fehlschläge, " .. addon.stats.absorb .. " Absorptionen, " .. addon.stats.graze .. " Teiltreffer.")
     else
-        addon.Print("/gws öffnet Einstellungen. Befehle: on, off, pack magic|spoken, spokenonly on|off, test hit|crit|resist|miss|absorb, buffs, all on|off, mute on|off, channel sfx|master, status")
+        addon.Print("/gws öffnet Einstellungen. Befehle: on, off, pack magic|spoken, spokenonly on|off, test hit|crit|resist|miss|absorb, herbs, buffs, all on|off, mute on|off, channel sfx|master, status")
     end
 end

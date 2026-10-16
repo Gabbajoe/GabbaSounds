@@ -10,7 +10,8 @@
 !/previews/magic/index.html
 !/previews/buffs/index.html
 /previews/magic/Hoerprobe.ogg
-/previews/herbalism/
+/previews/herbalism/*
+!/previews/herbalism/index.html
 /Hoerprobe.ogg
 /Sounds/spoken_*.ogg
 /references/

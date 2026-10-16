@@ -15,6 +15,64 @@ for _, key in ipairs(addon.meleeOrder) do weaponOrder[#weaponOrder + 1] = key en
 local weaponLabels = { wand = "Zauberstab", bow = "Pfeile / Armbrust", gun = "Schusswaffen", frostbolt = "Frostblitz", ranged = "unbekannte Fernkampfwaffe" }
 local buffPanel, buffNote
 local buffChecks = {}
+local herbPanel, herbCheck, herbNote
+
+function addon.RefreshHerbUI()
+    if not herbPanel or not herbPanel:IsShown() or not addon.db then return end
+    herbCheck:SetChecked(addon.db.herbAlerts)
+    herbNote:SetText((addon.db.enabled and "" or "Addon ausgeschaltet. ")
+        .. (addon.isHerbalist and "Kräuterkunde erkannt." or "Keine Kräuterkunde erkannt; Hörproben möglich.")
+        .. "\nGromsblut: " .. (addon.herbSounds.gromsblood and "bereit" or "Aufnahme fehlt")
+        .. " · Schwarzer Lotus: " .. (addon.herbSounds.blacklotus and "bereit" or "Aufnahme fehlt"))
+end
+
+function addon.OpenHerbUI()
+    if not addon.db then return end
+    if not herbPanel then
+        herbPanel = CreateFrame("Frame", "GabbaSoundsHerbPanel", UIParent, "BackdropTemplate")
+        herbPanel:SetSize(440, 300)
+        herbPanel:SetPoint("CENTER")
+        herbPanel:SetFrameStrata("DIALOG")
+        herbPanel:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border", tile = true, tileSize = 32, edgeSize = 32, insets = { left = 11, right = 12, top = 12, bottom = 11 } })
+        herbPanel:SetMovable(true)
+        herbPanel:EnableMouse(true)
+        herbPanel:RegisterForDrag("LeftButton")
+        herbPanel:SetScript("OnDragStart", function(self) self:StartMoving() end)
+        herbPanel:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+        herbPanel:SetScript("OnShow", addon.RefreshHerbUI)
+        tinsert(UISpecialFrames, "GabbaSoundsHerbPanel")
+        local close = CreateFrame("Button", nil, herbPanel, "UIPanelCloseButton")
+        close:SetPoint("TOPRIGHT", -5, -5)
+        local title = herbPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+        title:SetPoint("TOPLEFT", 25, -25)
+        title:SetText("GabbaSounds – Kräuter-Alarm")
+        herbCheck = CreateFrame("CheckButton", nil, herbPanel, "UICheckButtonTemplate")
+        herbCheck:SetPoint("TOPLEFT", 22, -58)
+        herbCheck.label = herbCheck:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        herbCheck.label:SetPoint("LEFT", herbCheck, "RIGHT", 4, 0)
+        herbCheck.label:SetText("Kräuter-Alarm beim Darüberfahren")
+        herbCheck:SetScript("OnClick", function(self) addon.SetOption("herbAlerts", self:GetChecked()) end)
+        local help = herbPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        help:SetPoint("TOPLEFT", 29, -103)
+        help:SetWidth(380)
+        help:SetJustifyH("LEFT")
+        help:SetText("Maus über einen echten Gromsblut-/Lotus-Punkt auf der Minimap oder das Kraut bewegen. Gespeicherte Addon-Pins zählen nicht. Pro Kraut mindestens 30 Sekunden Pause; kein automatischer Suchlauf.")
+        herbNote = herbPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        herbNote:SetPoint("TOPLEFT", 29, -182)
+        herbNote:SetWidth(380)
+        herbNote:SetJustifyH("LEFT")
+        for index, key in ipairs({ "gromsblood", "blacklotus" }) do
+            local herb = key
+            local button = CreateFrame("Button", nil, herbPanel, "UIPanelButtonTemplate")
+            button:SetSize(185, 25)
+            button:SetPoint("TOPLEFT", 25 + (index - 1) * 200, -246)
+            button:SetText(addon.herbLabels[herb] .. " hören")
+            button:SetScript("OnClick", function() addon.PlayHerb(herb, true) end)
+        end
+    end
+    addon.RefreshHerbalism()
+    herbPanel:Show()
+end
 
 function addon.RefreshMageBuffUI()
     if not buffPanel or not buffPanel:IsShown() or not addon.db then return end
@@ -163,6 +221,12 @@ local function BuildPanel()
     local title = panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOPLEFT", 25, -25)
     title:SetText("GabbaSounds")
+
+    local herbs = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    herbs:SetSize(110, 22)
+    herbs:SetPoint("TOPLEFT", 155, -25)
+    herbs:SetText("Kräuter-Alarm")
+    herbs:SetScript("OnClick", function() addon.OpenHerbUI() end)
 
     local buffs = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
     buffs:SetSize(125, 22)

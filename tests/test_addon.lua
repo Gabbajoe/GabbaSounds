@@ -28,7 +28,10 @@ local function setup(saved, legacy, auras)
     function methods:GetCenter() return 100, 100 end
     function methods:GetEffectiveScale() return 2 end
     function methods:GetFrameLevel() return 3 end
-    function methods:HookScript(name, callback) self.scripts[name] = callback end
+    function methods:HookScript(name, callback)
+        local before = self.scripts[name]
+        self.scripts[name] = before and function(...) before(...); callback(...) end or callback
+    end
     function methods:SetTexture(path) self.texture = path end
     function methods:SetDesaturated(value) self.desaturated = value end
     function methods:SetAlpha(value) self.alpha = value end
@@ -39,7 +42,10 @@ local function setup(saved, legacy, auras)
     function methods:SetChecked(value) self.checked = value end
     function methods:GetChecked() return self.checked end
     function methods:IsShown() return self.shown end
-    function methods:Hide() self.shown = false end
+    function methods:Hide()
+        self.shown = false
+        if self.scripts.OnHide then self.scripts.OnHide(self) end
+    end
     function methods:Show()
         self.shown = true
         if self.scripts.OnShow then self.scripts.OnShow(self) end
@@ -55,11 +61,24 @@ local function setup(saved, legacy, auras)
         return texture
     end
     UIParent = widget()
+    WorldFrame = widget()
     Minimap = widget()
     GameTooltip = widget()
     function GameTooltip:SetOwner(owner) self.owner = owner end
     function GameTooltip:IsOwned(owner) return self.owner == owner and self.shown end
     function GameTooltip:AddLine(text) self.lines = self.lines or {}; table.insert(self.lines, text) end
+    function GameTooltip:GetItem() return state.herbItemName, state.herbItemLink end
+    function GameTooltip:GetSpell() return state.herbSpell end
+    function GameTooltip:GetUnit() return state.herbUnit end
+    function GameTooltip:NumLines() return #(state.herbLines or {}) end
+    function GameTooltip:GetLeftLine(index)
+        local text = (state.herbLines or {})[index]
+        if text then return { GetText = function() return text end } end
+    end
+    function GetMouseFoci() return state.focus and { state.focus } or {} end
+    GetMouseFocus = nil
+    function IsSpellKnown(id) return id == 2383 and state.herbalist or false end
+    IsPlayerSpell = nil
     GetMinimapShape = nil
     function GetCursorPosition() return state.cursorX or 360, state.cursorY or 200 end
     UISpecialFrames = {}
@@ -141,7 +160,7 @@ local function setup(saved, legacy, auras)
     GabbaSoundsDB = saved
     GabbaWandSoundsDB = legacy
     local addon = {}
-    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "BuffAlertSoundData.lua", "MageBuffAlerts.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
+    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "BuffAlertSoundData.lua", "MageBuffAlerts.lua", "HerbSoundData.lua", "Herbalism.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
         assert(loadfile(file))("GabbaSounds", addon)
     end
     state.addon = addon
@@ -2219,6 +2238,126 @@ test("mage buff options validate persist and expose separate warning previews", 
     assert(button)
     GabbaSoundsBuffPanel:Hide(); button.scripts.OnClick()
     assert(GabbaSoundsBuffPanel:IsShown())
+end)
+
+local function herbalist(saved, auras)
+    local state = setup(saved, nil, auras)
+    state.herbalist = true
+    state:fire("SKILL_LINES_CHANGED")
+    function state:hover(lines, focus, owner)
+        self.herbLines = type(lines) == "table" and lines or { lines }
+        self.focus = focus or Minimap
+        GameTooltip:SetOwner(owner or UIParent)
+        GameTooltip:Show()
+    end
+    function state:tooltipTick(seconds)
+        seconds = seconds or .2
+        self:advance(seconds)
+        if GameTooltip:IsShown() then GameTooltip.scripts.OnUpdate(GameTooltip, seconds) end
+    end
+    return state
+end
+
+test("herbs recognize native Classic UIParent and Minimap tooltips in German and English", function()
+    for _, name in ipairs({ "Gromsblut", "Gromsblood", "Schwarzer Lotus", "Black Lotus" }) do
+        local state = herbalist()
+        state:hover("|cffffff00" .. name .. "|r")
+        state:tooltipTick()
+        equal(#state.played, 1)
+        assert(state.played[1].path:find(name:find("Lotus") and "voice_herb_blacklotus.ogg" or "voice_herb_gromsblood.ogg", 1, true))
+    end
+    local state = herbalist()
+    state:hover("Gromsblood", Minimap, Minimap); state:tooltipTick()
+    equal(#state.played, 1)
+end)
+
+test("herb alert requires Herbalism while previews work without profession or enabled addon", function()
+    local state = herbalist()
+    state.herbalist = false; state:fire("SPELLS_CHANGED")
+    state:hover("Black Lotus"); state:tooltipTick(); equal(#state.played, 0)
+    SlashCmdList.GABBASOUNDS("off")
+    SlashCmdList.GABBASOUNDS("herbs blacklotus"); equal(#state.played, 1)
+    state.herbalist = true; state:fire("PLAYER_LOGIN")
+    state:tooltipTick(); equal(#state.played, 1)
+    SlashCmdList.GABBASOUNDS("on"); state:tooltipTick(); equal(#state.played, 2)
+end)
+
+test("herb alerts ignore bag and linked items spells units and stored minimap pins", function()
+    local state = herbalist()
+    state:hover("Black Lotus", WorldFrame)
+    state.herbItemLink = "item:13468"; state:tooltipTick(); equal(#state.played, 0)
+    state.herbItemLink = nil; state.herbSpell = "Black Lotus"; state:tooltipTick(); equal(#state.played, 0)
+    state.herbSpell = nil; state.herbUnit = "Black Lotus"; state:tooltipTick(); equal(#state.played, 0)
+    state.herbUnit = nil
+    local pin = CreateFrame("Frame")
+    state:hover("Black Lotus", pin, pin); state:tooltipTick(); equal(#state.played, 0)
+    state:hover("Black Lotus", pin, UIParent); state:tooltipTick(); equal(#state.played, 0)
+    state:hover("Black Lotus", Minimap, pin); state:tooltipTick(); equal(#state.played, 0)
+    state:hover("Black Lotus", WorldFrame); state:tooltipTick(); equal(#state.played, 1)
+end)
+
+test("herb cooldown survives hiding and unchanged hover never repeats after 30 seconds", function()
+    local state = herbalist()
+    state:hover("Gromsblood"); state:tooltipTick(); equal(#state.played, 1)
+    state:tooltipTick(35); equal(#state.played, 1)
+    GameTooltip:Hide(); state:hover("Gromsblood"); state:tooltipTick(); equal(#state.played, 2)
+    GameTooltip:Hide(); state:hover("Gromsblood"); state:tooltipTick(); equal(#state.played, 2)
+    state:hover("Black Lotus"); state:tooltipTick(); equal(#state.played, 3, "Separate cooldowns for each herb")
+end)
+
+test("herb tooltip updates multi-line names and Classic legacy focus/font strings work", function()
+    local state = herbalist()
+    state:hover({ "Something else", "Gromsblood", "Black Lotus" }); state:tooltipTick()
+    assert(state.played[1].path:find("blacklotus.ogg", 1, true))
+    GetMouseFoci = nil
+    function GetMouseFocus() return state.focus end
+    GameTooltip.GetLeftLine = false
+    GameTooltipTextLeft1 = { GetText = function() return "Gromsblut" end }
+    state.herbLines = { "Gromsblut" }; state:tooltipTick()
+    equal(#state.played, 2)
+    GameTooltipTextLeft1 = nil
+end)
+
+test("herb switches stop only herb audio preserve mutes and reset on world changes", function()
+    local state = herbalist()
+    state:combat("RANGE_DAMAGE")
+    state:hover("Gromsblood"); state:tooltipTick(); equal(#state.played, 2)
+    SlashCmdList.GABBASOUNDS("herbs off")
+    equal(#state.stopped, 1); equal(state.stopped[1], 2)
+    equal(state.addon.originalsMuted, true)
+    state:tooltipTick(31); equal(#state.played, 2)
+    SlashCmdList.GABBASOUNDS("herbs on"); state:tooltipTick(); equal(#state.played, 3)
+    state:fire("PLAYER_ENTERING_WORLD"); state:tooltipTick(); equal(#state.played, 4)
+    state:fire("PLAYER_LOGOUT"); assert(#state.stopped >= 3)
+end)
+
+test("herb playback failure stays isolated and pitch falls back without warning spam", function()
+    local state = herbalist(nil, {16595})
+    state.failPitch = true
+    state:hover("Black Lotus"); state:tooltipTick()
+    equal(#state.played, 2)
+    assert(state.played[1].path:find("\\noggenfogger\\", 1, true))
+    assert(not state.played[2].path:find("\\noggenfogger\\", 1, true))
+    state.failPlayback = true
+    state:hover("Gromsblood"); state:tooltipTick()
+    equal(state.addon.originalsMuted, true)
+    local messages = #state.messages
+    GameTooltip:Hide(); state:hover("Gromsblood"); state:tooltipTick()
+    equal(#state.messages, messages)
+end)
+
+test("herb settings validate and options expose both independent previews", function()
+    local state = herbalist({ herbAlerts = "invalid" })
+    equal(state.addon.db.herbAlerts, true)
+    SlashCmdList.GABBASOUNDS("herbs"); assert(GabbaSoundsHerbPanel:IsShown())
+    local check
+    for _, frame in ipairs(state.frames) do
+        if frame.label and frame.label.text == "Kräuter-Alarm beim Darüberfahren" then check = frame end
+    end
+    assert(check and check.checked)
+    check:SetChecked(false); check.scripts.OnClick(check); equal(state.addon.db.herbAlerts, false)
+    SlashCmdList.GABBASOUNDS("herbs gromsblood")
+    SlashCmdList.GABBASOUNDS("herbs blacklotus"); equal(#state.played, 2)
 end)
 
 print(string.format("GabbaSounds: %d tests passed", total))

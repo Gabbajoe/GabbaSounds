@@ -18,8 +18,9 @@ class PreviewSite(unittest.TestCase):
             files = {p.relative_to(site).as_posix() for p in site.rglob('*') if p.is_file()}
             self.assertEqual(count, len(files))
             alerts = len(json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())['sounds'])
+            alerts += len(json.loads((ROOT / 'spoken/herbalism/manifest.json').read_text())['sounds'])
             self.assertEqual(sum(n.endswith('.ogg') for n in files), 345 + alerts)
-            self.assertEqual(sum(n.endswith('.html') for n in files), 10)
+            self.assertEqual(sum(n.endswith('.html') for n in files), 11)
             self.assertIn('previews/buffs/index.html', files)
             self.assertIn('Buffwarnungen', (site / 'index.html').read_text())
             self.assertFalse(any(n.endswith('.wav') or '/archive/' in n for n in files))

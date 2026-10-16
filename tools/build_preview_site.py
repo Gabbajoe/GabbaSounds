@@ -13,6 +13,7 @@ PAGES = (
     'previews/melee/index.html', 'previews/melee/blade.html',
     'previews/melee/blunt.html', 'previews/melee/dagger.html',
     'previews/melee/fist.html', 'previews/magic/index.html', 'previews/buffs/index.html',
+    'previews/herbalism/index.html',
 )
 
 

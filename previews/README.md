@@ -8,7 +8,7 @@ automatisch aktualisiert.
 
 Für die Offline-Nutzung öffne `index.html` im Browser. `spoken/` enthält alle Sprachaufnahmen,
 `melee/` die vier Nahkampf-Pakete, `buffs/` Minibobsels vier Buffwarnungen und
-`magic/` die synthetischen Zauberstab-Sounds.
+`herbalism/` die zwei Kräuter-Alarme und `magic/` die synthetischen Zauberstab-Sounds.
 Die kleinen HTML-Seiten sind im Git-Repository enthalten und laden ihre OGGs
 über relative Pfade aus `Sounds/`. Deshalb das komplette Repository herunterladen,
 nicht nur eine einzelne HTML-Datei. Im WoW-Installations-ZIP sind keine Hörproben.
@@ -28,7 +28,7 @@ python3 -m http.server --directory dist/site 8000
 
 Öffne anschließend `http://localhost:8000/`. Der Zielordner muss beim Bauen
 noch nicht existieren. Die Webseite enthält nur aktuelle Player, das Logo und
-die 349 fertigen OGGs. WAVs, Archive und Tooling werden nicht veröffentlicht.
+die 351 fertigen OGGs. WAVs, Archive und Tooling werden nicht veröffentlicht.
 Der Website-Bau ist unabhängig vom Addon-ZIP und löst keinen Addon-Release aus.
 
 Aufnahmen und bearbeitbare WAV-Schnitte bleiben unter `spoken/`; die WAVs sind

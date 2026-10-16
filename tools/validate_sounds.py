@@ -23,6 +23,11 @@ def main():
     if args.pack in ('magic', 'all'):
         manifest.extend(json.loads((ROOT / 'manifest.json').read_text()))
     if args.pack in ('spoken', 'all'):
+        herbs = json.loads((ROOT / 'spoken/herbalism/manifest.json').read_text())
+        for source in herbs['sources']:
+            if not args.runtime_only:
+                assert hashlib.sha256((ROOT / source['file']).read_bytes()).hexdigest() == source['sha256'], 'Herb recording was changed'
+        manifest.extend(herbs['sounds'])
         alerts = json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())
         for source in alerts['sources']:
             if not args.runtime_only:

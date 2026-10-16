@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare local herb recording previews while automatic Classic detection is blocked."""
+"""Shared voice encoding and herb previews; preserves the original source WAVs."""
 import hashlib
 import html
 import json
@@ -47,6 +47,10 @@ def encode(source, destination):
 
 
 def build_previews(root=ROOT):
+    manifest = root / 'spoken/herbalism/manifest.json'
+    if manifest.is_file():
+        write_preview(json.loads(manifest.read_text())['sounds'], root)
+        return root / 'previews/herbalism/index.html'
     sources = {key: root / 'spoken/herbalism' / (key + '.wav') for key in HERBS}
     missing = [str(path.relative_to(root)) for path in sources.values() if not path.is_file()]
     if missing:
@@ -74,6 +78,19 @@ def build_previews(root=ROOT):
 Classic Era bietet die benötigten Minimap-Scan-Funktionen nicht an. Deine WAV-Originale bleiben erhalten.</p>
 ''' + cards + '</html>', encoding='utf-8')
     return output / 'index.html'
+
+
+def write_preview(sounds, root=ROOT):
+    target = root / 'previews/herbalism/index.html'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    cards = ''.join('<article><h2>' + html.escape(item['name'])
+                    + '</h2><audio controls preload="none" src="../../' + item['file']
+                    + '"></audio></article>' for item in sounds)
+    target.write_text('''<!doctype html><html lang="de"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GabbaSounds – Kräuter-Alarm</title>
+<style>body{font-family:system-ui;background:#111321;color:#eeeaf8;max-width:800px;margin:auto;padding:25px}article{background:#1e2137;padding:18px;margin:18px 0;border-radius:12px}audio{width:100%}p{line-height:1.5;color:#bcb4d5}</style>
+<h1>🌿 Gromsblut und Schwarzer Lotus</h1><p>Aufnahmen für den Kräuter-Alarm beim Darüberfahren über echte Kräuterpunkte oder das Kraut in der Spielwelt. Kein automatischer Minimap-Suchlauf.</p>
+''' + cards + '</html>', encoding='utf-8')
 
 
 def main():

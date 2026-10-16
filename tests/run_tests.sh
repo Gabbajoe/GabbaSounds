@@ -9,6 +9,8 @@ LUAC="${LUAC:-luac}"
 "$LUAC" -p Noggenfogger.lua
 "$LUAC" -p MageBuffAlerts.lua
 "$LUAC" -p BuffAlertSoundData.lua
+"$LUAC" -p Herbalism.lua
+"$LUAC" -p HerbSoundData.lua
 "$LUAC" -p UI.lua
 "$LUAC" -p SoundData.lua
 "$LUAC" -p CustomSoundData.lua

@@ -6431,6 +6431,38 @@
       "source_file": "Sounds/voice_buff_armor_missing.ogg",
       "source_sha256": "734a23f62545c8f43b56a8d427ea748228c4fe7324a49f4a5f596ab713d89439",
       "sha256": "7da4d0fbb1dab4ba264f8ef6b580b7090952614cd8c81a1407c97d12dcfda865"
+    },
+    {
+      "file": "Sounds/noggenfogger/voice_herb_gromsblood.ogg",
+      "name": "Gromsblut",
+      "herb": "gromsblood",
+      "kind": "herb",
+      "school": "all",
+      "duration": 2.5878231292517007,
+      "source": "spoken/herbalism/gromsblood.wav",
+      "source_start": 0.3196825396825397,
+      "source_end": 2.9075056689342405,
+      "sample_rate": 44100,
+      "channels": 2,
+      "source_file": "Sounds/voice_herb_gromsblood.ogg",
+      "source_sha256": "6e5346bb0fd2ae151b828ac33e2f5bbd34fdbb679d23b2dd818ec7af5c951bb8",
+      "sha256": "6a8b2334f1e8b2420c2455bb9b8d58b75d395e72d5b16b4f34480e40b7b6f013"
+    },
+    {
+      "file": "Sounds/noggenfogger/voice_herb_blacklotus.ogg",
+      "name": "Schwarzer Lotus",
+      "herb": "blacklotus",
+      "kind": "herb",
+      "school": "all",
+      "duration": 1.4895918367346939,
+      "source": "spoken/herbalism/blacklotus.wav",
+      "source_start": 0.26988662131519275,
+      "source_end": 1.7594784580498866,
+      "sample_rate": 44100,
+      "channels": 2,
+      "source_file": "Sounds/voice_herb_blacklotus.ogg",
+      "source_sha256": "8caaf07bc95389102ec8df319208052f7d1d46403e7ce87c519acc5f0b5a5d15",
+      "sha256": "6591f32428f242bc2aaf98228b8a960806cd126192f88a963f33e32477031598"
     }
   ]
 }
