@@ -8,6 +8,7 @@ on:
       - 'Sounds/**'
       - 'manifest.json'
       - 'spoken/manifest.json'
+      - 'spoken/mage/buffs/manifest.json'
       - 'curseforge/logo.png'
       - 'tools/build_preview_site.py'
       - 'tools/build_package.py'

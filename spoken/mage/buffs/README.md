@@ -6,6 +6,9 @@ lokal; es wird nichts in den Gruppen- oder Raidchat geschickt.
 
 ## Vier Aufnahmen
 
+Seit Version 1.3.0 sind alle vier Aufnahmen und ihre Noggenfogger-Varianten
+enthalten. [Im Browser anhören](https://gabbajoe.github.io/GabbaSounds/previews/buffs/index.html).
+
 Je Datei **einen vollständigen Spruch** aufnehmen. Die beiden Warnstufen bekommen
 unterschiedliche Aufnahmen:
 

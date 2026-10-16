@@ -49,6 +49,11 @@ def import_recordings(root=ROOT):
         lines.append('addon.buffAlertSounds.' + item['buff'] + '.' + item['phase'] + ' = ' + filename)
         lines.append('addon.soundDurations[' + filename + '] = ' + str(item['duration']))
     (root / 'BuffAlertSoundData.lua').write_text('\n'.join(lines) + '\n')
+    write_preview(sounds, root)
+    return sounds
+
+
+def write_preview(sounds, root=ROOT):
     preview = root / 'previews/buffs'
     preview.mkdir(parents=True, exist_ok=True)
     cards = ''.join('<article><h2>' + html.escape(item['name']) + '</h2><audio controls preload="none" src="../../'
@@ -57,7 +62,6 @@ def import_recordings(root=ROOT):
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>GabbaSounds – Buffwarnungen</title>
 <style>body{font-family:system-ui;background:#111321;color:#eeeaf8;max-width:800px;margin:auto;padding:25px}article{background:#1e2137;padding:18px;margin:18px 0;border-radius:12px}audio{width:100%}</style>
 <h1>🧙 Minibobsels Buffwarnungen</h1>''' + cards + '</html>', encoding='utf-8')
-    return sounds
 
 
 def main():
