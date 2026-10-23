@@ -10,8 +10,9 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = (
     'GabbaSounds.toc', 'SoundData.lua', 'CustomSoundData.lua', 'Schools.lua',
-    'Weapons.lua', 'MeleeSoundIDs.lua', 'Melee.lua', 'MageSpells.lua', 'MageEvents.lua', 'Core.lua', 'UI.lua',
+    'Weapons.lua', 'MeleeSoundIDs.lua', 'Melee.lua', 'MageSpells.lua', 'MageEvents.lua', 'PriestSpells.lua', 'PriestEvents.lua', 'Core.lua', 'UI.lua',
     'Minimap.lua', 'Noggenfogger.lua', 'BuffAlertSoundData.lua', 'MageBuffAlerts.lua',
+    'HerbSoundData.lua', 'Herbalism.lua',
     'Assets/minimap.tga', 'README.md', 'THIRD_PARTY_NOTICES.md',
 )
 
@@ -29,6 +30,11 @@ def package_files(root=ROOT):
     files.extend(item['file'] for item in json.loads((root / 'manifest.json').read_text()))
     files.extend(item['file'] for item in json.loads((root / 'spoken/manifest.json').read_text())['sounds'])
     files.extend(item['file'] for item in json.loads((root / 'spoken/mage/buffs/manifest.json').read_text())['sounds'])
+    for folder in ('spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+        priest = root / folder / 'manifest.json'
+        if priest.is_file():
+            files.extend(item['file'] for item in json.loads(priest.read_text())['sounds'])
+    files.extend(item['file'] for item in json.loads((root / 'spoken/herbalism/manifest.json').read_text())['sounds'])
     files.extend(item['file'] for item in json.loads((root / 'noggenfogger/manifest.json').read_text())['sounds'])
     if len(set(files)) != len(files):
         raise ValueError('Duplicate package entry')

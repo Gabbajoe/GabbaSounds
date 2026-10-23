@@ -25,7 +25,8 @@ angelegt. WAVs bleiben lokal und werden weder in Git noch in Release-ZIPs gepack
 
 Arkane Intelligenz und Arkane Brillanz erfüllen gemeinsam die Int-Prüfung,
 einschließlich verschiedener Ränge und Buffs anderer Magier. Sie prüft dich
-sowie sichtbare, lebende, verbundene Mana-Klassen in Gruppe oder Raid; Krieger
+sowie sichtbare, lebende, verbundene, bekannte Mana-Klassen in bestätigter
+Buff-Reichweite in Gruppe oder Raid; Krieger
 und Schurken werden ausgelassen. Für dich selbst reicht **eine** Frost-, Eis-
 oder Magierrüstung. Nur bereits gelernte Buff-Kategorien werden verlangt.
 Situative Zauber wie Magie verstärken/dämpfen und kurzlebige Schutzzauber werden

@@ -103,8 +103,8 @@ class CategorizedRecordings(unittest.TestCase):
         import json
         manifest = json.loads((ROOT / 'spoken/manifest.json').read_text())
         self.assertEqual(manifest['version'], 2)
-        self.assertEqual(len(manifest['sources']), 51)
-        self.assertEqual(len(manifest['sounds']), 219)
+        self.assertEqual(len(manifest['sources']), 58)
+        self.assertEqual(len(manifest['sounds']), 247)
         for source in manifest['sources']:
             clips = [item for item in manifest['sounds'] if item['source'] == source['file']]
             self.assertEqual(len(clips), source['clips'])
@@ -187,7 +187,7 @@ class PreviewFiles(unittest.TestCase):
                 self.paths = []
             def handle_starttag(self, tag, attrs):
                 if tag == 'audio': self.paths.append(dict(attrs)['src'])
-        for name, count in [('spoken/index.html', 219), ('melee/index.html', 56),
+        for name, count in [('spoken/index.html', 247), ('priest/index.html', 44), ('melee/index.html', 56),
                             ('magic/index.html', 126), *[(f'melee/{key}.html',26) for key in ('blade','blunt','dagger','fist')]]:
             page = ROOT / 'previews' / name
             parser = AudioPaths()

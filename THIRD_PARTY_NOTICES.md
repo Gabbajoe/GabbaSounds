@@ -37,3 +37,10 @@ Leatrix code, full catalog or Blizzard audio is redistributed. Source paths and
 the catalog checksum are recorded in `analysis/melee_original_sounds.json`.
 The SWING event layout was checked against Blizzard's Classic Era combat-log UI:
 https://github.com/Gethe/wow-ui-source/blob/classic_era/Interface/AddOns/Blizzard_CombatLog/Classic/Blizzard_CombatLog.lua
+
+The nine numeric FileDataIDs for Mind Blast, Shadow Word: Pain, Smite and Holy
+Nova were checked against the same Resonance Vanilla spell-to-sound table.
+Mind Blast, Shadow Word: Pain and Smite ranks were checked against the original
+WoWSims Classic priest definitions; Holy Nova ranks against Classic spell data.
+Only numeric identifiers and handwritten routing metadata are included.
+Provenance: `analysis/priest_spells.json`.

@@ -13,38 +13,67 @@ kurz Ruhe lassen. WAV mit 44,1 oder 48 kHz, Mono oder Stereo; ohne Hall und
 ohne Übersteuerung. Du musst die Dateien weder schneiden noch umwandeln.
 Die WAV-Originale bleiben lokal und werden nicht ins Git-Repo oder Release-ZIP gepackt.
 
-## Stand: automatischer Alarm technisch blockiert
+## Tooltip-Alarm (ab 1.4.0)
 
-Gewünscht ist ein Alarm **ohne Darüberfahren mit der Maus**, wenn das Kraut als
-echter Trackingpunkt auf der Minimap erscheint. Eine Tooltip-Variante ist nicht
-gewünscht und wurde nicht ins Addon übernommen.
+Die beiden Aufnahmen sind jetzt im Addon eingebunden, einschließlich höherer
+Noggenfogger-Varianten. Beim **Darüberfahren mit der Maus** über einen echten
+Gromsblut-/Lotus-Trackingpunkt auf der Minimap oder das Kraut in der Spielwelt
+wird der passende Sound abgespielt. Deutsche und englische Namen werden erkannt.
 
-Der Test im Classic-Era-Client am 16.10.2026 ergab:
+- Nur beim eigenen Kräuterkundler; erkennbar über die gelernte Kräutersuche.
+- Standardmäßig aktiv, unabhängig vom gewählten Angriffs-Soundpaket.
+- Mindestens 30 Sekunden Pause pro Kraut. Solange derselbe Tooltip stehen bleibt,
+  gibt es auch nach 30 Sekunden keine erneute Meldung.
+- Gespeicherte Addon-Pins, Taschengegenstände, Chatlinks, Einheiten und Zauber
+  lösen keinen Alarm aus. Schwarzer Lotus hat bei überlappenden Kräuterpunkten Vorrang.
+- Eigene Wiedergabe: Angriffsgeräusche schneiden die Kräuteraufnahme nicht ab.
+- Kein automatischer Minimap-Suchlauf und kein Nachweis der Pflückreichweite.
 
-```lua
-/run print("AutoScan:", type(Minimap.UpdateMouseoverAtPoint), type(C_TooltipInfo and C_TooltipInfo.GetMinimapMouseover))
--- AutoScan: nil nil
+Die zwei nötigen Funktionen für einen automatischen Scan fehlen dem verwendeten
+Classic-Era-Client (`AutoScan: nil nil`, 16.10.2026). Deshalb wurde die
+Tooltip-Variante ausdrücklich ausgewählt. Tooltip-Erkennung und Wiedergabe wurden
+im Classic-Client geprüft; Details stehen unter „Im Client bestätigt“.
+
+## Einstellungen und Hörproben
+
+`/gws herbs` oder der Button „Kräuter-Alarm“ im `/gws`-Fenster öffnet die Optionen.
+Die Einstellung ist pro Charakter gespeichert. Ausschalten des ganzen Addons
+stoppt auch die Kräuter-Alarme. Hörproben funktionieren auf Charakteren ohne
+Kräuterkunde und bei abgeschaltetem Addon.
+
+```text
+/gws herbs on
+/gws herbs off
+/gws herbs gromsblood
+/gws herbs blacklotus
 ```
 
-Das hängt nicht von Kräuterkunde oder der gerade aktiven Schatzsuche ab: Die
-beiden Funktionen fehlen dem Client grundsätzlich. Der automatische Suchlauf
-anderer Clients lässt sich deshalb hier nicht verwenden. Vergleiche die
-[Classic-Era-Minimap-API](https://github.com/Gethe/wow-ui-source/blob/classic_era/Interface/AddOns/Blizzard_APIDocumentationGenerated/MinimapFrameAPIDocumentation.lua)
-mit der [Forever-Minimap-API](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/MinimapFrameAPIDocumentation.lua).
+[Lokale Hörproben](../../previews/herbalism/index.html) im Browser öffnen.
 
-Ein Alarm bei Nähe zu **gespeicherten Fundstellen** wäre eine andere Möglichkeit,
-würde aber auch bei leeren Spawnpunkten auslösen. Diese Alternative ist noch
-nicht ausgewählt oder eingebaut. Es wurde kein automatischer Kräuter-Alarm
-installiert oder veröffentlicht.
-
-## Lokale Hörproben
+## Neue Aufnahmen importieren
 
 ```sh
-python3 tools/preview_herbalism.py
+python3 tools/import_herbalism.py
 ```
 
-Das Werkzeug trimmt die äußere Stille, gleicht die Lautstärke an und erstellt
-zwei OGG-Hörproben unter `previews/herbalism/`. Den erzeugten
-[Player](../../previews/herbalism/index.html) lokal im Browser öffnen.
-Die WAV-Quellen bleiben unverändert. Die Hörproben sind lokal, werden nicht
-in Git aufgenommen und landen nicht im Addon-Release oder auf GitHub Pages.
+Trimmt die äußere Stille, gleicht die Lautstärke an und erzeugt die zwei OGGs
+plus zwei höhere Noggenfogger-Varianten. Die WAV-Quellen und alle bisherigen
+Angriffs- und Buffaufnahmen bleiben unverändert. Registry, Manifest und Player
+werden aktualisiert. Die Release-ZIP enthält nur fertige Sounds und Laufzeitdateien.
+
+`python3 tools/build_previews.py` regeneriert die Player aus den OGG-Metadaten
+auch ohne private WAV-Dateien. `tools/preview_herbalism.py` bleibt als alter
+Aufruf für den Kräuter-Player nutzbar.
+
+Nach Installation **WoW vollständig schließen und neu starten**, damit die
+neuen Audiodateien geladen werden.
+
+## Im Client bestätigt
+
+Der Tooltip-Alarm wurde am 23.10.2026 mit Silberblatt und der Lotus-Aufnahme
+als Gegenprobe erfolgreich getestet. Der vorübergehende Einsteigerkräuter-
+Testmodus ist entfernt; Alarme gelten nur noch für Gromsblut und Schwarzen Lotus.
+
+Die verfügbaren Classic-APIs liefern keine Liste der nativen Tracking-Punkte.
+Die HereBeDragons-Version in GuildMap-Legacy zeichnet registrierte Addon-Pins
+aus bekannten Koordinaten und liefert keine Live-Liste vorhandener Kräuter.

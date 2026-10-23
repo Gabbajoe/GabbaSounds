@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from build_preview_site import ROOT, build_site, validate_links
+from build_preview_site import ROOT, PAGES, build_site, validate_links
 from build_package import package_files
 
 
@@ -18,8 +18,14 @@ class PreviewSite(unittest.TestCase):
             files = {p.relative_to(site).as_posix() for p in site.rglob('*') if p.is_file()}
             self.assertEqual(count, len(files))
             alerts = len(json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())['sounds'])
-            self.assertEqual(sum(n.endswith('.ogg') for n in files), 345 + alerts)
-            self.assertEqual(sum(n.endswith('.html') for n in files), 10)
+            for folder in ('spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+                priest_manifest = ROOT / folder / 'manifest.json'
+                if priest_manifest.is_file():
+                    alerts += len(json.loads(priest_manifest.read_text())['sounds'])
+            alerts += len(json.loads((ROOT / 'spoken/herbalism/manifest.json').read_text())['sounds'])
+            base = len(json.loads((ROOT / 'manifest.json').read_text())) + len(json.loads((ROOT / 'spoken/manifest.json').read_text())['sounds'])
+            self.assertEqual(sum(n.endswith('.ogg') for n in files), base + alerts)
+            self.assertEqual(sum(n.endswith('.html') for n in files), len(PAGES) + 1)
             self.assertIn('previews/buffs/index.html', files)
             self.assertIn('Buffwarnungen', (site / 'index.html').read_text())
             self.assertFalse(any(n.endswith('.wav') or '/archive/' in n for n in files))

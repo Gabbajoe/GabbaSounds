@@ -1,0 +1,166 @@
+{
+  "sources": [
+    {
+      "file": "spoken/priest/buffs/generic/fortitude/expiring.wav",
+      "sha256": "3e906d667a40edb013a0ac78d17213187af26bd98ab69869e9daee0e1e96874e"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/fortitude/missing.wav",
+      "sha256": "447bc7ffed5cc85b750d7d3bfd2514e1459b989285dc228827426d13867159ff"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/spirit/expiring.wav",
+      "sha256": "884f9f551a3ec28e0d6d2812929d36f956172b22307f8c2bdc1f4464e5bdea31"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/spirit/missing.wav",
+      "sha256": "5d205ece93a7d945b9fd6b6112a136840d6bf984be7a2da9faacdaa1af88e238"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/innerfire/expiring.wav",
+      "sha256": "a322e7578ffdc90319633abe6b75ef10c5efc8e7233e7bd0f62e83b75fcabdb0"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/innerfire/missing1.wav",
+      "sha256": "e1673bee2b6e3bbb70536fbe1bc23f1242feb3ccada4b9cac168c423af7aa6b9"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/fearward/expiring.wav",
+      "sha256": "7613f7522e718c3dea09676657f90ca33c37d150e8af9cbc91aa4b57a881382c"
+    },
+    {
+      "file": "spoken/priest/buffs/generic/fearward/missing.wav",
+      "sha256": "79937d652e165c77064b69f592a807907ba063288331b797bdebb5aeb919a607"
+    }
+  ],
+  "sounds": [
+    {
+      "file": "Sounds/voice_buff_priest_generic_fortitude_expiring.ogg",
+      "name": "Priester (neutral): Seelenstärke / Ausdauer – läuft in 2 Minuten ab",
+      "buff": "fortitude",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.4120861678004535,
+      "recording_sha256": "3e906d667a40edb013a0ac78d17213187af26bd98ab69869e9daee0e1e96874e",
+      "source": "spoken/priest/buffs/generic/fortitude/expiring.wav",
+      "source_start": 0.15950113378684808,
+      "source_end": 3.5715873015873014,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_fortitude_missing.ogg",
+      "name": "Priester (neutral): Seelenstärke / Ausdauer – fehlt / abgelaufen",
+      "buff": "fortitude",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.3654195011337866,
+      "recording_sha256": "447bc7ffed5cc85b750d7d3bfd2514e1459b989285dc228827426d13867159ff",
+      "source": "spoken/priest/buffs/generic/fortitude/missing.wav",
+      "source_start": 0.019863945578231294,
+      "source_end": 2.3852834467120183,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_spirit_expiring.ogg",
+      "name": "Priester (neutral): Göttlicher Willen – läuft in 2 Minuten ab",
+      "buff": "spirit",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.1925396825396826,
+      "recording_sha256": "884f9f551a3ec28e0d6d2812929d36f956172b22307f8c2bdc1f4464e5bdea31",
+      "source": "spoken/priest/buffs/generic/spirit/expiring.wav",
+      "source_start": 0.10945578231292517,
+      "source_end": 2.3019954648526078,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_spirit_missing.ogg",
+      "name": "Priester (neutral): Göttlicher Willen – fehlt / abgelaufen",
+      "buff": "spirit",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.736848072562358,
+      "recording_sha256": "5d205ece93a7d945b9fd6b6112a136840d6bf984be7a2da9faacdaa1af88e238",
+      "source": "spoken/priest/buffs/generic/spirit/missing.wav",
+      "source_start": 0.23975056689342403,
+      "source_end": 3.976598639455782,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_innerfire_expiring.ogg",
+      "name": "Priester (neutral): Inneres Feuer – läuft in 2 Minuten ab",
+      "buff": "innerFire",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.375192743764172,
+      "recording_sha256": "a322e7578ffdc90319633abe6b75ef10c5efc8e7233e7bd0f62e83b75fcabdb0",
+      "source": "spoken/priest/buffs/generic/innerfire/expiring.wav",
+      "source_start": 0.18950113378684807,
+      "source_end": 2.5646938775510204,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_innerfire_missing.ogg",
+      "name": "Priester (neutral): Inneres Feuer – fehlt / abgelaufen",
+      "buff": "innerFire",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.8067573696145125,
+      "recording_sha256": "e1673bee2b6e3bbb70536fbe1bc23f1242feb3ccada4b9cac168c423af7aa6b9",
+      "source": "spoken/priest/buffs/generic/innerfire/missing1.wav",
+      "source_start": 0.18970521541950114,
+      "source_end": 2.9964625850340134,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_fearward_expiring.ogg",
+      "name": "Priester (neutral): Furchtzauberschutz – läuft in 2 Minuten ab",
+      "buff": "fearWard",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.355079365079365,
+      "recording_sha256": "7613f7522e718c3dea09676657f90ca33c37d150e8af9cbc91aa4b57a881382c",
+      "source": "spoken/priest/buffs/generic/fearward/expiring.wav",
+      "source_start": 0.0,
+      "source_end": 2.355079365079365,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    },
+    {
+      "file": "Sounds/voice_buff_priest_generic_fearward_missing.ogg",
+      "name": "Priester (neutral): Furchtzauberschutz – fehlt / abgelaufen",
+      "buff": "fearWard",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.663265306122449,
+      "recording_sha256": "79937d652e165c77064b69f592a807907ba063288331b797bdebb5aeb919a607",
+      "source": "spoken/priest/buffs/generic/fearward/missing.wav",
+      "source_start": 0.06977324263038549,
+      "source_end": 3.7330385487528344,
+      "sample_rate": 44100,
+      "channels": 2,
+      "voice_profile": "priest-generic"
+    }
+  ]
+}

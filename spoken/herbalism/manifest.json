@@ -1,0 +1,40 @@
+{
+  "sources": [
+    {
+      "file": "spoken/herbalism/gromsblood.wav",
+      "sha256": "2b9f4f20bdf2d91db6e36e878c8867cdc7fcb20c0ede3514c1ebfab710b71fd0"
+    },
+    {
+      "file": "spoken/herbalism/blacklotus.wav",
+      "sha256": "9d06369bdf04e549c3b65cb12f639a004a16a1a983be6b1b0b584378fe6a4624"
+    }
+  ],
+  "sounds": [
+    {
+      "file": "Sounds/voice_herb_gromsblood.ogg",
+      "name": "Gromsblut",
+      "herb": "gromsblood",
+      "kind": "herb",
+      "school": "all",
+      "duration": 2.5878231292517007,
+      "source": "spoken/herbalism/gromsblood.wav",
+      "source_start": 0.3196825396825397,
+      "source_end": 2.9075056689342405,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_herb_blacklotus.ogg",
+      "name": "Schwarzer Lotus",
+      "herb": "blacklotus",
+      "kind": "herb",
+      "school": "all",
+      "duration": 1.4895918367346939,
+      "source": "spoken/herbalism/blacklotus.wav",
+      "source_start": 0.26988662131519275,
+      "source_end": 1.7594784580498866,
+      "sample_rate": 44100,
+      "channels": 2
+    }
+  ]
+}

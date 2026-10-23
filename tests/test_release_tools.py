@@ -29,6 +29,14 @@ class ReleaseTools(unittest.TestCase):
             shutil.copyfile(ROOT / 'spoken/manifest.json', checkout / 'spoken/manifest.json')
             (checkout / 'spoken/mage/buffs').mkdir(parents=True)
             shutil.copyfile(ROOT / 'spoken/mage/buffs/manifest.json', checkout / 'spoken/mage/buffs/manifest.json')
+            for folder in ('spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+                priest_manifest = ROOT / folder / 'manifest.json'
+                if priest_manifest.is_file():
+                    target = checkout / folder / 'manifest.json'
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(priest_manifest, target)
+            (checkout / 'spoken/herbalism').mkdir()
+            shutil.copyfile(ROOT / 'spoken/herbalism/manifest.json', checkout / 'spoken/herbalism/manifest.json')
             (checkout / 'noggenfogger').mkdir()
             shutil.copyfile(ROOT / 'noggenfogger/manifest.json', checkout / 'noggenfogger/manifest.json')
             release, archive, checksum, count = build(checkout, base / 'dist', CURRENT_TAG)
@@ -38,8 +46,14 @@ class ReleaseTools(unittest.TestCase):
                 self.assertEqual(count, len(names))
                 self.assertTrue(all(name.startswith('GabbaSounds/') for name in names))
                 alerts = len(json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())['sounds'])
-                self.assertEqual(sum(name.endswith('.ogg') for name in names), 690 + alerts * 2)
-                self.assertEqual(sum('/Sounds/noggenfogger/' in name for name in names), 345 + alerts)
+                for folder in ('spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+                    priest_manifest = ROOT / folder / 'manifest.json'
+                    if priest_manifest.is_file():
+                        alerts += len(json.loads(priest_manifest.read_text())['sounds'])
+                alerts += len(json.loads((ROOT / 'spoken/herbalism/manifest.json').read_text())['sounds'])
+                audio_count = len(json.loads((ROOT / 'manifest.json').read_text())) + len(json.loads((ROOT / 'spoken/manifest.json').read_text())['sounds'])
+                self.assertEqual(sum(name.endswith('.ogg') for name in names), (audio_count + alerts) * 2)
+                self.assertEqual(sum('/Sounds/noggenfogger/' in name for name in names), audio_count + alerts)
                 self.assertTrue(all('/tools/' not in name and not name.endswith('.wav') for name in names))
             for name in RUNTIME:
                 (checkout / name).touch()
@@ -66,6 +80,8 @@ class ReleaseTools(unittest.TestCase):
             (root / 'spoken/manifest.json').write_text('{"sounds": []}')
             (root / 'spoken/mage/buffs').mkdir(parents=True)
             (root / 'spoken/mage/buffs/manifest.json').write_text('{"sounds": []}')
+            (root / 'spoken/herbalism').mkdir()
+            (root / 'spoken/herbalism/manifest.json').write_text('{"sounds": []}')
             (root / 'noggenfogger').mkdir()
             (root / 'noggenfogger/manifest.json').write_text('{"sounds": []}')
             with self.assertRaisesRegex(ValueError, 'Unsafe package path'):
