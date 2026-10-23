@@ -22,16 +22,22 @@ MAGE_SPELLS = {
     'pyroblast': 'Pyroschlag', 'flamestrike': 'Flammenstoß', 'blastwave': 'Druckwelle',
     'combustion': 'Verbrennung',
 }
+PRIEST_SPELLS = {'mindblast': 'Gedankenschlag', 'shadowwordpain': 'Schattenwort: Schmerz',
+                 'smite': 'Göttliche Pein', 'holynova': 'Heilige Nova'}
 CAST_ONLY = {'icebarrier', 'iceblock', 'coldsnap', 'frostward', 'combustion'}
 MELEE_WEAPONS = {'blade': 'Schwerter / Äxte', 'blunt': 'Streitkolben / Stäbe', 'dagger': 'Dolche', 'fist': 'Faustwaffen / unbewaffnet'}
-WEAPONS = {'wand': 'Zauberstab', 'bow': 'Pfeile / Armbrust', 'gun': 'Schusswaffen', **MAGE_SPELLS, **MELEE_WEAPONS}
+WEAPONS = {'wand': 'Zauberstab', 'bow': 'Pfeile / Armbrust', 'gun': 'Schusswaffen', **MAGE_SPELLS, **MELEE_WEAPONS, **PRIEST_SPELLS}
 RECORDING_DIRS = {weapon: ROOT / 'spoken' / weapon for weapon in ('wand', 'bow', 'gun')}
 RECORDING_DIRS.update({spell: ROOT / 'spoken' / 'mage' / spell for spell in MAGE_SPELLS})
 RECORDING_DIRS.update({weapon: ROOT / 'spoken' / 'melee' / weapon for weapon in MELEE_WEAPONS})
+RECORDING_DIRS.update({spell: ROOT / 'spoken' / 'priest' / spell for spell in PRIEST_SPELLS})
 
 
 def reviewed_ranges(source_name, source_hash, samples, pause):
     cuts = json.loads((ROOT / 'spoken/melee/cuts.json').read_text())
+    priest_cuts = ROOT / 'spoken/priest/cuts.json'
+    if priest_cuts.is_file():
+        cuts.update(json.loads(priest_cuts.read_text()))
     record = cuts.get(source_name)
     if not record:
         return split_ranges(samples, RATE, -35, pause)
@@ -55,7 +61,7 @@ def build_preview(items, target_dir=None, weapons=None):
         cards.append(f'<article data-weapon="{item["weapon"]}" data-kind="{item["kind"]}"><h2>{html.escape(item["name"])}</h2><p>{html.escape(item["source"])} · {item["source_start"]:.2f}–{item["source_end"]:.2f} s</p><audio controls preload="none" data-group="{html.escape(item["repeat_group"])}" src="{html.escape(src)}"></audio></article>')
     return ('''<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gabba – gesprochene Soundpakete</title><style>
 body{font-family:system-ui;background:#111321;color:#eeeaf8;max-width:1050px;padding:25px;margin:auto}p{color:#bcb4d5;line-height:1.5}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}article{background:#1e2137;border-radius:12px;padding:18px}article[hidden]{display:none}audio{width:100%}select,button{font:inherit;background:#b9a6ff;border:0;border-radius:8px;padding:10px;margin:10px 8px 20px 0;cursor:pointer}
-</style><h1>Gesprochene Soundpakete</h1><p>Eigene Casts, Treffer und Crits für 15 Frost-/Feuerzauber sowie Treffer und Crits für Zauberstab, Pfeile, Schusswaffen und vier Nahkampf-Waffengruppen. Miss- und Teiltreffer-Sprüche sind gemeinsam. Die Sprüche werden als ganze Phrasen geschnitten. Teiltreffer bedeutet Streifschläge und teilweise widerstandenen/geblockten Schaden; Fernkampfangriffe haben in Classic keine regulären Glancing Blows.</p>
+</style><h1>Gesprochene Soundpakete</h1><p>Eigene Casts, Treffer und Crits für 15 Frost-/Feuerzauber sowie Treffer und Crits für vier Priesterzauber und für Zauberstab, Pfeile, Schusswaffen und vier Nahkampf-Waffengruppen. Miss- und Teiltreffer-Sprüche sind gemeinsam. Die Sprüche werden als ganze Phrasen geschnitten. Teiltreffer bedeutet Streifschläge und teilweise widerstandenen/geblockten Schaden; Fernkampfangriffe haben in Classic keine regulären Glancing Blows.</p>
 <label>Waffe / Zauber: <select id="weapon">PLACEHOLDER_OPTIONS</select></label>
 <label>Trefferart: <select id="kind"><option value="hit">Normal</option><option value="crit">Crit</option><option value="cast">Zauberbeginn / Aktivieren</option><option value="miss">Miss (gemeinsam)</option><option value="graze">Teiltreffer (gemeinsam)</option></select></label>
 <button id="random">Zufällig anhören</button><button id="stop">Stoppen</button><section>''' + ''.join(cards) + '''</section><script>
@@ -75,7 +81,7 @@ def build_banks(sounds):
         for kind in ('hit','crit','miss','graze'):
             selected_weapon = 'shared' if kind in ('miss','graze') else weapon
             bank[kind] = [Path(item['file']).name for item in sounds if item['kind']==kind and item['weapon']==selected_weapon]
-            if not bank[kind] and not (weapon in MAGE_SPELLS and kind in ('hit', 'crit')):
+            if not bank[kind] and not (weapon in (MAGE_SPELLS | PRIEST_SPELLS) and kind in ('hit', 'crit')):
                 raise SystemExit(f'Missing sound pool: {weapon}/{kind}')
         bank['resist'], bank['absorb'] = bank['miss'], bank['miss']
         if weapon in MAGE_SPELLS:
@@ -93,10 +99,11 @@ def write_registry(manifest):
         lines.append('    },')
     lines.extend(['}', 'local groups = {'])
     for item in sounds: lines.append('    ['+json.dumps(Path(item['file']).name)+'] = '+json.dumps(item['repeat_group'])+',')
-    lines.extend(['}', 'addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage", "spoken_melee", "spoken_blade", "spoken_blunt", "spoken_dagger", "spoken_fist" }', 'addon.soundPacks = {',
+    lines.extend(['}', 'addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage", "spoken_priest", "spoken_melee", "spoken_blade", "spoken_blunt", "spoken_dagger", "spoken_fist" }', 'addon.soundPacks = {',
                  '    magic = { label = "Magie je Schadensart", schools = addon.schoolSounds, weapon = "wand" },',
                  '    spoken = { label = "Eigene Aufnahmen (automatisch)", categories = banks.wand, weapons = banks, repeatGroups = groups },'])
     lines.append('    spoken_mage = { label = "Gesprochen: Magier (Frost und Feuer)", categories = banks.frostbolt, weapons = banks, mageOnly = true, repeatGroups = groups },')
+    lines.append('    spoken_priest = { label = "Gesprochen: Priester (Schatten und Heilig)", categories = banks.mindblast, weapons = banks, priestOnly = true, repeatGroups = groups },')
     lines.append('    spoken_melee = { label = "Gesprochen: Nahkampf (automatisch)", categories = banks.blade, weapons = banks, meleeOnly = true, repeatGroups = groups },')
     for weapon,label in WEAPONS.items(): lines.append('    spoken_'+weapon+' = { label = "Gesprochen: '+label+'", weapon = "'+weapon+'", categories = banks.'+weapon+', repeatGroups = groups },')
     lines.append('}')
@@ -108,7 +115,7 @@ def write_registry(manifest):
 
 
 def write_previews(sounds):
-    pages = [('spoken/index.html', WEAPONS), ('melee/index.html', MELEE_WEAPONS)]
+    pages = [('spoken/index.html', WEAPONS), ('melee/index.html', MELEE_WEAPONS), ('priest/index.html', PRIEST_SPELLS)]
     pages.extend(('melee/' + key + '.html', {key: label}) for key, label in MELEE_WEAPONS.items())
     for name, weapons in pages:
         destination = ROOT / 'previews' / name
@@ -120,8 +127,11 @@ def write_previews(sounds):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--registry-only', action='store_true', help='Update banks and UI data without re-encoding existing clips.')
+    parser.add_argument('--priest-only', action='store_true', help='Import priest damage recordings and pitch variants, preserving all other audio.')
     parser.add_argument('--melee-only', action='store_true', help='Import melee recordings while preserving all existing ranged and mage clips.')
     args = parser.parse_args()
+    if sum((args.registry_only, args.melee_only, args.priest_only)) > 1:
+        parser.error('Choose only one import mode.')
     if args.registry_only:
         manifest = json.loads((ROOT/'spoken'/'manifest.json').read_text())
         manifest['banks'] = build_banks(manifest['sounds'])
@@ -131,32 +141,44 @@ def main():
     recordings = []
     for weapon in WEAPONS:
         if args.melee_only and weapon not in MELEE_WEAPONS: continue
+        if args.priest_only and weapon not in PRIEST_SPELLS: continue
+        if args.priest_only:
+            required = ('hit.wav',) if weapon == 'shadowwordpain' else ('hit.wav', 'crit.wav')
+            for name in required:
+                if not (RECORDING_DIRS[weapon] / name).is_file():
+                    raise SystemExit('Missing recording: ' + str(RECORDING_DIRS[weapon] / name))
         for source in sorted(RECORDING_DIRS[weapon].glob('*.wav')):
             stem = source.stem.lower()
             kind = ('cast' if weapon in MAGE_SPELLS and stem.startswith('cast') else
                     'hit' if stem.startswith(('hit', 'ht')) else 'crit' if stem.startswith('crit') else None)
+            if weapon == 'shadowwordpain' and kind == 'crit':
+                raise SystemExit('Shadow Word: Pain cannot crit in Classic Era: ' + str(source))
             if kind is None:
                 raise SystemExit(f'Unknown recording category: {source}. Use hit*.wav, crit*.wav or mage spell cast*.wav.')
             # The existing wand recording contains closely paired single noises.
             pause = (0.08 if weapon == 'wand' and stem == 'hit' else
-                     0.40 if weapon in MAGE_SPELLS and kind == 'hit' else
+                     0.60 if weapon in PRIEST_SPELLS else 0.40 if weapon in MAGE_SPELLS and kind == 'hit' else
                      0.20 if kind == 'hit' else 0.60)
             recordings.append((weapon, kind, source, pause))
-    for kind in (() if args.melee_only else ('miss', 'graze')):
+    for kind in (() if args.melee_only or args.priest_only else ('miss', 'graze')):
         source = ROOT / 'spoken' / 'shared' / (kind + '.wav')
         if not source.is_file(): raise SystemExit('Missing shared recording: ' + str(source))
         recordings.append(('shared', kind, source, 0.60))
     cuts = json.loads((ROOT / 'spoken/melee/cuts.json').read_text())
+    priest_cuts = ROOT / 'spoken/priest/cuts.json'
+    if priest_cuts.is_file(): cuts.update(json.loads(priest_cuts.read_text()))
     # Reject stale reviewed cuts before writing any audio or manifest output.
     for _, _, source, _ in recordings:
         source_name = source.relative_to(ROOT).as_posix()
         if source_name in cuts and hashlib.sha256(source.read_bytes()).hexdigest() != cuts[source_name]['sha256']:
             raise SystemExit('Recording changed; review its cuts before importing: ' + source_name)
     sounds, sources, counts = [], [], Counter()
-    if args.melee_only:
+    if args.melee_only or args.priest_only:
+        selected_weapons = PRIEST_SPELLS if args.priest_only else MELEE_WEAPONS
+        prefix = "spoken/priest/" if args.priest_only else "spoken/melee/"
         existing = json.loads((ROOT/'spoken/manifest.json').read_text())
-        sounds = [item for item in existing['sounds'] if item['weapon'] not in MELEE_WEAPONS]
-        sources = [item for item in existing['sources'] if not item['file'].startswith('spoken/melee/')]
+        sounds = [item for item in existing['sounds'] if item['weapon'] not in selected_weapons]
+        sources = [item for item in existing['sources'] if not item['file'].startswith(prefix)]
     with tempfile.TemporaryDirectory(prefix='gabba-voice-') as directory:
         for weapon, kind, source, pause in recordings:
             source_name = source.relative_to(ROOT).as_posix()
@@ -165,6 +187,8 @@ def main():
             samples = np.frombuffer(raw, dtype='<f4').reshape(-1, 2).astype(float)
             ranges = reviewed_ranges(source_name, source_hash, samples, pause)
             if not ranges: raise SystemExit('No sounds found: ' + source_name)
+            if weapon in PRIEST_SPELLS and len(ranges) != 4:
+                raise SystemExit('Review cuts: expected four complete phrases in ' + source_name)
             families = split_ranges(samples, RATE, -42, 0.40) if kind == 'hit' and weapon not in MELEE_WEAPONS else ranges
             sources.append({'file': source_name, 'sha256': source_hash, 'duration': round(len(samples) / RATE, 5), 'pause_seconds': pause, 'threshold_db': -35, 'clips': len(ranges), 'cut_method': 'reviewed' if source_name in cuts else 'pause_detection'})
             for start, end in ranges:
@@ -199,6 +223,15 @@ def main():
     manifest = {'version': 2, 'sources': sources, 'sounds': sounds, 'banks': banks}
     (ROOT/'spoken'/'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+'\n')
     write_registry(manifest)
+    if args.priest_only:
+        import build_noggenfogger
+        new_sounds = [item for item in sounds if item['weapon'] in PRIEST_SPELLS]
+        variants = [build_noggenfogger.render(item) for item in new_sounds]
+        pitch_path = ROOT / 'noggenfogger/manifest.json'
+        pitch = json.loads(pitch_path.read_text())
+        replaced = {item['file'] for item in new_sounds}
+        pitch['sounds'] = [item for item in pitch['sounds'] if item['source_file'] not in replaced] + variants
+        pitch_path.write_text(json.dumps(pitch, ensure_ascii=False, indent=2) + '\n')
     print('Total:',len(sounds),'distinct sounds;', {weapon:{k:len(v) for k,v in bank.items()} for weapon,bank in banks.items()})
 
 

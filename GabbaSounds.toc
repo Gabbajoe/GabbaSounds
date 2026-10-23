@@ -1,7 +1,7 @@
 ## Interface: 11509
 ## Title: GabbaSounds
 ## IconTexture: Interface\AddOns\GabbaSounds\Assets\minimap.tga
-## Notes: Magische und gesprochene Sounds für Zauberstab, Bogen, Gewehr, Nahkampf und 15 Frost-/Feuerzauber. Minimap: links an/aus, rechts Optionen.
+## Notes: Gesprochene Waffen-, Magier- und Priestersounds, Buffwarnungen und Kräuter-Tooltips. Minimap: links an/aus, rechts Optionen.
 ## Author: Gabbajoe
 ## Version: 1.4.0
 ## X-Curse-Project-ID: 1733615
@@ -15,6 +15,8 @@ MeleeSoundIDs.lua
 Melee.lua
 MageSpells.lua
 MageEvents.lua
+PriestSpells.lua
+PriestEvents.lua
 Noggenfogger.lua
 BuffAlertSoundData.lua
 MageBuffAlerts.lua

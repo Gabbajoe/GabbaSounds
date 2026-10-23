@@ -1,0 +1,158 @@
+{
+  "sources": [
+    {
+      "file": "spoken/priest/buffs/fortitude/expiring.wav",
+      "sha256": "7a07ac88b26428ac820d35be92d6260751a905f022f5cf4c36283270b946ab1b"
+    },
+    {
+      "file": "spoken/priest/buffs/fortitude/missing.wav",
+      "sha256": "9362d954296dd16dae80c739e5e0fafd8c4e33a2c2787879c22b7380c715a047"
+    },
+    {
+      "file": "spoken/priest/buffs/spirit/expiring.wav",
+      "sha256": "4c4a35b0b6e2c3ce8af5fbc2fe9ca649a8ba80483eeb6ef6d0b308158922aed8"
+    },
+    {
+      "file": "spoken/priest/buffs/spirit/missing.wav",
+      "sha256": "d0f4a06670ff29b520ff7737dc1de05aed8e777a6f70df08f341fb877c8a2ec7"
+    },
+    {
+      "file": "spoken/priest/buffs/innerfire/expiring.wav",
+      "sha256": "35eaa66ed0de47dd829bbc00b503b622d0bc0037f22325d490982aad830469b5"
+    },
+    {
+      "file": "spoken/priest/buffs/innerfire/missing.wav",
+      "sha256": "1573e29e395391c0304933632696f084e5173080443f2c2343db6b737495f34e"
+    },
+    {
+      "file": "spoken/priest/buffs/fearward/expiring.wav",
+      "sha256": "36ab3fa43a8f5e4b2eec4e6268b0b75c95c1aa43f70acb408fa2e2c9056e9e74"
+    },
+    {
+      "file": "spoken/priest/buffs/fearward/missing.wav",
+      "sha256": "79937d652e165c77064b69f592a807907ba063288331b797bdebb5aeb919a607"
+    }
+  ],
+  "sounds": [
+    {
+      "file": "Sounds/voice_buff_fortitude_expiring.ogg",
+      "name": "Seelenstärke / Ausdauer – läuft in 2 Minuten ab",
+      "buff": "fortitude",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.2041496598639454,
+      "recording_sha256": "7a07ac88b26428ac820d35be92d6260751a905f022f5cf4c36283270b946ab1b",
+      "source": "spoken/priest/buffs/fortitude/expiring.wav",
+      "source_start": 0.4191156462585034,
+      "source_end": 3.623265306122449,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_fortitude_missing.ogg",
+      "name": "Seelenstärke / Ausdauer – fehlt / abgelaufen",
+      "buff": "fortitude",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 4.444444444444445,
+      "recording_sha256": "9362d954296dd16dae80c739e5e0fafd8c4e33a2c2787879c22b7380c715a047",
+      "source": "spoken/priest/buffs/fortitude/missing.wav",
+      "source_start": 0.309546485260771,
+      "source_end": 4.753990929705216,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_spirit_expiring.ogg",
+      "name": "Göttlicher Willen – läuft in 2 Minuten ab",
+      "buff": "spirit",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.8730385487528345,
+      "recording_sha256": "4c4a35b0b6e2c3ce8af5fbc2fe9ca649a8ba80483eeb6ef6d0b308158922aed8",
+      "source": "spoken/priest/buffs/spirit/expiring.wav",
+      "source_start": 0.4091609977324263,
+      "source_end": 4.282199546485261,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_spirit_missing.ogg",
+      "name": "Göttlicher Willen – fehlt / abgelaufen",
+      "buff": "spirit",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.1343990929705217,
+      "recording_sha256": "d0f4a06670ff29b520ff7737dc1de05aed8e777a6f70df08f341fb877c8a2ec7",
+      "source": "spoken/priest/buffs/spirit/missing.wav",
+      "source_start": 0.0,
+      "source_end": 3.1343990929705217,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_innerfire_expiring.ogg",
+      "name": "Inneres Feuer – läuft in 2 Minuten ab",
+      "buff": "innerFire",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.0933560090702947,
+      "recording_sha256": "35eaa66ed0de47dd829bbc00b503b622d0bc0037f22325d490982aad830469b5",
+      "source": "spoken/priest/buffs/innerfire/expiring.wav",
+      "source_start": 0.19945578231292518,
+      "source_end": 3.2928117913832198,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_innerfire_missing.ogg",
+      "name": "Inneres Feuer – fehlt / abgelaufen",
+      "buff": "innerFire",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.4673015873015873,
+      "recording_sha256": "1573e29e395391c0304933632696f084e5173080443f2c2343db6b737495f34e",
+      "source": "spoken/priest/buffs/innerfire/missing.wav",
+      "source_start": 0.35965986394557825,
+      "source_end": 3.8269614512471657,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_fearward_expiring.ogg",
+      "name": "Furchtzauberschutz – läuft in 2 Minuten ab",
+      "buff": "fearWard",
+      "phase": "expiring",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 2.7620408163265306,
+      "recording_sha256": "36ab3fa43a8f5e4b2eec4e6268b0b75c95c1aa43f70acb408fa2e2c9056e9e74",
+      "source": "spoken/priest/buffs/fearward/expiring.wav",
+      "source_start": 0.0,
+      "source_end": 2.7620408163265306,
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    {
+      "file": "Sounds/voice_buff_fearward_missing.ogg",
+      "name": "Furchtzauberschutz – fehlt / abgelaufen",
+      "buff": "fearWard",
+      "phase": "missing",
+      "kind": "buffwarning",
+      "school": "all",
+      "duration": 3.663265306122449,
+      "recording_sha256": "79937d652e165c77064b69f592a807907ba063288331b797bdebb5aeb919a607",
+      "source": "spoken/priest/buffs/fearward/missing.wav",
+      "source_start": 0.06977324263038549,
+      "source_end": 3.7330385487528344,
+      "sample_rate": 44100,
+      "channels": 2
+    }
+  ]
+}

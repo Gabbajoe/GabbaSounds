@@ -68,7 +68,7 @@ function addon.HandleMeleeCombatLog(event, source, ...)
     if not source or not source:match("^Player%-") then return true end
     local db = addon.db
     local pack = addon.soundPacks[db.soundPack]
-    if pack.mageOnly or (not pack.weapons and not addon.meleeLabels[pack.weapon]) then return true end
+    if pack.priestOnly or pack.mageOnly or (not pack.weapons and not addon.meleeLabels[pack.weapon]) then return true end
     local amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, offHand = ...
     if event == "SWING_MISSED" then offHand = overkill end
     local weapon = addon.ResolveMeleeWeapon(source, offHand == true or offHand == 1)

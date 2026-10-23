@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the actual encoded OGGs and summarize their decoded signal."""
 from collections import Counter
-from import_spoken_library import MAGE_SPELLS, CAST_ONLY
+from import_spoken_library import MAGE_SPELLS, CAST_ONLY, PRIEST_SPELLS
 import argparse
 import hashlib
 import json
@@ -28,11 +28,15 @@ def main():
             if not args.runtime_only:
                 assert hashlib.sha256((ROOT / source['file']).read_bytes()).hexdigest() == source['sha256'], 'Herb recording was changed'
         manifest.extend(herbs['sounds'])
-        alerts = json.loads((ROOT / 'spoken/mage/buffs/manifest.json').read_text())
-        for source in alerts['sources']:
-            if not args.runtime_only:
-                assert hashlib.sha256((ROOT / source['file']).read_bytes()).hexdigest() == source['sha256'], 'Buff recording was changed'
-        manifest.extend(alerts['sounds'])
+        for folder in ('spoken/mage/buffs', 'spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+            alert_path = ROOT / folder / 'manifest.json'
+            if not alert_path.is_file() and folder != 'spoken/mage/buffs':
+                continue
+            alerts = json.loads(alert_path.read_text())
+            for source in alerts['sources']:
+                if not args.runtime_only:
+                    assert hashlib.sha256((ROOT / source['file']).read_bytes()).hexdigest() == source['sha256'], 'Buff recording was changed'
+            manifest.extend(alerts['sounds'])
         custom = json.loads((ROOT / 'spoken' / 'manifest.json').read_text())
         if custom.get('version') == 2:
             for source in custom['sources']:
@@ -62,12 +66,17 @@ def main():
         assert hashlib.sha256((ROOT / item['file']).read_bytes()).hexdigest() == item['sha256']
         assert abs(item['duration'] - sources[item['source_file']]['duration']) < .001
     manifest.extend(selected)
-    counts, hashes, measures = Counter(), set(), []
+    counts, hashes, measures = Counter(), {}, []
     for item in manifest:
         path = ROOT / item['file']
         digest = hashlib.sha256(path.read_bytes()).digest()
-        assert digest not in hashes, f'Duplicate audio: {path.name}'
-        hashes.add(digest)
+        previous = hashes.get(digest)
+        if previous is not None:
+            # Personal/neutral warnings may intentionally share a nameless take.
+            assert item['kind'] == previous['kind'] == 'buffwarning' and item.get('recording_sha256') \
+                and item['recording_sha256'] == previous.get('recording_sha256') \
+                and (item['buff'], item['phase']) == (previous['buff'], previous['phase']), f'Duplicate audio: {path.name}'
+        hashes[digest] = item
         probe = json.loads(subprocess.check_output([
             'ffprobe', '-v', 'error', '-show_streams', '-of', 'json', str(path)]))['streams'][0]
         assert probe['codec_name'] == 'vorbis' and probe['channels'] == 2 and int(probe['sample_rate']) == 44100
@@ -106,7 +115,7 @@ def main():
             voice_files = {Path(item['file']).name for item in custom['sounds']}
             for weapon, bank in custom['banks'].items():
                 for category in ('hit', 'crit', 'miss', 'graze', 'resist', 'absorb'):
-                    assert bank[category] or (weapon in CAST_ONLY and category in ('hit', 'crit')) or (weapon == 'blizzard' and category == 'crit') or (weapon == 'frostbolt' and category in ('hit', 'crit'))
+                    assert bank[category] or (weapon in CAST_ONLY and category in ('hit', 'crit')) or (weapon in ('blizzard', 'shadowwordpain') and category == 'crit') or (weapon == 'frostbolt' and category in ('hit', 'crit'))
                     assert all(file in voice_files for file in bank[category])
                 if weapon in MAGE_SPELLS:
                     assert all(file in voice_files for file in bank.get('cast', []))
@@ -116,7 +125,7 @@ def main():
     output = ROOT / 'analysis' / ('spoken_audio_validation.json' if args.pack == 'spoken' else 'school_audio_validation.json')
     output.parent.mkdir(exist_ok=True)
     output.write_text(json.dumps(measures, indent=2, ensure_ascii=False) + '\n')
-    print(f'Validated {len(measures)} distinct stereo Vorbis files: duration, gain, headroom, no silence/NaNs/DC offset.')
+    print(f'Validated {len(measures)} stereo Vorbis files: duration, gain, headroom, no silence/NaNs/DC offset.')
     if args.runtime_only and args.pack in ('spoken', 'all'):
         print('Runtime-only validation: private source WAV hashes are checked locally, not in public CI.')
     for school in (() if args.pack == 'spoken' else ('shadow', 'fire', 'frost', 'arcane', 'nature', 'holy')):

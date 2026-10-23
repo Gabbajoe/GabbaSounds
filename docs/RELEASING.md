@@ -62,25 +62,16 @@ Uploads still pass through CurseForge moderation. The token is not passed throug
 
 Official API details: https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-api
 
-The published version is **1.3.0** (personal mage buff reminders). Pushing `main` does not
-publish a release or upload to CurseForge. A release tag explicitly starts that
-publishing workflow.
+The 1.4.0 release includes priest attack sounds, priest buff reminders, herbalism
+tooltip alerts and the unified settings window. Pushing `main` does not publish
+a release: the `v1.4.0` tag starts GitHub publishing and the CurseForge upload.
 
-**Author release authorization (2026-10-16):** the author explicitly requested
-local installation and publication of 1.3.0 after the personal Minibobsel mage
-reminders and their four voice recordings were prepared and checked. After
-required CI passes, tag the merged `main` commit as `v1.3.0`. The configured
-workflow publishes to GitHub and submits the ZIP to CurseForge. A newly uploaded
-file can require its own moderation. Version 1.2.0 was published on 2026-10-15.
+**Author release authorization (2026-10-23):** publish 1.4.0 after required CI
+passes, through a pull request to protected `main` and then the version tag.
+The author verified tooltip alerts in the Classic client; the temporary
+low-level-herb test mode is removed. The ZIP contains **790 OGGs** (395 normal
+and 395 higher variants), plus allowlisted runtime code and addon documents.
 The separately held community-credits PR is not included in this release.
-
-The separate `feature/herbalism-tooltip-alerts` branch prepares **1.4.0** as a
-local test build. The author selected tooltip-based herb detection on 2026-10-16
-after automatic scanning proved unavailable. Two herb recordings and their
-pitched variants bring this development build to **702 OGGs**. It is not yet
-published; validate real herb tooltips in-game before a future release. Import
-these recordings with `python3 tools/import_herbalism.py`. The existing 1.3.0
-release authorization does not by itself mark 1.4.0 as published.
 
 The initial addon approval and the author's 1.1.0 release request on 2026-10-11
 lifted the earlier hold from 2026-10-08. Version 1.1.0 was published successfully.
@@ -123,8 +114,8 @@ and audio links, then deploys through GitHub Pages after relevant changes reach
 Actions publishing source in the repository settings.
 
 `python3 tools/build_preview_site.py --output-dir dist/site` creates the site in
-a destination that does not yet exist. Only the nine current player pages,
-the landing page, logo, `.nojekyll` and 349 manifest-listed OGGs are included.
+a destination that does not yet exist. Only the eleven current player pages,
+the landing page, logo, `.nojekyll` and 395 manifest-listed base OGGs are included.
 Private recordings and archived players are excluded. This workflow neither
 creates an addon release nor uploads to CurseForge. The release ZIP continues
 to use its independent runtime allowlist.
@@ -141,7 +132,7 @@ python3 tools/validate_sounds.py --pack all --runtime-only
 python3 tools/build_package.py --output-dir dist
 ```
 
-Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 698 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
+Runtime-only mode explicitly skips four tests that require the private source recordings and omits source-WAV hash verification. All Lua behavior tests, manifest/bank/preview checks, packaging tests, upload metadata tests and checks of all 790 encoded OGGs still run. The full local suite continues to verify the original recording hashes and phrase cuts when recordings are available.
 
 The pipeline packages reviewed audio; it does not re-slice or re-encode recordings. `python3 tools/import_spoken_library.py --registry-only` can regenerate the spoken browser preview from the checked-in OGGs without any WAV recordings.
 

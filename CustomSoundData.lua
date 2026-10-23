@@ -192,6 +192,38 @@ local banks = {
         resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
         absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
     },
+    mindblast = {
+        hit = { "voice_mindblast_hit_01.ogg", "voice_mindblast_hit_02.ogg", "voice_mindblast_hit_03.ogg", "voice_mindblast_hit_04.ogg" },
+        crit = { "voice_mindblast_crit_01.ogg", "voice_mindblast_crit_02.ogg", "voice_mindblast_crit_03.ogg", "voice_mindblast_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    shadowwordpain = {
+        hit = { "voice_shadowwordpain_hit_01.ogg", "voice_shadowwordpain_hit_02.ogg", "voice_shadowwordpain_hit_03.ogg", "voice_shadowwordpain_hit_04.ogg" },
+        crit = {  },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    smite = {
+        hit = { "voice_smite_hit_01.ogg", "voice_smite_hit_02.ogg", "voice_smite_hit_03.ogg", "voice_smite_hit_04.ogg" },
+        crit = { "voice_smite_crit_01.ogg", "voice_smite_crit_02.ogg", "voice_smite_crit_03.ogg", "voice_smite_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
+    holynova = {
+        hit = { "voice_holynova_hit_01.ogg", "voice_holynova_hit_02.ogg", "voice_holynova_hit_03.ogg", "voice_holynova_hit_04.ogg" },
+        crit = { "voice_holynova_crit_01.ogg", "voice_holynova_crit_02.ogg", "voice_holynova_crit_03.ogg", "voice_holynova_crit_04.ogg" },
+        miss = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        graze = { "voice_shared_graze_01.ogg", "voice_shared_graze_02.ogg", "voice_shared_graze_03.ogg", "voice_shared_graze_04.ogg", "voice_shared_graze_05.ogg", "voice_shared_graze_06.ogg", "voice_shared_graze_07.ogg", "voice_shared_graze_08.ogg" },
+        resist = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+        absorb = { "voice_shared_miss_01.ogg", "voice_shared_miss_02.ogg", "voice_shared_miss_03.ogg", "voice_shared_miss_04.ogg", "voice_shared_miss_05.ogg", "voice_shared_miss_06.ogg", "voice_shared_miss_07.ogg", "voice_shared_miss_08.ogg" },
+    },
 }
 local groups = {
     ["voice_wand_crit_01.ogg"] = "spoken/wand/crit.wav:1",
@@ -413,12 +445,41 @@ local groups = {
     ["voice_fist_hit_04.ogg"] = "spoken/melee/fist/hit.wav:4",
     ["voice_fist_hit_05.ogg"] = "spoken/melee/fist/hit.wav:5",
     ["voice_fist_hit_06.ogg"] = "spoken/melee/fist/hit.wav:6",
+    ["voice_mindblast_crit_01.ogg"] = "spoken/priest/mindblast/crit.wav:1",
+    ["voice_mindblast_crit_02.ogg"] = "spoken/priest/mindblast/crit.wav:2",
+    ["voice_mindblast_crit_03.ogg"] = "spoken/priest/mindblast/crit.wav:3",
+    ["voice_mindblast_crit_04.ogg"] = "spoken/priest/mindblast/crit.wav:4",
+    ["voice_mindblast_hit_01.ogg"] = "spoken/priest/mindblast/hit.wav:1",
+    ["voice_mindblast_hit_02.ogg"] = "spoken/priest/mindblast/hit.wav:2",
+    ["voice_mindblast_hit_03.ogg"] = "spoken/priest/mindblast/hit.wav:3",
+    ["voice_mindblast_hit_04.ogg"] = "spoken/priest/mindblast/hit.wav:4",
+    ["voice_shadowwordpain_hit_01.ogg"] = "spoken/priest/shadowwordpain/hit.wav:1",
+    ["voice_shadowwordpain_hit_02.ogg"] = "spoken/priest/shadowwordpain/hit.wav:2",
+    ["voice_shadowwordpain_hit_03.ogg"] = "spoken/priest/shadowwordpain/hit.wav:3",
+    ["voice_shadowwordpain_hit_04.ogg"] = "spoken/priest/shadowwordpain/hit.wav:4",
+    ["voice_smite_crit_01.ogg"] = "spoken/priest/smite/crit.wav:1",
+    ["voice_smite_crit_02.ogg"] = "spoken/priest/smite/crit.wav:2",
+    ["voice_smite_crit_03.ogg"] = "spoken/priest/smite/crit.wav:3",
+    ["voice_smite_crit_04.ogg"] = "spoken/priest/smite/crit.wav:4",
+    ["voice_smite_hit_01.ogg"] = "spoken/priest/smite/hit.wav:1",
+    ["voice_smite_hit_02.ogg"] = "spoken/priest/smite/hit.wav:2",
+    ["voice_smite_hit_03.ogg"] = "spoken/priest/smite/hit.wav:3",
+    ["voice_smite_hit_04.ogg"] = "spoken/priest/smite/hit.wav:4",
+    ["voice_holynova_crit_01.ogg"] = "spoken/priest/holynova/crit.wav:1",
+    ["voice_holynova_crit_02.ogg"] = "spoken/priest/holynova/crit.wav:2",
+    ["voice_holynova_crit_03.ogg"] = "spoken/priest/holynova/crit.wav:3",
+    ["voice_holynova_crit_04.ogg"] = "spoken/priest/holynova/crit.wav:4",
+    ["voice_holynova_hit_01.ogg"] = "spoken/priest/holynova/hit.wav:1",
+    ["voice_holynova_hit_02.ogg"] = "spoken/priest/holynova/hit.wav:2",
+    ["voice_holynova_hit_03.ogg"] = "spoken/priest/holynova/hit.wav:3",
+    ["voice_holynova_hit_04.ogg"] = "spoken/priest/holynova/hit.wav:4",
 }
-addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage", "spoken_melee", "spoken_blade", "spoken_blunt", "spoken_dagger", "spoken_fist" }
+addon.packOrder = { "magic", "spoken", "spoken_wand", "spoken_bow", "spoken_gun", "spoken_frostbolt", "spoken_mage", "spoken_priest", "spoken_melee", "spoken_blade", "spoken_blunt", "spoken_dagger", "spoken_fist" }
 addon.soundPacks = {
     magic = { label = "Magie je Schadensart", schools = addon.schoolSounds, weapon = "wand" },
     spoken = { label = "Eigene Aufnahmen (automatisch)", categories = banks.wand, weapons = banks, repeatGroups = groups },
     spoken_mage = { label = "Gesprochen: Magier (Frost und Feuer)", categories = banks.frostbolt, weapons = banks, mageOnly = true, repeatGroups = groups },
+    spoken_priest = { label = "Gesprochen: Priester (Schatten und Heilig)", categories = banks.mindblast, weapons = banks, priestOnly = true, repeatGroups = groups },
     spoken_melee = { label = "Gesprochen: Nahkampf (automatisch)", categories = banks.blade, weapons = banks, meleeOnly = true, repeatGroups = groups },
     spoken_wand = { label = "Gesprochen: Zauberstab", weapon = "wand", categories = banks.wand, repeatGroups = groups },
     spoken_bow = { label = "Gesprochen: Pfeile / Armbrust", weapon = "bow", categories = banks.bow, repeatGroups = groups },
@@ -442,6 +503,10 @@ addon.soundPacks = {
     spoken_blunt = { label = "Gesprochen: Streitkolben / Stäbe", weapon = "blunt", categories = banks.blunt, repeatGroups = groups },
     spoken_dagger = { label = "Gesprochen: Dolche", weapon = "dagger", categories = banks.dagger, repeatGroups = groups },
     spoken_fist = { label = "Gesprochen: Faustwaffen / unbewaffnet", weapon = "fist", categories = banks.fist, repeatGroups = groups },
+    spoken_mindblast = { label = "Gesprochen: Gedankenschlag", weapon = "mindblast", categories = banks.mindblast, repeatGroups = groups },
+    spoken_shadowwordpain = { label = "Gesprochen: Schattenwort: Schmerz", weapon = "shadowwordpain", categories = banks.shadowwordpain, repeatGroups = groups },
+    spoken_smite = { label = "Gesprochen: Göttliche Pein", weapon = "smite", categories = banks.smite, repeatGroups = groups },
+    spoken_holynova = { label = "Gesprochen: Heilige Nova", weapon = "holynova", categories = banks.holynova, repeatGroups = groups },
 }
 addon.voiceBanks = banks
 addon.sharedGraze = banks.wand.graze
@@ -665,3 +730,31 @@ addon.soundDurations["voice_fist_hit_03.ogg"] = 0.86
 addon.soundDurations["voice_fist_hit_04.ogg"] = 1.31
 addon.soundDurations["voice_fist_hit_05.ogg"] = 0.66501
 addon.soundDurations["voice_fist_hit_06.ogg"] = 1.06
+addon.soundDurations["voice_mindblast_crit_01.ogg"] = 1.72
+addon.soundDurations["voice_mindblast_crit_02.ogg"] = 0.94
+addon.soundDurations["voice_mindblast_crit_03.ogg"] = 3.13501
+addon.soundDurations["voice_mindblast_crit_04.ogg"] = 2.29
+addon.soundDurations["voice_mindblast_hit_01.ogg"] = 0.95
+addon.soundDurations["voice_mindblast_hit_02.ogg"] = 0.70501
+addon.soundDurations["voice_mindblast_hit_03.ogg"] = 0.96
+addon.soundDurations["voice_mindblast_hit_04.ogg"] = 1.2
+addon.soundDurations["voice_shadowwordpain_hit_01.ogg"] = 0.92
+addon.soundDurations["voice_shadowwordpain_hit_02.ogg"] = 1.01
+addon.soundDurations["voice_shadowwordpain_hit_03.ogg"] = 1.17
+addon.soundDurations["voice_shadowwordpain_hit_04.ogg"] = 1.1
+addon.soundDurations["voice_smite_crit_01.ogg"] = 1.4
+addon.soundDurations["voice_smite_crit_02.ogg"] = 1.87
+addon.soundDurations["voice_smite_crit_03.ogg"] = 1.79
+addon.soundDurations["voice_smite_crit_04.ogg"] = 1.62
+addon.soundDurations["voice_smite_hit_01.ogg"] = 1.5
+addon.soundDurations["voice_smite_hit_02.ogg"] = 0.85
+addon.soundDurations["voice_smite_hit_03.ogg"] = 1.32
+addon.soundDurations["voice_smite_hit_04.ogg"] = 1.13
+addon.soundDurations["voice_holynova_crit_01.ogg"] = 1.48
+addon.soundDurations["voice_holynova_crit_02.ogg"] = 1.52
+addon.soundDurations["voice_holynova_crit_03.ogg"] = 1.53
+addon.soundDurations["voice_holynova_crit_04.ogg"] = 1.67
+addon.soundDurations["voice_holynova_hit_01.ogg"] = 1.04
+addon.soundDurations["voice_holynova_hit_02.ogg"] = 1.16
+addon.soundDurations["voice_holynova_hit_03.ogg"] = 1.05
+addon.soundDurations["voice_holynova_hit_04.ogg"] = 0.91

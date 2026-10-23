@@ -5,6 +5,8 @@ LUA="${LUA:-lua}"
 LUAC="${LUAC:-luac}"
 "$LUAC" -p MageSpells.lua
 "$LUAC" -p MageEvents.lua
+"$LUAC" -p PriestSpells.lua
+"$LUAC" -p PriestEvents.lua
 "$LUAC" -p Core.lua
 "$LUAC" -p Noggenfogger.lua
 "$LUAC" -p MageBuffAlerts.lua

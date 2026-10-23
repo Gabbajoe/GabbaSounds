@@ -5,7 +5,7 @@
 **Pew pew. Whoosh. Bamm. And something extra for that epic crit.** 💥
 
 ![Classic Era and Hardcore](https://img.shields.io/badge/WoW-Classic_Era_%26_Hardcore-a78bfa?style=flat-square)
-![German voice clips](https://img.shields.io/badge/German_voice_clips-223-f472b6?style=flat-square)
+![German voice clips](https://img.shields.io/badge/German_voice_clips-269-f472b6?style=flat-square)
 ![Magic sounds](https://img.shields.io/badge/Magic_sounds-126-fbbf24?style=flat-square)
 [![Latest release](https://img.shields.io/github/v/release/Gabbajoe/GabbaSounds?style=flat-square&color=22d3ee&label=Release)](https://github.com/Gabbajoe/GabbaSounds/releases)
 
@@ -20,6 +20,19 @@ It started with a wand priest who had heard the same default whoosh one too many
 Four original voice reminders give **Minibobsel the mage** a heads-up when buffs have **two minutes or less remaining**, and a different reminder when they're missing. Intellect/Brilliance covers you and visible mana-using group members; your own Frost, Ice or Mage Armor counts as one armor buff. 💜
 
 **This personal automatic reminder is restricted to a mage named Minibobsel.** Everyone can listen to the four clips in `/gws buffs` or [in the browser](https://gabbajoe.github.io/GabbaSounds/previews/buffs/index.html). Reminders stay on your own screen, share one voice reaction across affected group members and support the higher Noggenfogger voice. No messages are sent to your party or raid.
+
+## ✨ New in 1.4.0: Priests get a voice!
+
+**28 attack clips** for Mind Blast, Shadow Word: Pain, Smite and Holy Nova.
+Shadow Word: Pain reacts on application or refresh, without extra comments on
+every tick. Holy Nova combines damage targets into one reaction and ignores healing.
+**Spoken priest buff reminders** cover Fortitude, Divine Spirit, your own Inner Fire
+and optional learned Fear Ward. Group reminders require suitable classes in confirmed
+buff range. Shared miss and partial-hit comments complete the pack. 💛
+
+**🌿 Herb hunting with personality:** tooltip alerts for Gromsblood and Black Lotus when you hover a real herb point or the herb itself. Herbalism required; no automatic minimap scanning.
+
+**🎛️ Everything in one place:** a compact, opaque settings window with clear navigation, direct sound selection and previews that keep your active package unchanged. Choose Mage or Priest under buff reminders to hear the matching clips.
 
 ## 🐭 Small character, higher voice!
 

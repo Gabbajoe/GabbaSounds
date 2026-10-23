@@ -13,7 +13,7 @@ kurz Ruhe lassen. WAV mit 44,1 oder 48 kHz, Mono oder Stereo; ohne Hall und
 ohne Übersteuerung. Du musst die Dateien weder schneiden noch umwandeln.
 Die WAV-Originale bleiben lokal und werden nicht ins Git-Repo oder Release-ZIP gepackt.
 
-## Tooltip-Alarm (Testfassung 1.4.0)
+## Tooltip-Alarm (ab 1.4.0)
 
 Die beiden Aufnahmen sind jetzt im Addon eingebunden, einschließlich höherer
 Noggenfogger-Varianten. Beim **Darüberfahren mit der Maus** über einen echten
@@ -31,8 +31,8 @@ wird der passende Sound abgespielt. Deutsche und englische Namen werden erkannt.
 
 Die zwei nötigen Funktionen für einen automatischen Scan fehlen dem verwendeten
 Classic-Era-Client (`AutoScan: nil nil`, 16.10.2026). Deshalb wurde die
-Tooltip-Variante ausdrücklich ausgewählt. Der Alarm muss noch an echten Kräutern
-im Spiel geprüft werden; dies ist zunächst eine lokale Testfassung.
+Tooltip-Variante ausdrücklich ausgewählt. Tooltip-Erkennung und Wiedergabe wurden
+im Classic-Client geprüft; Details stehen unter „Im Client bestätigt“.
 
 ## Einstellungen und Hörproben
 
@@ -67,3 +67,13 @@ Aufruf für den Kräuter-Player nutzbar.
 
 Nach Installation **WoW vollständig schließen und neu starten**, damit die
 neuen Audiodateien geladen werden.
+
+## Im Client bestätigt
+
+Der Tooltip-Alarm wurde am 23.10.2026 mit Silberblatt und der Lotus-Aufnahme
+als Gegenprobe erfolgreich getestet. Der vorübergehende Einsteigerkräuter-
+Testmodus ist entfernt; Alarme gelten nur noch für Gromsblut und Schwarzen Lotus.
+
+Die verfügbaren Classic-APIs liefern keine Liste der nativen Tracking-Punkte.
+Die HereBeDragons-Version in GuildMap-Legacy zeichnet registrierte Addon-Pins
+aus bekannten Koordinaten und liefert keine Live-Liste vorhandener Kräuter.

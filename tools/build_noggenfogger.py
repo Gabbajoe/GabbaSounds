@@ -14,10 +14,15 @@ RATE = 44100
 
 
 def source_sounds(root=ROOT):
-    return json.loads((root / 'manifest.json').read_text()) + json.loads(
+    sounds = json.loads((root / 'manifest.json').read_text()) + json.loads(
         (root / 'spoken/manifest.json').read_text())['sounds'] + json.loads(
         (root / 'spoken/mage/buffs/manifest.json').read_text())['sounds'] + json.loads(
         (root / 'spoken/herbalism/manifest.json').read_text())['sounds']
+    for folder in ('spoken/priest/buffs', 'spoken/priest/buffs/generic'):
+        priest = root / folder / 'manifest.json'
+        if priest.is_file():
+            sounds += json.loads(priest.read_text())['sounds']
+    return sounds
 
 
 def render(item):

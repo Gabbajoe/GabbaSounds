@@ -24,10 +24,11 @@ end
 
 function addon.PlayHerb(key, preview)
     local db, filename = addon.db, addon.herbSounds[key]
-    if not db or not addon.herbLabels[key] then return false end
+    local label = addon.herbLabels[key]
+    if not db or not label then return false end
     if not preview and (not db.enabled or not db.herbAlerts or not addon.isHerbalist) then return false end
     if not filename then
-        if preview then addon.Print("Aufnahme für " .. addon.herbLabels[key] .. " fehlt.") end
+        if preview then addon.Print("Aufnahme für " .. label .. " fehlt.") end
         return false
     end
     local now = GetTime()
@@ -38,7 +39,7 @@ function addon.PlayHerb(key, preview)
     if not played and pitched ~= filename then played, handle = PlaySoundFile(prefix .. filename, db.channel, false) end
     if not played then
         if not warned[key] then
-            addon.Print("Kräuter-Sound nicht geladen: " .. addon.herbLabels[key] .. ". Addon vollständig installieren und WoW neu starten.")
+            addon.Print("Kräuter-Sound nicht geladen: " .. label .. ". Addon vollständig installieren und WoW neu starten.")
             warned[key] = true
         end
         return false

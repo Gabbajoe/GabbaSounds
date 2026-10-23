@@ -19,6 +19,12 @@ local defaults = {
     mageBuffIntellect = true,
     mageBuffArmor = true,
     mageBuffSound = true,
+    priestBuffAlerts = true,
+    priestBuffFortitude = true,
+    priestBuffSpirit = true,
+    priestBuffInnerFire = true,
+    priestBuffFearWard = false,
+    priestBuffSound = true,
     herbAlerts = true,
     minimapAngle = 145,
     minimapHidden = false,
@@ -56,15 +62,16 @@ local warnedAboutPitch = false
 local frame = CreateFrame("Frame")
 addon.stats = { hit = 0, crit = 0, resist = 0, miss = 0, absorb = 0, graze = 0, cast = 0 }
 
-function addon.GetBank(school, weapon)
-    local pack = addon.soundPacks[addon.db.soundPack] or addon.soundPacks.magic
+function addon.GetBank(school, weapon, previewPack)
+    local pack = addon.soundPacks[previewPack or addon.db.soundPack] or addon.soundPacks.magic
     if pack.weapons then
         if not weapon then
-            if pack.mageOnly then weapon = "frostbolt"
+            if pack.priestOnly then weapon = "mindblast"
+            elseif pack.mageOnly then weapon = "frostbolt"
             elseif pack.meleeOnly then weapon = addon.ResolveMeleeWeapon(UnitGUID("player")) or "blade"
             else weapon = addon.ResolveWeapon(UnitGUID("player")) or "wand" end
         end
-        if (pack.mageOnly and not addon.mageSpells[weapon]) or (pack.meleeOnly and not addon.meleeLabels[weapon]) then return addon.voiceShared, pack, weapon end
+        if (pack.mageOnly and not addon.mageSpells[weapon]) or (pack.priestOnly and not addon.priestSpells[weapon]) or (pack.meleeOnly and not addon.meleeLabels[weapon]) then return addon.voiceShared, pack, weapon end
         -- Auto Shot cannot identify an unseen hunter's weapon. If both native
         -- weapon banks are muted, use spoken wand takes as a neutral reserve
         -- without caching a guessed bow/gun identification.
@@ -96,6 +103,10 @@ local function StopSoundForSource(source)
     activeSounds[source] = nil
 end
 
+function addon.StopPreview()
+    StopSoundForSource("preview")
+end
+
 local function StopAllSounds()
     wipe(lastMeleePlayed)
     for source in pairs(activeSounds) do
@@ -116,6 +127,7 @@ local function ReleaseOriginals()
     addon.gunOriginalsMuted = false
     addon.meleeOriginalsMuted = false
     addon.mageOriginalsMuted = {}
+    addon.priestOriginalsMuted = {}
 end
 
 local function WarmOriginalSound(id)
@@ -143,7 +155,7 @@ end
 function addon.IsSpokenOnly()
     local db = addon.db
     local pack = db and addon.soundPacks[db.soundPack]
-    return not not (pack and pack.weapons and not pack.mageOnly and not pack.meleeOnly and db.muteOriginal and db.allSources and db.cast
+    return not not (pack and pack.weapons and not pack.mageOnly and not pack.priestOnly and not pack.meleeOnly and db.muteOriginal and db.allSources and db.cast
         and db.hit and db.crit and db.resist and db.miss and db.absorb and db.graze)
 end
 
@@ -154,10 +166,10 @@ function addon.UpdateOriginalMuting()
         and db.allSources and db.hit and db.crit and db.resist and db.miss and db.absorb
         and not playbackFailed
         and type(MuteSoundFile) == "function" and type(UnmuteSoundFile) == "function"
-    local wandMute = canMute and not pack.mageOnly and not pack.meleeOnly and (pack.weapon == "wand" or pack.weapons)
-    local frostMute = canMute and not pack.meleeOnly and CompleteVoiceBank(pack, "frostbolt", db)
-    local bowMute = canMute and not pack.mageOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "bow", db)
-    local gunMute = canMute and not pack.mageOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "gun", db)
+    local wandMute = canMute and not pack.mageOnly and not pack.priestOnly and not pack.meleeOnly and (pack.weapon == "wand" or pack.weapons)
+    local frostMute = canMute and not pack.priestOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "frostbolt", db)
+    local bowMute = canMute and not pack.mageOnly and not pack.priestOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "bow", db)
+    local gunMute = canMute and not pack.mageOnly and not pack.priestOnly and not pack.meleeOnly and CompleteVoiceBank(pack, "gun", db)
     -- Unknown foreign Auto Shots need a normal/crit reserve when both types
     -- are silent. Do not mute them if that reserve is incomplete.
     if pack and pack.weapons and not pack.mageOnly and not CompleteVoiceBank(pack, "wand", db) then
@@ -169,7 +181,7 @@ function addon.UpdateOriginalMuting()
     addon.gunOriginalsMuted = not not gunMute
     -- Native swings and parries are shared across weapon types. Mute them
     -- only when all four melee banks and glancing replacements are covered.
-    local meleeMute = canMute and pack.weapons and not pack.mageOnly and db.graze
+    local meleeMute = canMute and pack.weapons and not pack.mageOnly and not pack.priestOnly and db.graze
     for _, key in ipairs(addon.meleeOrder) do
         if not CompleteVoiceBank(pack, key, db) then meleeMute = false end
     end
@@ -177,8 +189,9 @@ function addon.UpdateOriginalMuting()
     local wanted = {}
     if meleeMute then for _, id in ipairs(addon.meleeOriginalIDs) do wanted[id] = true end end
     addon.mageOriginalsMuted = {}
+    addon.priestOriginalsMuted = {}
     for key, spell in pairs(addon.mageSpells) do
-        local covered = canMute and not pack.meleeOnly and (pack.weapons or pack.weapon == key)
+        local covered = canMute and not pack.priestOnly and not pack.meleeOnly and (pack.weapons or pack.weapon == key)
         local bank = covered and (pack.weapons and pack.weapons[key] or pack.categories)
         if covered and key ~= "frostbolt" then
             covered = db.cast and bank and bank.cast and #bank.cast > 0
@@ -193,6 +206,19 @@ function addon.UpdateOriginalMuting()
         addon.mageOriginalsMuted[key] = not not covered
         if covered then for _, id in ipairs(spell.originalIDs) do wanted[id] = true end end
     end
+    for key, spell in pairs(addon.priestSpells) do
+        local covered = canMute and not pack.mageOnly and not pack.meleeOnly and (pack.weapons or pack.weapon == key)
+        local bank = covered and (pack.weapons and pack.weapons[key] or pack.categories)
+        if covered then
+            for _, kind in ipairs({ "hit", "miss", "resist", "absorb" }) do
+                if not bank or not bank[kind] or #bank[kind] == 0 then covered = false end
+            end
+            if spell.canCrit and (not bank or not bank.crit or #bank.crit == 0) then covered = false end
+            if db.graze and (not bank or not bank.graze or #bank.graze == 0) then covered = false end
+        end
+        addon.priestOriginalsMuted[key] = not not covered
+        if covered then for _, id in ipairs(spell.originalIDs) do wanted[id] = true end end
+    end
     if wandMute then for _, id in ipairs(originalIDs) do wanted[id] = true end end
     if frostMute then for _, id in ipairs(frostboltOriginalIDs) do wanted[id] = true end end
     if bowMute then for _, id in ipairs(bowOriginalIDs) do wanted[id] = true end end
@@ -205,6 +231,7 @@ function addon.UpdateOriginalMuting()
     end
     local warmGroups = { frostboltOriginalIDs, bowOriginalIDs, gunOriginalIDs, addon.meleeOriginalIDs }
     for _, spell in pairs(addon.mageSpells) do warmGroups[#warmGroups + 1] = spell.originalIDs end
+    for _, spell in pairs(addon.priestSpells) do warmGroups[#warmGroups + 1] = spell.originalIDs end
     local warmedThisUpdate = {}
     for _, group in ipairs(warmGroups) do
         for _, id in ipairs(group) do
@@ -229,6 +256,7 @@ function addon.SetOption(key, value)
         if value then
             StopAllSounds()
             addon.ResetMageResults()
+            addon.ResetPriestResults()
             addon.db.soundPack = "spoken"
             addon.db.allSources = true
             for _, category in ipairs({ "hit", "crit", "resist", "miss", "absorb", "graze", "cast" }) do
@@ -271,6 +299,7 @@ function addon.SetOption(key, value)
     if (key == "enabled" and not value) or key == "soundPack" then
         StopAllSounds()
         addon.ResetMageResults()
+        addon.ResetPriestResults()
     elseif key == "cast" and not value then
         for source in pairs(activeSounds) do
             if source:sub(-5) == ":cast" then StopSoundForSource(source) end
@@ -281,18 +310,22 @@ function addon.SetOption(key, value)
     return true
 end
 
-function addon.PlayCategory(category, preview, sourceGUID, school, weapon, melee)
+function addon.PlayCategory(category, preview, sourceGUID, school, weapon, melee, previewPack)
     local db = addon.db
     if not db then return false end
     school = school or (preview and addon.PreviewSchool()) or "neutral"
-    local bank, pack, voiceWeapon = addon.GetBank(school, weapon)
+    local bank, pack, voiceWeapon = addon.GetBank(school, weapon, preview and previewPack or nil)
     if category == "cast" and not addon.mageSpells[voiceWeapon] then
-        if preview then addon.Print("Cast-Sounds gehören zu den Magier-Sprachpaketen.") end
+        if preview then addon.Print("Priester-Aufnahmen sind für Treffer und Crits; Cast-Aufnahmen gibt es bisher für Magier.") end
         return false
     end
     local pool = bank[category] or (preview and category == "graze" and addon.sharedGraze)
     if not db or not pool or #pool == 0 then
-        if preview and addon.mageSpells[voiceWeapon] then
+        if preview and addon.priestSpells[voiceWeapon] then
+            if voiceWeapon == "shadowwordpain" and category == "crit" then
+                addon.Print("Schattenwort: Schmerz hat in Classic Era keine kritischen Treffer.")
+            else addon.Print("Für diesen Priesterzauber fehlt die gewählte Aufnahme.") end
+        elseif preview and addon.mageSpells[voiceWeapon] then
             local spell = addon.mageSpells[voiceWeapon]
             if not spell.damage and (category == "hit" or category == "crit") then
                 addon.Print(spell.label .. " verwendet nur einen Sound beim Aktivieren. Nutze Cast hören.")
@@ -325,7 +358,7 @@ function addon.PlayCategory(category, preview, sourceGUID, school, weapon, melee
     end
     local count = #pool
     local common = category == "miss" or category == "graze" or category == "resist" or category == "absorb"
-    local key = db.soundPack .. ":" .. (pack.weapons and (common and "shared" or voiceWeapon) or pack.categories and "all" or school) .. ":" .. category
+    local key = (preview and previewPack or db.soundPack) .. ":" .. (pack.weapons and (common and "shared" or voiceWeapon) or pack.categories and "all" or school) .. ":" .. category
     local index
     if count > 1 and previous[key] and pack.repeatGroups then
         local lastGroup = pack.repeatGroups[pool[previous[key]]]
@@ -424,13 +457,14 @@ local function HandleCombatLog()
     end
     if addon.HandleMeleeCombatLog(event, sourceGUID, select(12, CombatLogGetCurrentEventInfo())) then return end
     if addon.HandleMageCombatLog(event, sourceGUID, spellID, spellName, arg15, resisted, blocked, critical) then return end
+    if addon.HandlePriestCombatLog(event, sourceGUID, spellID, arg15, resisted, blocked, critical) then return end
     local isFrostbolt = frostboltRanks[spellID] and sourceGUID:match("^Player%-")
     if not isFrostbolt and spellID ~= 5019 and spellID ~= 75 and spellID ~= 2480 and spellID ~= 7918 and spellID ~= 7919 then return end
     if event ~= "RANGE_DAMAGE" and event ~= "SPELL_DAMAGE" and event ~= "RANGE_MISSED" and event ~= "SPELL_MISSED" then return end
     if isFrostbolt and event ~= "SPELL_DAMAGE" and event ~= "SPELL_MISSED" then return end
     local weapon = isFrostbolt and "frostbolt" or addon.ResolveWeapon(sourceGUID, spellID)
     local pack = addon.soundPacks[addon.db.soundPack]
-    if pack.meleeOnly or (pack.mageOnly and not addon.mageSpells[weapon]) then return end
+    if pack.priestOnly or pack.meleeOnly or (pack.mageOnly and not addon.mageSpells[weapon]) then return end
     if not pack.weapons and pack.weapon ~= weapon
         and not (weapon == "ranged" and (pack.weapon == "bow" or pack.weapon == "gun")) then return end
     -- Classic 1.15.9 reports Shoot as RANGE_DAMAGE / RANGE_MISSED. The spell
@@ -470,6 +504,7 @@ local function Initialize()
             GabbaSoundsDB[key] = default
         end
     end
+    GabbaSoundsDB.herbTest = nil -- Retire the temporary low-level-herb test setting.
     addon.db = GabbaSoundsDB
     addon.db.minimapAngle = addon.db.minimapAngle % 360
     playerGUID = UnitGUID("player")
@@ -519,6 +554,7 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         StopAllSounds()
         wipe(seenCasts)
         addon.ResetMageResults()
+        addon.ResetPriestResults()
         currentPlayerCast = nil
     elseif (event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_CHANNEL_START"
         or event == "UNIT_SPELLCAST_SUCCEEDED") and loadedName == "player" then
@@ -555,6 +591,7 @@ frame:SetScript("OnEvent", function(self, event, loadedName, castGUID, spellID)
         addon.ResetHerbAlerts()
         addon.noggenfoggerShrunk = false
         addon.ResetMageResults()
+        addon.ResetPriestResults()
         StopAllSounds()
         ReleaseOriginals()
     elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
@@ -576,16 +613,17 @@ SlashCmdList.GABBASOUNDS = function(message)
         addon.Print(command == "on" and "Aktiviert." or "Deaktiviert; Original-Stummschaltung aufgehoben.")
     elseif command == "pack" then
         local aliases = { magie = "magic", custom = "spoken", eigene = "spoken", wand = "spoken_wand", bow = "spoken_bow", gun = "spoken_gun", pfeile = "spoken_bow", gewehr = "spoken_gun", frostbolt = "spoken_frostbolt", frostblitz = "spoken_frostbolt", mage = "spoken_mage", magier = "spoken_mage" }
+        aliases.priest, aliases.priester = "spoken_priest", "spoken_priest"
         aliases.melee, aliases.nahkampf = "spoken_melee", "spoken_melee"
-        local selected = aliases[argument] or ((addon.mageSpells[argument] or addon.meleeLabels[argument]) and "spoken_" .. argument) or argument
+        local selected = aliases[argument] or ((addon.mageSpells[argument] or addon.priestSpells[argument] or addon.meleeLabels[argument]) and "spoken_" .. argument) or argument
         if addon.SetOption("soundPack", selected) then
             addon.Print("Soundpaket: " .. addon.soundPacks[selected].label)
         else
-            addon.Print("Soundpaket wählen: /gws pack magic|spoken|wand|bow|gun|mage|frostbolt|fireball|blizzard …")
+            addon.Print("Soundpaket wählen: /gws pack magic|spoken|wand|bow|gun|mage|priest|frostbolt|fireball|blizzard …")
         end
     elseif command == "test" then
         local category, school = argument:match("^(%S+)%s*(%S*)$")
-        local previewSpell = addon.mageSpells[school] and school
+        local previewSpell = (addon.mageSpells[school] or addon.priestSpells[school]) and school
         local previewMelee = addon.meleeLabels[school] and school
         local aliases = { schatten = "shadow", feuer = "fire", frost = "frost", kaelte = "frost", arkan = "arcane", natur = "nature", heilig = "holy" }
         school = aliases[school] or school
@@ -593,7 +631,7 @@ SlashCmdList.GABBASOUNDS = function(message)
         if (not addon.sounds[category] and category ~= "graze" and category ~= "cast") or (school and not previewSpell and not previewMelee and not addon.schoolSounds[school]) then
             addon.Print("Hörprobe: /gws test hit|crit|resist|miss|absorb|graze|cast [Schadensart oder Zauber, z.B. fireball]")
         else
-            addon.PlayCategory(category, true, nil, previewSpell and addon.mageSpells[previewSpell].school or previewMelee and "neutral" or school,
+            addon.PlayCategory(category, true, nil, previewSpell and (addon.mageSpells[previewSpell] or addon.priestSpells[previewSpell]).school or previewMelee and "neutral" or school,
                 previewMelee or previewSpell or category == "cast" and "frostbolt" or nil)
         end
     elseif command == "spokenonly" or command == "mute" or command == "all" or command == "hit" or command == "crit" or command == "resist" or command == "miss" or command == "absorb" or command == "graze" or command == "cast" then
@@ -612,14 +650,15 @@ SlashCmdList.GABBASOUNDS = function(message)
         else addon.Print("/gws herbs [on|off|gromsblood|blacklotus]") end
     elseif command == "buffs" then
         if argument == "on" or argument == "off" then
-            addon.SetOption("mageBuffAlerts", argument == "on")
-            addon.Print("Magier-Buffwarnungen für Minibobsel: " .. argument)
+            local profile = addon.GetBuffAlertProfile()
+            addon.SetOption(profile.enabled, argument == "on")
+            addon.Print(addon.GetBuffAlertTitle() .. ": " .. argument)
         else
-            local key, phase = argument:match("^(intellect)%s+(%S+)$")
-            if not key then key, phase = argument:match("^(armor)%s+(%S+)$") end
+            local key, phase = argument:match("^(%a+)%s+(%a+)$")
+            if key == "innerfire" then key = "innerFire" elseif key == "fearward" then key = "fearWard" end
             if key and (phase == "expiring" or phase == "missing") then addon.PreviewMageBuff(key, phase)
             elseif argument == "" then addon.OpenMageBuffUI()
-            else addon.Print("/gws buffs [on|off|intellect expiring|intellect missing|armor expiring|armor missing]") end
+            else addon.Print("/gws buffs [on|off|<intellect|armor|fortitude|spirit|innerfire|fearward> <expiring|missing>]") end
         end
     elseif command == "noggenfogger" then
         if argument == "on" or argument == "off" then
@@ -644,6 +683,8 @@ SlashCmdList.GABBASOUNDS = function(message)
             addon.Print("Verwendung: /gws channel sfx oder master")
         end
     elseif command == "status" then
+        local mutedPriest = 0
+        for _, key in ipairs(addon.priestOrder) do if addon.priestOriginalsMuted[key] then mutedPriest = mutedPriest + 1 end end
         local mutedMage = 0
         for _, key in ipairs(addon.mageOrder) do if addon.mageOriginalsMuted[key] then mutedMage = mutedMage + 1 end end
         addon.Print((addon.db.enabled and "Aktiv" or "Deaktiviert") .. "; " .. (addon.db.allSources and "alle Schützen" or "eigene Schüsse")
@@ -653,6 +694,7 @@ SlashCmdList.GABBASOUNDS = function(message)
             .. "; Gewehr-Originale: " .. (addon.gunOriginalsMuted and "stumm" or "hörbar")
             .. "; Nahkampf-Originale: " .. (addon.meleeOriginalsMuted and "stumm" or "hörbar")
             .. "; Magier-Stummschaltung: " .. mutedMage .. "/15 Zauber abgedeckt"
+            .. "; Priester-Stummschaltung: " .. mutedPriest .. "/4 Zauber abgedeckt"
             .. "; Soundpaket: " .. addon.soundPacks[addon.db.soundPack].label
             .. "; Kräuter-Tooltip-Alarm: " .. (addon.db.herbAlerts and "an" or "aus")
             .. "; Noggenfogger: " .. (not addon.db.noggenfoggerPitch and "aus" or addon.noggenfoggerShrunk and "+4 Halbtöne" or "an (normal groß)")

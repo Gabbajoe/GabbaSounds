@@ -1,0 +1,104 @@
+{
+  "sound_source_url": "https://www.curseforge.com/wow/addons/resonance/files/8899894",
+  "sound_source_sha256": "971c850d70cc7d7ebd089c79c5f477b813d59f3dd3542ebd40b272100cc3a129",
+  "sound_source_file": "Resonance_Data/data/SpellMuteData_Vanilla.lua (Resonance_SpellMuteData)",
+  "rank_sources": [
+    "https://raw.githubusercontent.com/wowsims/classic/master/sim/priest/mind_blast.go",
+    "https://raw.githubusercontent.com/wowsims/classic/master/sim/priest/shadow_word_pain.go",
+    "https://raw.githubusercontent.com/wowsims/classic/master/sim/priest/smite.go",
+    "https://classicdb.ch/?spell=27801"
+  ],
+  "spells": [
+    {
+      "key": "mindblast",
+      "label": "Gedankenschlag",
+      "school": "shadow",
+      "ranks": [
+        8092,
+        8102,
+        8103,
+        8104,
+        8105,
+        8106,
+        10945,
+        10946,
+        10947
+      ],
+      "canCrit": true,
+      "aoe": false,
+      "auraHit": false,
+      "originalIDs": [
+        569220,
+        569424,
+        569766
+      ]
+    },
+    {
+      "key": "shadowwordpain",
+      "label": "Schattenwort: Schmerz",
+      "school": "shadow",
+      "ranks": [
+        589,
+        594,
+        970,
+        992,
+        2767,
+        10892,
+        10893,
+        10894
+      ],
+      "canCrit": false,
+      "aoe": false,
+      "auraHit": true,
+      "originalIDs": [
+        569138,
+        569424,
+        569766
+      ]
+    },
+    {
+      "key": "smite",
+      "label": "Göttliche Pein",
+      "school": "holy",
+      "ranks": [
+        585,
+        591,
+        598,
+        984,
+        1004,
+        6060,
+        10933,
+        10934
+      ],
+      "canCrit": true,
+      "aoe": false,
+      "auraHit": false,
+      "originalIDs": [
+        568915,
+        569402,
+        569763
+      ]
+    },
+    {
+      "key": "holynova",
+      "label": "Heilige Nova",
+      "school": "holy",
+      "ranks": [
+        15237,
+        15430,
+        15431,
+        27799,
+        27800,
+        27801
+      ],
+      "canCrit": true,
+      "aoe": true,
+      "auraHit": false,
+      "originalIDs": [
+        568440,
+        569763,
+        569771
+      ]
+    }
+  ]
+}

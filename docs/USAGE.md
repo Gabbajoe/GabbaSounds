@@ -2,7 +2,7 @@
 
 [Zurück zur README](../README.md) · [Entwicklung und Releases](RELEASING.md)
 
-Diese Anleitung beschreibt den Entwicklungsstand **1.4.0** (lokale Testfassung, noch nicht veröffentlicht) für Classic Era /
+Diese Anleitung beschreibt **GabbaSounds 1.4.0** für Classic Era /
 Hardcore 1.15.9, Interface 11509. Veröffentlichungen und Paketbau sind in der
 [Release-Anleitung](RELEASING.md) dokumentiert.
 
@@ -41,13 +41,54 @@ Stufen und die beiden Kategorien; Gruppenmeldungen werden zusammengefasst.
 Es wird kein Chat an andere Spieler gesendet.
 
 Keine Prüfung ungelernter Buff-Kategorien, toter/offline/unsichtbarer Mitglieder
-oder während du tot/im Flugtaxi bist. Nach Ladebildschirmen fünf Sekunden Pause.
+oder während du tot/im Flugtaxi bist. Gruppenmitglieder brauchen eine bekannte
+passende Klasse und bestätigte Buff-Reichweite; unbekannte Werte werden übersprungen. Nach Ladebildschirmen fünf Sekunden Pause.
 Schalter für das Modul, Intelligenz, Rüstung und Ton sind standardmäßig an und
 pro Charakter gespeichert. Das ganze Addon ausschalten stoppt auch diese Warnungen.
 Vier Warnaufnahmen und vier höhere Noggenfogger-Varianten sind enthalten. Mehr zu Aufnahme,
 Hörproben und Import: [Aufnahmevorlagen](../spoken/mage/buffs/README.md).
 
-## Kräuter-Alarm über Tooltips (Testfassung 1.4.0)
+## Priester-Buffwarnungen
+
+`/gws buffs` öffnet auf einem Priester die Priester-Optionen. Automatische
+Warnungen erhalten **alle Charaktere mit Klasse Priester**: Seelenstärke/Ausdauer
+für alle Klassen, Göttlicher Willen nur für Mana-Klassen (keine Krieger/Schurken),
+Inneres Feuer nur für dich selbst. **Furchtzauberschutz** ist ein eigener Schalter,
+standardmäßig aus, und setzt den gelernten Zwergenzauber voraus. Eingeschaltet
+wird er für dich und erreichbare Gruppenmitglieder aller Klassen geprüft.
+Gebete, verschiedene Ränge und Buffs anderer Priester zählen.
+
+Dieselben Reichweiten-, Lebensstatus- und Ladepausen-Regeln wie beim Magier
+verhindern Meldungen für entfernte oder noch unbekannte Gruppenmitglieder.
+Jede Kategorie hat getrennte Warnungen bei höchstens zwei Minuten Restzeit
+und bei fehlendem/abgelaufenem Buff. Die acht gesprochenen Warnungen sind enthalten,
+auch höher für Noggenfogger. Fehlt eine passende Aufnahme, bleibt die Warnung
+rein visuell. Das alte Gabba-Priestermodul überlässt seine Warnungen diesem
+Modul für alle Priester, wenn es geladen ist; auch bei ausgeschalteten Warnungen
+springt dann nicht plötzlich das alte Modul ein.
+
+Die Hörproben verwenden automatisch dieselben Aufnahmen wie die Warnungen auf
+deinem Charakter. Es gibt keine Auswahl zwischen verschiedenen Stimmen.
+Einstellungen bleiben pro Charakter gespeichert.
+
+[Aufnahmevorlagen](../spoken/priest/buffs/generic/README.md) ·
+[Aufnahmeplan für Priester-Schadenszauber](../spoken/priest/README.md)
+
+## Priester-Schadenszauber
+
+`/gws pack priest` oder `priester` spielt 28 Aufnahmen für Gedankenschlag,
+Schattenwort: Schmerz, Göttliche Pein und Heilige Nova. Sie gehören auch zu
+`/gws pack spoken`. Gedankenschlag/Pein/Nova haben je vier normale und vier
+Crit-Aufnahmen. Schmerz hat vier Aufnahmen beim Auftragen/Auffrischen, keine
+Crits und keine zusätzlichen DoT-Tick-Reaktionen. Heilige Nova fasst Schadensziele
+zusammen, bevorzugt Crits und ignoriert Heilung. Miss-/Resist-/Absorb- und
+Teiltreffer-Sprüche sind gemeinsam. Quellenfilter, Ergebnisschalter und
+Noggenfogger gelten wie bei den anderen Zaubern. Keine eigenen Cast-Aufnahmen.
+Bei vollständigen Ersatzpools kann „Nur gesprochene Sounds“ die verifizierten
+nativen Dateien stummschalten; diese umfassen auch teils geteilte Cast-Sounds.
+[Aufnahmen, Hörproben und Import](../spoken/priest/README.md).
+
+## Kräuter-Alarm über Tooltips
 
 `/gws herbs` oder „Kräuter-Alarm“ in den Optionen. Auf dem eigenen Kräuterkundler
 spielt Gromsblut oder Schwarzer Lotus deine jeweilige Aufnahme, sobald du mit der
@@ -59,16 +100,16 @@ Standardmäßig an, pro Charakter gespeichert, mindestens 30 Sekunden Abstand
 pro Kraut und keine Wiederholung beim Stehenlassen der Maus. Kein automatischer
 Suchlauf. Höhere Noggenfogger-Varianten sind enthalten; Vorschauen gehen auch ohne
 Kräuterkunde. `/gws herbs on|off` schaltet den Alarm; `/gws herbs gromsblood` und
-`/gws herbs blacklotus` spielen die Hörproben. Die Testfassung braucht noch die
-Prüfung an echten Kräutern im Client. [Aufnahmen und Details](../spoken/herbalism/README.md).
+`/gws herbs blacklotus` spielen die Hörproben. Tooltip-Erkennung und Audio wurden
+im Classic-Client geprüft; der temporäre Einsteigerkräuter-Test ist entfernt. [Aufnahmen und Details](../spoken/herbalism/README.md).
 
 ## Installation und Auswahl
 
 `GabbaSounds-1.4.0.zip` in `World of Warcraft/_classic_era_/Interface/AddOns/`
 entpacken. Darin muss anschließend `GabbaSounds/GabbaSounds.toc` liegen.
 Den WoW-Client vollständig schließen und neu starten, damit alle neuen
-Sounddateien geladen werden. Das ZIP enthält 702 fertige OGGs: 225 Aufnahmen,
-126 synthetische Sounds und 351 höhere Noggenfogger-Varianten, ohne WAV-Quellen, Charakterdaten oder
+Sounddateien geladen werden. Das ZIP enthält 790 fertige OGGs: 269 Sprachaufnahmen,
+126 synthetische Sounds und 395 höhere Noggenfogger-Varianten, ohne WAV-Quellen, Charakterdaten oder
 Entwicklerwerkzeuge. Die Einstellungen bleiben pro Charakter gespeichert;
 neue Charaktere starten wie bisher mit dem Magiepaket.
 
@@ -108,12 +149,42 @@ pro Charakter gespeichert; `/gws minimap on|off` zeigt bzw. versteckt es.
 
 Alle Magier-Ordnernamen aus `spoken/mage/README.md` sind auch Paketnamen.
 Die vollständigen IDs wie `spoken_fireball` werden ebenfalls akzeptiert.
-`custom` und `eigene` wählen das automatische Sprachpaket. Der obere Button
-im Optionsfenster wechselt die allgemeinen Pakete. Der Hörproben-Button
-wechselt im automatischen Paket zwischen der eigenen Waffe, den drei
-Fernkampfgruppen, vier Nahkampfgruppen und allen 15 Zaubern; im Magierpaket zwischen den 15 Zaubern.
-Im Magiepaket wechselt er die Schadensart. Die Auswahl betrifft nur die
-Vorschau. Im Kampf wird jede Quelle unabhängig ausgewertet.
+`custom` und `eigene` wählen das automatische Sprachpaket.
+
+Das Konfigurationsfenster hat eine feste Navigation links und zeigt immer nur
+einen Bereich. Es passt sich bei Bedarf der verfügbaren Bildschirmgröße an und
+lässt sich verschieben. Schließen oder Escape schließt das ganze Fenster.
+
+| Bereich | Inhalt |
+| --- | --- |
+| Allgemein | Paket direkt aus der Liste auswählen, Originalsounds, Trefferarten, Magier-Zauberbeginn, Kanal, Noggenfogger und Minimap-Symbol |
+| Waffen | Zauberstab, Bogen/Armbrust, Gewehr und vier Nahkampfgruppen |
+| Magier | Alle 15 Zauber mit Treffer-, Crit- und Cast-Hörproben, soweit vorhanden |
+| Priester | Vier Schadenszauber mit ihren Treffer- und Crit-Hörproben; keine geliehenen Magier-Casts |
+| Zauberstab-Sounds | Synthetische Zauberstab-Laute je Schadensart |
+| Buffwarnungen | Magier/Priester auswählen, Optionen einstellen und Warnungen für zwei Minuten oder fehlende Buffs anhören |
+| Kräuter-Alarm | Tooltip-Alarm für Gromsblut und Schwarzen Lotus mit Hörproben |
+
+In den Soundbereichen wählst du links die Waffe oder den Zauber und hörst rechts
+die gewünschten Varianten. Längere Listen haben Zurück/Weiter und unterstützen
+das Mausrad. Fehlende oder ungeeignete Varianten sind ausgegraut, etwa Crits bei
+Schattenwort: Schmerz. Die Clip-Anzahlen stehen direkt bei den Hörproben.
+
+**Anhören ändert das aktive Paket nicht.** Erst „Nur dieses Paket aktivieren“
+oder die Paketauswahl unter Allgemein wechselt die Kampf-Sounds. Die normalen
+Waffen-/Zauber-Zuordnungen werden weiterhin pro Quelle ausgewertet.
+`/gws herbs` und `/gws buffs` öffnen direkt den zugehörigen Bereich im selben
+Fenster. Die zuletzt geöffnete Seite bleibt beim erneuten Öffnen ausgewählt.
+Es verwendet wie das GabbaAddon die normale Fensterebene: andere Fenster können
+durch Anklicken davor liegen.
+
+Unter Buffwarnungen kannst du auf jedem Charakter zwischen Magier und Priester
+wechseln. Die Hörproben verwenden die Aufnahmen für deinen Charakter.
+Automatische Priester-Warnungen gibt es nur auf Priestern; Magier-Warnungen
+bleiben auf Minibobsel beschränkt. Priesterwarnungen enthalten Seelenstärke,
+Willenskraft, Inneres Feuer und Furchtzauberschutz, jeweils für zwei Minuten
+Restzeit und fehlenden Buff. Furchtzauberschutz bleibt optional und setzt den
+gelernten Zauber voraus.
 
 ```text
 /gws test cast fireball
@@ -129,8 +200,9 @@ deaktiviertem Addon und verändern keine Kampfzähler.
 
 ## Deine Aufnahmen
 
-51 WAV-Quelldateien wurden in 219 unterschiedliche Angriffsclips geschnitten.
-Vier weitere Aufnahmen liefern Minibobsels Buffwarnungen: zusammen mit den beiden Kräuter-Aufnahmen insgesamt 225 Sprachclips.
+58 WAV-Quelldateien wurden in 247 unterschiedliche Angriffsclips geschnitten.
+Mit Buffwarnungen und den beiden Kräuter-Aufnahmen enthält das Paket insgesamt
+269 Sprachclips, jeweils mit einer höheren Noggenfogger-Variante.
 
 | Waffe / Zauber | Cast / Aktivieren | Normale Treffer | Crits |
 | --- | ---: | ---: | ---: |
@@ -156,6 +228,10 @@ Vier weitere Aufnahmen liefern Minibobsels Buffwarnungen: zusammen mit den beide
 | Flammenstoß | 2 | 5 | 4 |
 | Druckwelle | 2 | 5 | 4 |
 | Verbrennung | 2 | 0 | 0 |
+| Gedankenschlag | 0 | 4 | 4 |
+| Schattenwort: Schmerz | 0 | 4 | 0 |
+| Göttliche Pein | 0 | 4 | 4 |
+| Heilige Nova | 0 | 4 | 4 |
 
 Alle Waffen und Schadenszauber verwenden dieselben acht Miss- und acht
 Teiltreffer-Sprüche aus `spoken/shared/`. `RESIST` und vollständiges `ABSORB`
@@ -178,9 +254,9 @@ unverändert. WAV-Clips liegen unter `spoken/clips/`, WoW-Dateien unter `Sounds/
 
 Die [Browser-Hörproben](https://gabbajoe.github.io/GabbaSounds/) sind direkt online
 abspielbar. Für die Offline-Nutzung verlinkt `previews/index.html` dieselben Player. `previews/spoken/index.html`
-enthält die 219 Angriffsclips; `previews/buffs/` die vier Buffwarnungen,
+enthält die 247 Angriffsclips; `previews/buffs/` vier Magier- und acht Priester-Buffwarnungen,
 `previews/herbalism/` die beiden Kräuter-Alarme, `previews/melee/` die Nahkampf-Pakete und
-`previews/magic/` die synthetischen Sounds. Die kleinen HTML-Seiten sind im Repo
+`previews/magic/` die synthetischen Sounds. `previews/priest/` bietet die Priester-Angriffsclips und gemeinsamen Fehlschläge. Die kleinen HTML-Seiten sind im Repo
 enthalten und laden OGGs aus `Sounds/`, ohne Internet oder Webserver. Lade dafür
 das vollständige Repository herunter. `python3 tools/build_previews.py` baut
 die Seiten ohne private WAV-Quellen neu.
@@ -196,7 +272,7 @@ spielen beim erfolgreichen Wirken. Blizzard spielt beim Kanalbeginn.
 Eigene Ereignisse kommen aus `UNIT_SPELLCAST_*`, fremde aus dem Kampflog;
 doppelte eigene Unit-/Kampflog-Meldungen werden vermieden. Abgebrochene oder
 fehlgeschlagene eigene Casts stoppen ihren noch laufenden Cast-Sound.
-„Magier-Casts“ bzw. `/gws cast on|off` ist unabhängig von Treffer-/Crit-Sounds.
+„Magier: Sound beim Zauberbeginn“ bzw. `/gws cast on|off` ist unabhängig von Treffer-/Crit-Sounds.
 
 Cast und Einschlag nutzen getrennte Handles, sodass ein früherer Einschlag
 den nächsten Cast nicht abschneidet. Pro Quelle ersetzt ein neuer Cast den

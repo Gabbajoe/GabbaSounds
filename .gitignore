@@ -9,6 +9,7 @@
 !/previews/melee/*.html
 !/previews/magic/index.html
 !/previews/buffs/index.html
+!/previews/priest/index.html
 /previews/magic/Hoerprobe.ogg
 /previews/herbalism/*
 !/previews/herbalism/index.html
@@ -21,6 +22,7 @@
 !/analysis/hunter_original_sounds.json
 !/analysis/melee_original_sounds.json
 !/analysis/mage_spells.json
+!/analysis/priest_spells.json
 
 # Build outputs and developer caches.
 /dist/

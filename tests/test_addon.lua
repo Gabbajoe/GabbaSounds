@@ -18,9 +18,17 @@ local function setup(saved, legacy, auras)
         local id = state.auras[index]
         if id then return "Noggenfogger", nil, nil, nil, nil, nil, nil, nil, nil, id end
     end
-    for _, name in ipairs({ "SetFrameStrata", "SetBackdrop", "SetMovable", "EnableMouse", "RegisterForDrag", "StartMoving", "StopMovingOrSizing", "SetWidth", "SetJustifyH", "SetFrameLevel", "ClearAllPoints", "RegisterForClicks", "SetHighlightTexture" }) do
+    for _, name in ipairs({ "SetFrameStrata", "SetBackdrop", "SetMovable", "EnableMouse", "RegisterForDrag", "StartMoving", "StopMovingOrSizing", "SetWidth", "SetJustifyH", "SetFrameLevel", "ClearAllPoints", "RegisterForClicks", "SetHighlightTexture", "SetBackdropColor", "SetBackdropBorderColor", "SetClampedToScreen", "EnableMouseWheel" }) do
         methods[name] = function() end
     end
+    function methods:SetWidth(width) self.width = width end
+    function methods:SetFrameStrata(strata) self.strata = strata end
+    function methods:SetToplevel(value) self.toplevel = value end
+    function methods:SetScale(scale) self.scale = scale end
+    function methods:Enable() self.disabled = false end
+    function methods:Disable() self.disabled = true end
+    function methods:IsEnabled() return not self.disabled end
+    function methods:SetFontString(label) self.fontString = label end
     function methods:SetSize(width, height) self.width, self.height = width, height end
     function methods:SetPoint(...) self.point = { ... } end
     function methods:GetWidth() return self.width or 140 end
@@ -43,10 +51,12 @@ local function setup(saved, legacy, auras)
     function methods:GetChecked() return self.checked end
     function methods:IsShown() return self.shown end
     function methods:Hide()
+        if not self.shown then return end
         self.shown = false
         if self.scripts.OnHide then self.scripts.OnHide(self) end
     end
     function methods:Show()
+        if self.shown then return end
         self.shown = true
         if self.scripts.OnShow then self.scripts.OnShow(self) end
     end
@@ -60,7 +70,7 @@ local function setup(saved, legacy, auras)
         table.insert(self.textures, texture)
         return texture
     end
-    UIParent = widget()
+    UIParent = widget(); UIParent:SetSize(1280, 800)
     WorldFrame = widget()
     Minimap = widget()
     GameTooltip = widget()
@@ -160,7 +170,7 @@ local function setup(saved, legacy, auras)
     GabbaSoundsDB = saved
     GabbaWandSoundsDB = legacy
     local addon = {}
-    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "Noggenfogger.lua", "BuffAlertSoundData.lua", "MageBuffAlerts.lua", "HerbSoundData.lua", "Herbalism.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
+    for _, file in ipairs({ "SoundData.lua", "CustomSoundData.lua", "Schools.lua", "Weapons.lua", "MeleeSoundIDs.lua", "Melee.lua", "MageSpells.lua", "MageEvents.lua", "PriestSpells.lua", "PriestEvents.lua", "Noggenfogger.lua", "BuffAlertSoundData.lua", "MageBuffAlerts.lua", "HerbSoundData.lua", "Herbalism.lua", "Core.lua", "UI.lua", "Minimap.lua" }) do
         assert(loadfile(file))("GabbaSounds", addon)
     end
     state.addon = addon
@@ -236,7 +246,7 @@ end)
 
 test("ignore unrelated spells and cast events", function()
     local state = setup()
-    state:combat("SPELL_DAMAGE", 8105, nil, true)
+    state:combat("SPELL_DAMAGE", 14914, nil, true)
     state:combat("SPELL_CAST_START")
     state:combat("SPELL_CAST_SUCCESS")
     state:combat("SWING_DAMAGE")
@@ -423,28 +433,34 @@ end)
 test("settings panel opens, previews work, checkboxes save, close and Escape work", function()
     local state = setup()
     SlashCmdList.GABBASOUNDS("")
-    assert(GabbaSoundsPanel:IsShown())
-    equal(UISpecialFrames[1], "GabbaSoundsPanel")
-    local previews = 0
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("hören") then
-            frame.scripts.OnClick(frame)
-            previews = previews + 1
-        elseif frame.kind == "CheckButton" then
-            frame:SetChecked(false)
-            frame.scripts.OnClick(frame)
-        end
+    local ui = state.addon.ui
+    assert(ui.frame:IsShown())
+    equal(#UISpecialFrames, 1); equal(UISpecialFrames[1], "GabbaSoundsPanel")
+    for key, button in pairs(ui.nav) do
+        button.scripts.OnClick(button)
+        equal(ui.selected, key)
+        for id, page in pairs(ui.pages) do equal(page:IsShown(), id == key) end
     end
-    equal(previews, 7)
-    equal(#state.played, 6)
+    state.addon.OpenUI("weapons")
+    local view = ui.previews.weapons
+    for _, category in ipairs({"hit", "crit", "resist", "miss", "absorb", "graze"}) do
+        assert(view.buttons[category]:IsEnabled())
+        view.buttons[category].scripts.OnClick()
+    end
+    equal(#state.played, 6); equal(state.addon.stats.hit, 0)
+    ui.checks.enabled:SetChecked(false); ui.checks.enabled.scripts.OnClick(ui.checks.enabled)
     equal(state.addon.db.enabled, false)
     SlashCmdList.GABBASOUNDS("")
-    equal(GabbaSoundsPanel:IsShown(), false)
+    equal(ui.frame:IsShown(), false)
+    for _, page in pairs(ui.pages) do equal(page:IsShown(), false) end
     SlashCmdList.GABBASOUNDS("")
     for _, frame in ipairs(state.frames) do
         if frame.template == "UIPanelCloseButton" then frame.scripts.OnClick(frame) end
     end
-    equal(GabbaSoundsPanel:IsShown(), false)
+    equal(ui.frame:IsShown(), false)
+    state.addon.OpenUI("priest")
+    _G[UISpecialFrames[1]]:Hide()
+    for _, page in pairs(ui.pages) do equal(page:IsShown(), false) end
 end)
 
 test("replay Gabbaophant's captured wand events", function()
@@ -646,16 +662,12 @@ test("slash previews and UI school choice preview the selected school without ch
     SlashCmdList.GABBASOUNDS("test hit nonsense")
     SlashCmdList.GABBASOUNDS("test")
     equal(#state.played, count)
-    SlashCmdList.GABBASOUNDS("")
-    local selector, preview
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("Hörprobe:", 1, true) then selector = frame end
-        if frame.text == "Treffer hören" then preview = frame end
-    end
-    assert(selector and preview)
-    for _, school in ipairs(state.addon.schoolOrder) do
-        selector.scripts.OnClick(selector)
-        preview.scripts.OnClick(preview)
+    state.addon.OpenUI("magic")
+    local view = state.addon.ui.previews.magic
+    for index, school in ipairs(state.addon.schoolOrder) do
+        local row = view.rows[index]
+        row.scripts.OnClick(row)
+        view.buttons.hit.scripts.OnClick()
         lastSchool(state, school, "hit")
     end
     state:combat("RANGE_DAMAGE", 5019, nil, false, nil, 50, 0, 32)
@@ -675,7 +687,7 @@ end)
 
 test("categorized recordings have distinct hit and crit pools and common failure pools", function()
     local state = setup()
-    equal(#state.addon.packOrder, 12)
+    equal(#state.addon.packOrder, 13)
     equal(state.addon.packOrder[2], "spoken")
     for _, category in ipairs({ "hit", "crit", "resist", "miss", "absorb" }) do
         local pool = state.addon.soundPacks.spoken.categories[category]
@@ -709,7 +721,7 @@ test("selected spoken pack covers every school, shooter and result including unk
     for _, playback in ipairs(state.played) do assert(playback.path:find("\\voice_", 1, true)) end
     equal(state.addon.originalsMuted, true)
     local count = #state.played
-    state:combat("SPELL_DAMAGE", 8105, nil, true)
+    state:combat("SPELL_DAMAGE", 14914, nil, true)
     equal(#state.played, count)
 end)
 
@@ -752,28 +764,25 @@ end)
 
 test("custom selection works in panel, updates variant labels and preserves preview semantics", function()
     local state = setup()
-    SlashCmdList.GABBASOUNDS("")
-    local selector, preview, schoolButton
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("Soundpaket:", 1, true) then selector = frame end
-        if frame.text == "Treffer hören" then preview = frame end
-        if frame.text and frame.text:find("Hörprobe:", 1, true) then schoolButton = frame end
-    end
-    assert(selector and preview and schoolButton)
-    selector.scripts.OnClick(selector)
+    state.addon.OpenUI()
+    local ui = state.addon.ui
+    ui.packButton.scripts.OnClick()
+    equal(state.addon.db.soundPack, "magic", "Opening a picker must not change the package")
+    assert(ui.picker:IsShown())
+    ui.packChoices.spoken.scripts.OnClick()
     equal(state.addon.db.soundPack, "spoken")
-    assert(selector.text:find("Eigene Aufnahme", 1, true))
-    assert(schoolButton.text:find("Zauberstab", 1, true))
-    for _, frame in ipairs(state.frames) do
-        if frame.kind == "CheckButton" and frame.label.text:find("Normale Treffer", 1, true) then
-            equal(frame.label.text, "Normale Treffer: 16 Varianten")
-        end
-    end
-    schoolButton.scripts.OnClick(schoolButton)
-    preview.scripts.OnClick(preview)
+    equal(ui.picker:IsShown(), false)
+    assert(ui.packButton.text:find("Eigene Aufnahme", 1, true))
+    state.addon.OpenUI("weapons")
+    local view = ui.previews.weapons
+    equal(view.counts.hit.text, "16 Clips")
+    view.rows[2].scripts.OnClick(view.rows[2])
+    view.buttons.hit.scripts.OnClick()
     assert(state.played[1].path:find("\\voice_", 1, true))
     equal(state.addon.stats.hit, 0)
-    selector.scripts.OnClick(selector)
+    state.addon.OpenUI("general")
+    ui.packButton.scripts.OnClick()
+    ui.packChoices.spoken_wand.scripts.OnClick()
     equal(state.addon.db.soundPack, "spoken_wand")
 end)
 
@@ -961,25 +970,19 @@ end)
 test("automatic UI previews select all three weapons and leave combat weapon routing automatic", function()
     local state = setup({ soundPack = "spoken" })
     equip(state, 3)
-    SlashCmdList.GABBASOUNDS("")
-    local selector, preview
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("Hörprobe:", 1, true) then selector = frame end
-        if frame.text == "Treffer hören" then preview = frame end
-    end
-    assert(selector and preview)
-    for _, weapon in ipairs({ "wand", "bow", "gun" }) do
-        selector.scripts.OnClick(selector)
-        preview.scripts.OnClick(preview)
+    state.addon.OpenUI("weapons")
+    local view = state.addon.ui.previews.weapons
+    for index, weapon in ipairs({ "wand", "bow", "gun" }) do
+        local row = view.rows[index]
+        row.scripts.OnClick(row)
+        view.buttons.hit.scripts.OnClick()
         voicePath(state, weapon, "hit")
     end
-    selector.scripts.OnClick(selector) -- Frostbolt preview
-    assert(selector.text:find("Frostblitz", 1, true))
-    for _ = 2, #state.addon.mageOrder do selector.scripts.OnClick(selector) end
-    for _ = 1, #state.addon.meleeOrder do selector.scripts.OnClick(selector) end
-    selector.scripts.OnClick(selector) -- back to actual equipment
-    preview.scripts.OnClick(preview)
-    voicePath(state, "gun", "hit")
+    equal(state.addon.db.soundPack, "spoken")
+    state.addon.OpenUI("mage")
+    local mage = state.addon.ui.previews.mage
+    mage.buttons.cast.scripts.OnClick()
+    voicePath(state, "frostbolt", "cast")
     state:combat("RANGE_DAMAGE", 75)
     voicePath(state, "gun", "hit")
     equal(state.addon.stats.hit, 1)
@@ -1260,7 +1263,7 @@ test("package changes independently release wand and Frostbolt original mutes", 
     end
     state.addon.SetOption("soundPack", "spoken")
     for _, id in ipairs(frostOriginals) do equal(state.muteDepth[id], 1) end
-    equal(#state.warmed, 349)
+    equal(#state.warmed, 358)
 end)
 
 test("incomplete Frostbolt coverage restores originals and graze-off falls back to hit", function()
@@ -1307,7 +1310,7 @@ test("Frostbolt playback failure restores originals and leaves another addon's m
     equal(state.muteDepth[568119], 2)
     state.addon.SetOption("enabled", false)
     equal(state.muteDepth[568119], 1)
-    equal(#state.warmed, 349)
+    equal(#state.warmed, 358)
 end)
 
 test("minimap disable and logout restore Frostbolt as well as wand originals", function()
@@ -1363,7 +1366,7 @@ test("spoken-only mode enables complete replacement and off restores originals w
     equal(state.addon.gunOriginalsMuted, true)
     local count = 0
     for _ in pairs(state.muted) do count = count + 1 end
-    equal(count, 357)
+    equal(count, 366)
     SlashCmdList.GABBASOUNDS("spokenonly off")
     equal(next(state.muted), nil)
     equal(state.addon.IsSpokenOnly(), false)
@@ -1378,8 +1381,8 @@ end)
 
 test("hunter originals warm once, release owned mutes only and recover after playback failure", function()
     local state = setup({ soundPack = "spoken" })
-    equal(#state.warmed, 349)
-    equal(#state.warmStops, 349)
+    equal(#state.warmed, 358)
+    equal(#state.warmStops, 358)
     for _, group in ipairs({ bowOriginals, gunOriginals }) do
         for _, id in ipairs(group) do
             equal(state.muteDepth[id], 1)
@@ -1398,7 +1401,7 @@ test("hunter originals warm once, release owned mutes only and recover after pla
     state.addon.PlayCategory("hit", true, nil, "neutral", "gun")
     equal(state.addon.gunOriginalsMuted, true)
     equal(state.muteDepth[567721], 2)
-    equal(#state.warmed, 349)
+    equal(#state.warmed, 358)
     state:fire("PLAYER_LOGOUT")
     equal(state.addon.bowOriginalsMuted, false)
     equal(state.addon.gunOriginalsMuted, false)
@@ -1573,18 +1576,15 @@ end)
 
 test("cast checkbox, preview and persisted option work independently of impact categories", function()
     local state = setup({ soundPack = "spoken", cast = false })
-    state.addon.OpenUI()
-    local checkbox, preview
-    for _, frame in ipairs(state.frames) do
-        if frame.label and frame.label.text:find("Magier-Casts", 1, true) then checkbox = frame end
-        if frame.text == "Cast hören" then preview = frame end
-    end
-    assert(checkbox and preview)
-    assert(checkbox.label.text:find("2 Varianten", 1, true))
+    state.addon.OpenUI("mage")
+    local checkbox = state.addon.ui.checks.cast
+    local view = state.addon.ui.previews.mage
+    local preview = view.buttons.cast
+    equal(view.counts.cast.text, "2 Clips")
     equal(checkbox.checked, false)
     castPool(state)
     state.addon.RefreshUI()
-    assert(checkbox.label.text:find("7 Varianten", 1, true))
+    equal(view.counts.cast.text, "7 Clips")
     preview.scripts.OnClick(preview)
     equal(#state.played, 1)
     equal(state.addon.stats.cast, 0)
@@ -1774,17 +1774,15 @@ test("new mage packages, selectors and slash previews use the chosen spell witho
     voicePath(state, "fireball", "cast")
     SlashCmdList.GABBASOUNDS("test crit pyroblast")
     voicePath(state, "pyroblast", "crit")
-    state.addon.OpenUI()
-    local selector, preview, castPreview
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("Hörprobe:", 1, true) then selector = frame end
-        if frame.text == "Treffer hören" then preview = frame end
-        if frame.text == "Cast hören" then castPreview = frame end
-    end
-    for _, key in ipairs(state.addon.mageOrder) do
-        selector.scripts.OnClick(selector)
-        assert(selector.text:find(state.addon.mageSpells[key].label, 1, true))
-        castPreview.scripts.OnClick(castPreview)
+    state.addon.OpenUI("mage")
+    local view = state.addon.ui.previews.mage
+    for index, key in ipairs(state.addon.mageOrder) do
+        if index == 9 then view.next.scripts.OnClick() end
+        local row = view.rows[(index - 1) % 8 + 1]
+        equal(row.key, key)
+        row.scripts.OnClick(row)
+        assert(view.buttons.cast:IsEnabled())
+        view.buttons.cast.scripts.OnClick()
         voicePath(state, key, "cast")
     end
     SlashCmdList.GABBASOUNDS("pack fireball")
@@ -2086,20 +2084,16 @@ test("melee interval settings and UI previews cover every new bank", function()
     state:swing()
     equal(#state.played, 2)
     state.addon.SetOption("meleeInterval", 0.5)
-    state.addon.OpenUI()
-    local selector, hit, interval
-    for _, frame in ipairs(state.frames) do
-        if frame.text and frame.text:find("Hörprobe:",1,true) then selector = frame end
-        if frame.text == "Treffer hören" then hit = frame end
-        if frame.text and frame.text:find("Nahkampf-Mindestpause:",1,true) then interval = frame end
-    end
-    assert(interval and selector and hit)
-    interval.scripts.OnClick(interval)
+    state.addon.OpenUI("weapons")
+    local ui = state.addon.ui
+    ui.interval.scripts.OnClick()
     equal(state.addon.db.meleeInterval, 0.75)
-    for _, key in ipairs(state.addon.meleeOrder) do
-        selector.scripts.OnClick(selector)
-        assert(selector.text:find(state.addon.meleeLabels[key],1,true))
-        hit.scripts.OnClick(hit)
+    local view = ui.previews.weapons
+    for index, key in ipairs(state.addon.meleeOrder) do
+        local row = view.rows[index + 3]
+        equal(row.key, key)
+        row.scripts.OnClick(row)
+        view.buttons.hit.scripts.OnClick()
         voicePath(state, key, "hit")
         SlashCmdList.GABBASOUNDS("test crit " .. key)
         voicePath(state, key, "crit")
@@ -2215,16 +2209,15 @@ test("mage buff options validate persist and expose separate warning previews", 
     equal(state.addon.db.mageBuffIntellect, false)
     equal(state.addon.db.mageBuffArmor, true)
     equal(state.addon.db.mageBuffSound, true)
+    equal(state.addon.db.priestBuffAlerts, true)
+    equal(state.addon.db.priestBuffFearWard, false)
     SlashCmdList.GABBASOUNDS("buffs off")
     equal(state.addon.db.mageBuffAlerts, false)
     SlashCmdList.GABBASOUNDS("buffs on")
     equal(state.addon.db.mageBuffAlerts, true)
     SlashCmdList.GABBASOUNDS("buffs")
     assert(GabbaSoundsBuffPanel:IsShown())
-    local check
-    for _, frame in ipairs(state.frames) do
-        if frame.label and frame.label.text == "Gesprochene Warnungen abspielen" then check = frame end
-    end
+    local check = state.addon.ui.buffChecks.mageBuffSound
     assert(check and check.checked)
     check:SetChecked(false); check.scripts.OnClick(check)
     equal(state.addon.db.mageBuffSound, false)
@@ -2238,6 +2231,31 @@ test("mage buff options validate persist and expose separate warning previews", 
     assert(button)
     GabbaSoundsBuffPanel:Hide(); button.scripts.OnClick()
     assert(GabbaSoundsBuffPanel:IsShown())
+end)
+
+test("priest buff UI uses its own saved options and preview keys", function()
+    local state = setup({ priestBuffFortitude = false, priestBuffFearWard = "invalid" })
+    state.classes.player = "PRIEST"
+    equal(state.addon.db.priestBuffFortitude, false)
+    equal(state.addon.db.priestBuffFearWard, false)
+    SlashCmdList.GABBASOUNDS("buffs off")
+    equal(state.addon.db.priestBuffAlerts, false)
+    equal(state.addon.db.mageBuffAlerts, true)
+    SlashCmdList.GABBASOUNDS("buffs on")
+    equal(state.addon.db.priestBuffAlerts, true)
+    SlashCmdList.GABBASOUNDS("buffs")
+    assert(GabbaSoundsBuffPanel:IsShown())
+    local fearCheck
+    for _, frame in ipairs(state.frames) do
+        if frame.label and frame.label.text == "Furchtzauberschutz (Zwerg, optional)" then fearCheck = frame end
+    end
+    assert(fearCheck and not fearCheck.checked)
+    fearCheck:SetChecked(true); fearCheck.scripts.OnClick(fearCheck)
+    equal(state.addon.db.priestBuffFearWard, true)
+    state.addon.priestBuffGenericSounds.innerFire.missing = "test_innerfire_missing.ogg"
+    SlashCmdList.GABBASOUNDS("buffs innerfire missing")
+    equal(#state.played, 1)
+    assert(state.played[1].path:find("test_innerfire_missing.ogg", 1, true))
 end)
 
 local function herbalist(saved, auras)
@@ -2358,6 +2376,182 @@ test("herb settings validate and options expose both independent previews", func
     check:SetChecked(false); check.scripts.OnClick(check); equal(state.addon.db.herbAlerts, false)
     SlashCmdList.GABBASOUNDS("herbs gromsblood")
     SlashCmdList.GABBASOUNDS("herbs blacklotus"); equal(#state.played, 2)
+end)
+
+test("retired herb test settings cannot trigger alerts for low-level herbs", function()
+    local s = herbalist({herbTest = true})
+    equal(s.addon.db.herbTest, nil)
+    for _, name in ipairs({"Silverleaf", "Silberblatt", "Peacebloom", "Friedensblume", "Earthroot", "Erdwurzel"}) do
+        s:hover(name); s:tooltipTick(); equal(#s.played, 0)
+    end
+    s:hover("Black Lotus"); s:tooltipTick(); equal(#s.played, 1)
+    s:hover("Gromsblut"); s:tooltipTick(); equal(#s.played, 2)
+end)
+
+test("priest direct spells use all Classic ranks and separate hit/crit banks", function()
+    for key, ranks in pairs({ mindblast = {8092,8102,8103,8104,8105,8106,10945,10946,10947}, smite = {585,591,598,984,1004,6060,10933,10934} }) do
+        local s = setup({ soundPack = "spoken_priest" })
+        for _, id in ipairs(ranks) do s:combat("SPELL_DAMAGE", id); s:combat("SPELL_DAMAGE", id, nil, true) end
+        equal(s.addon.stats.hit, #ranks); equal(s.addon.stats.crit, #ranks)
+        equal(#s.addon.voiceBanks[key].hit, 4); equal(#s.addon.voiceBanks[key].crit, 4)
+        assert(s.played[1].path:find("voice_" .. key .. "_hit_", 1, true))
+        assert(s.played[2].path:find("voice_" .. key .. "_crit_", 1, true))
+    end
+end)
+test("Shadow Word Pain reacts on application and refresh, never ticks or removal", function()
+    local s = setup({ soundPack = "spoken_priest" })
+    s:combat("SPELL_CAST_SUCCESS", 589); equal(#s.played, 0)
+    s:combat("SPELL_AURA_APPLIED", 589, nil, nil, "DEBUFF"); equal(#s.played, 1)
+    for _, event in ipairs({"SPELL_PERIODIC_DAMAGE", "SPELL_PERIODIC_MISSED", "SPELL_AURA_REMOVED", "SPELL_HEAL"}) do s:combat(event, 589) end
+    equal(#s.played, 1)
+    s:combat("SPELL_AURA_REFRESH", 10894, nil, nil, "DEBUFF"); equal(#s.played, 2)
+    equal(s.addon.stats.crit, 0)
+    s:combat("SPELL_MISSED", 589, nil, nil, "RESIST"); equal(s.addon.stats.resist, 1)
+end)
+test("Holy Nova combines damage targets, favors crits and ignores its healing", function()
+    local s = setup({ soundPack = "spoken_priest" })
+    s:combat("SPELL_CAST_SUCCESS", 27801); s:combat("SPELL_HEAL", 27805)
+    s:combat("SPELL_DAMAGE", 27801); s:combat("SPELL_MISSED", 27801, nil, nil, "RESIST")
+    s:combat("SPELL_DAMAGE", 27801, nil, true); equal(#s.played, 0)
+    s:advance(.08); equal(#s.played, 1); equal(s.addon.stats.crit, 1)
+    s:combat("SPELL_DAMAGE", 27801); s:advance(.1); equal(#s.played, 1)
+    s:combat("SPELL_CAST_SUCCESS", 15237); s:combat("SPELL_DAMAGE", 15237)
+    s:advance(.08); equal(#s.played, 2); equal(s.addon.stats.hit, 1)
+end)
+test("priest packs isolate weapons/mages and retain source filters and shared failures", function()
+    for _, pack in ipairs({"magic", "spoken_mage", "spoken_melee", "spoken_wand"}) do
+        local s = setup({ soundPack = pack }); s:combat("SPELL_DAMAGE", 8092); equal(#s.played, 0)
+    end
+    local s = setup({ soundPack = "spoken_priest", allSources = false })
+    s:combat("SPELL_DAMAGE", 8092, "Player-Other"); s:combat("SPELL_DAMAGE", 8092, "Creature-Other")
+    s:combat("SPELL_DAMAGE", 116); s:combat("RANGE_DAMAGE"); s:swing(); equal(#s.played, 0)
+    s:combat("SPELL_MISSED", 8092, nil, nil, "ABSORB"); equal(s.addon.stats.absorb, 1)
+    s:combat("SPELL_DAMAGE", 8092, nil, nil, nil, 50, 5); equal(s.addon.stats.graze, 1)
+    s.addon.SetOption("graze", false)
+    s:combat("SPELL_DAMAGE", 585, nil, nil, nil, 50, 5); equal(s.addon.stats.hit, 1)
+    s.addon.SetOption("soundPack", "spoken"); s.addon.SetOption("allSources", true)
+    s:combat("SPELL_DAMAGE", 585, "Player-Other"); equal(s.addon.stats.hit, 2)
+end)
+test("priest previews and Noggenfogger use their own banks", function()
+    local s = setup({ soundPack = "spoken_priest" }, nil, {16595})
+    s:combat("SPELL_DAMAGE", 8092)
+    assert(s.played[1].path:find("\\noggenfogger\\voice_mindblast_hit_", 1, true))
+    SlashCmdList.GABBASOUNDS("pack priest"); equal(s.addon.db.soundPack, "spoken_priest")
+    SlashCmdList.GABBASOUNDS("test crit holynova"); equal(#s.played, 2)
+    SlashCmdList.GABBASOUNDS("test crit shadowwordpain"); equal(#s.played, 2)
+    SlashCmdList.GABBASOUNDS("pack smite"); equal(s.addon.db.soundPack, "spoken_smite")
+end)
+test("priest muting requires complete replacements and restores on playback failure", function()
+    local s = setup({ soundPack = "spoken_priest" })
+    for _, key in ipairs(s.addon.priestOrder) do equal(s.addon.priestOriginalsMuted[key], true) end
+    equal(s.addon.originalsMuted, false); equal(s.addon.frostboltOriginalsMuted, false)
+    equal(s.addon.meleeOriginalsMuted, false)
+    s.addon.voiceBanks.shadowwordpain.hit = {}; s.addon.UpdateOriginalMuting()
+    equal(s.addon.priestOriginalsMuted.shadowwordpain, false)
+    s.failPlayback = true; s:combat("SPELL_DAMAGE", 8092)
+    for _, key in ipairs(s.addon.priestOrder) do equal(s.addon.priestOriginalsMuted[key], false) end
+end)
+
+test("unified shortcuts reuse one parent and fit small screens without losing preferences", function()
+    local s = setup({soundPack = "spoken_priest", minimapHidden = true})
+    UIParent:SetSize(640, 480)
+    s.addon.OpenUI("priest")
+    local ui = s.addon.ui
+    equal(ui.frame.strata, "MEDIUM", "Options must share the normal Blizzard window layer")
+    equal(ui.frame.toplevel, true, "Click order must control window stacking, like Gabba")
+    assert(ui.frame.scale < 1)
+    assert(ui.frame.width * ui.frame.scale <= 608)
+    assert(ui.frame.height * ui.frame.scale <= 448)
+    local count = #s.frames
+    SlashCmdList.GABBASOUNDS("herbs")
+    equal(ui.selected, "herbs"); assert(ui.pages.herbs:IsShown())
+    equal(ui.pages.priest:IsShown(), false)
+    SlashCmdList.GABBASOUNDS("buffs")
+    equal(ui.selected, "buffs"); equal(ui.pages.herbs:IsShown(), false)
+    equal(ui.pages.buffs.parent, ui.frame); equal(ui.pages.herbs.parent, ui.frame)
+    equal(#s.frames, count); equal(#UISpecialFrames, 1)
+    ui.frame:Hide(); s.addon.OpenUI()
+    equal(ui.selected, "buffs"); assert(ui.pages.buffs:IsShown())
+    equal(s.addon.db.soundPack, "spoken_priest")
+    equal(ui.checks.minimapHidden.checked, false)
+    ui.checks.minimapHidden:SetChecked(true)
+    ui.checks.minimapHidden.scripts.OnClick(ui.checks.minimapHidden)
+    equal(s.addon.db.minimapHidden, false)
+    UIParent:SetSize(1280, 800)
+    ui.frame.scripts.OnEvent(ui.frame, "DISPLAY_SIZE_CHANGED")
+    equal(ui.frame.scale, 1)
+end)
+
+test("previews expose only valid priest results and never alter package or native mutes", function()
+    local s = setup({soundPack = "magic"})
+    s.addon.OpenUI("priest")
+    local ui, muted = s.addon.ui, {}
+    for key, value in pairs(s.muteDepth) do muted[key] = value end
+    local view = ui.previews.priest
+    equal(view.buttons.cast, nil, "Priest previews must not borrow Frostbolt casts")
+    view.buttons.hit.scripts.OnClick()
+    voicePath(s, "mindblast", "hit")
+    view.rows[2].scripts.OnClick(view.rows[2])
+    equal(view.selected, "shadowwordpain")
+    equal(view.buttons.crit:IsEnabled(), false)
+    equal(view.counts.crit.text, "0 Clips")
+    view.buttons.hit.scripts.OnClick()
+    voicePath(s, "shadowwordpain", "hit")
+    equal(s.addon.db.soundPack, "magic"); equal(s.addon.stats.hit, 0)
+    for key, value in pairs(s.muteDepth) do equal(value, muted[key]) end
+    local stopped = #s.stopped
+    ui.nav.general.scripts.OnClick()
+    equal(#s.stopped, stopped + 1, "Changing pages stops the preview tail")
+    ui.packButton.scripts.OnClick()
+    ui.pickerMask.scripts.OnClick()
+    equal(ui.picker:IsShown(), false); equal(s.addon.db.soundPack, "magic")
+    s.addon.OpenUI("priest")
+    view.activate.scripts.OnClick()
+    equal(s.addon.db.soundPack, "spoken_shadowwordpain")
+end)
+
+test("priest buff previews stay accessible without exposing a personal voice selector", function()
+    local previousName = UnitName
+    for _, identity in ipairs({{ "Other", "WARRIOR" }, { "AnotherPriest", "PRIEST" }, { "Bobselinchen", "PRIEST" }, { "Bobselinchen", "MAGE" }}) do
+        local s = setup()
+        s.classes.player = identity[2]
+        UnitName = function() return identity[1] end
+        s.addon.OpenUI("buffs")
+        local ui = s.addon.ui
+        equal(ui.buffProfile, identity[2] == "PRIEST" and "priest" or "mage")
+        ui.buffTabs.priest.scripts.OnClick()
+        equal(#ui.buffRows, 4)
+        equal(ui.buffVoiceButton, nil)
+        equal(ui.buffProfiles.mage.frame:IsShown(), false)
+        equal(ui.buffProfiles.priest.frame:IsShown(), true)
+        assert(not ui.buffNote.text:find("Bobselinchen", 1, true))
+        for _, frame in ipairs(s.frames) do
+            assert(not (frame.text and frame.text:find("Bobselinchen", 1, true)))
+        end
+        local special = identity[1] == "Bobselinchen" and identity[2] == "PRIEST"
+        local bank = special and s.addon.buffAlertSounds or s.addon.priestBuffGenericSounds
+        for _, row in ipairs(ui.buffRows) do
+            for _, phase in ipairs({"expiring", "missing"}) do
+                local button = row.buttons[phase]
+                assert(button:IsEnabled())
+                button.scripts.OnClick()
+                assert(s.played[#s.played].path:find(bank[row.key][phase], 1, true))
+            end
+        end
+        equal(#s.played, 8)
+        equal(s.addon.GetBuffAlertProfile().class, identity[2] == "PRIEST" and "PRIEST" or "MAGE")
+        local fort = ui.buffChecks.priestBuffFortitude
+        fort:SetChecked(false); fort.scripts.OnClick(fort)
+        equal(s.addon.db.priestBuffFortitude, false)
+        equal(s.addon.db.mageBuffIntellect, true)
+        ui.buffTabs.mage.scripts.OnClick()
+        equal(#ui.buffRows, 2)
+        ui.buffRows[1].buttons.expiring.scripts.OnClick()
+        assert(s.played[#s.played].path:find("voice_buff_intellect_expiring.ogg", 1, true))
+        equal(s.addon.db.soundPack, "magic")
+        equal(ui.nav.magic.text, "Zauberstab-Sounds")
+    end
+    UnitName = previousName
 end)
 
 print(string.format("GabbaSounds: %d tests passed", total))

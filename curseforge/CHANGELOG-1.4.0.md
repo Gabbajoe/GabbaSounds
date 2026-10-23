@@ -1,11 +1,15 @@
-# GabbaSounds 1.4.0 (in development)
+# GabbaSounds 1.4.0
 
-- Added spoken alerts for **Gromsblood** and **Black Lotus** when a herbalist hovers a real herb tracking point on the minimap or the herb in the world. German and English names are supported.
-- Included two original recordings and two matching Noggenfogger variants. Existing attack and mage buff recordings are preserved.
-- Reject stored addon pins, bag items, item links, unit and spell tooltips. Identical herb alerts have a 30-second minimum interval and do not repeat while the same tooltip stays open.
-- Added `/gws herbs`, a character-specific toggle and previews that also work without Herbalism. Alerts follow the existing sound channel and remain independent of combat sounds.
-- Included the herb recordings and both runtime modules in the allowlisted package. The build contains 702 OGGs: 225 spoken recordings, 126 synthetic sounds and 351 pitched variants. Original WAVs remain private.
+Give your priest a voice, keep buffs covered and enjoy a clearer settings window. 💛
 
-This is a local test build, not yet published. Real herb tooltips still need in-game validation. It does not automatically scan the minimap or check stored spawn proximity. Warrior ability sounds are still in preparation.
+- Added **28 priest attack clips** for Mind Blast, Shadow Word: Pain, Smite and Holy Nova. Shadow Word: Pain reacts on application/refresh rather than each tick; Holy Nova combines damage targets into one reaction and ignores healing.
+- Added **spoken priest buff reminders** for Fortitude, Divine Spirit, your own Inner Fire and optional, learned Fear Ward. Separate recordings warn at two minutes remaining and when a buff is missing. Other priests can use the reminders too.
+- Improved group buff checks: Intellect and Spirit only target suitable classes, and distant or unknown-range group members do not trigger reminders. Mage reminders remain restricted to Minibobsel.
+- Rebuilt the options into **one compact, opaque window** with navigation for general settings, weapons, mage/priest spells, wand sounds, buffs and herbs. The window fits smaller screens and follows normal click order like the GabbaAddon.
+- Added direct package and preview selection. Listening to a preview keeps your active combat package unchanged; unavailable results are disabled. All mage/priest buff previews are reachable from any class.
+- Added **Gromsblood and Black Lotus tooltip alerts** for herbalists, with German/English names, a 30-second per-herb cooldown and no repeat while hovering the same tooltip. Stored addon pins, items and spell tooltips are ignored. This uses mouseover tooltips, not automatic minimap scanning.
+- Included all new recordings and matching Noggenfogger variants. The installable package contains **790 OGG files** and excludes source WAVs, browser players and development tools.
 
-Fully exit and restart WoW after installation to load the new sound files.
+**Fully exit and restart WoW after updating** so the new sound files can load. Open `/gws` to choose your sounds; `/gws buffs` and `/gws herbs` open the matching settings directly.
+
+WoW Classic Era / Hardcore 1.15.9, Interface 11509. Warrior ability recordings remain in preparation.
